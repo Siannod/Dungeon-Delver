@@ -39,9 +39,11 @@ void Generator::generate()
 						{
 							for (int i = 0; i < 2; i++)
 							{
-								for (int j = 0; j < directions[wall[2]][i]; j++)
+								move = directions[wall[2]][i];
+								for (int j = 0; j < move; j++)
 								{
-
+									
+									dungeon[wallx + (move - j)];
 								}
 							}
 						}

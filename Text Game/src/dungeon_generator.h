@@ -23,6 +23,7 @@ public:
 	int temp = 0;
 	int directionx;
 	int directiony;
+	int move;
 	std::vector<int> wall;
 
 	std::vector<std::vector<int>> walls = { {3, 1 ,3}, {1, 3, 2} };
