@@ -4,6 +4,8 @@
 
 int main()
 {
-    Generator temp;
-    temp.generate();
+    Generator generator;
+    generator.fill_dungeon();
+    generator.generate_2();
+    generator.print_dungeon();
 }
