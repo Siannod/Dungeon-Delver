@@ -20,11 +20,13 @@ public:
 	//CO-ORDS
 	int wallx = 1;
 	int wally = 1;
-	int temp = 0;
+	int rand_wall = 0;
 	int directionx;
 	int directiony;
 	int move;
 	std::vector<int> wall;
+
+	int wall_store[2] = { wallx, wally };
 
 	std::vector<std::vector<int>> walls = { {3, 1 ,3}, {1, 3, 2} };
 	std::vector<std::vector<int>> visited;
@@ -37,10 +39,20 @@ public:
 		{4, {-3, 0}}
 	};
 
+	std::map<int, std::vector<int>> direction_fill =
+	{
+		{1, {0, 2, 0, 1}},
+		{2, {2, 0, 1, 0,}},
+		{3, {0, -2, 0, -1}},
+		{4, {-2, 0, -1, 0}}
+	};
+
 	//FUNCTIONS
 	void fill_dungeon();
 
 	void generate();
 	
 	int random(int min, int max);
+
+	bool valid();
 };

@@ -13,59 +13,45 @@ void Generator::fill_dungeon()
 	dungeon[1][1] = 0;
 }
 
+bool Generator::valid()
+{
+	if (std::find(visited.begin(), visited.end(), wall) != visited.end())
+	{
+		//NOT VIISTED
+		if (wall_min < wallx && wallx + directionx < wall_max && wall_min < wally && wally + directiony < wall_max)
+		{
+			//IN RANGE
+			if (dungeon[wallx][wally] == 1 && dungeon[wallx + directionx][wally + directiony] == 1)
+			{
+				//ISNT A PATH
+				if (dungeon[wallx][wally + 1] != 1)
+				{
+					//NOT BORDERING A ROOM
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
 void Generator::generate()
 {
 	do
 	{
-		temp = random(0, walls.size());
-		wall = walls[temp];
+		rand_wall = random(0, walls.size());
+		wall = walls[rand_wall];
 		wallx = wall[0];
 		wally = wall[1];
 		directionx = directions[wall[2]][0];
 		directiony = directions[wall[2]][1];
-		if (std::find(visited.begin(), visited.end(), wall) != visited.end())
+		if (valid())
 		{
-			//NOT VIISTED
-			if (wall_min < wallx && wallx + directionx < wall_max && wall_min < wally && wally + directiony < wall_max)
-			{
-				//NOT VISITED & IN RANGE
-				if (dungeon[wallx][wally] == 1 && dungeon[wallx + directionx][wally + directiony] == 1)
-				{
-					//NOT VISITED & IN RANGE & IS A WALL
-					if (dungeon[wallx][wally + 1] != 1)
-					{
-						//NOT VISITED & IN RANGE & IS A WALL & NOT BORDERING ROOM
-						if (directionx + directiony > 0)
-						{
-							for (int i = 0; i < 2; i++)
-							{
-								move = directions[wall[2]][i];
-								for (int j = 0; j < move; j++)
-								{
-									
-									dungeon[wallx + (move - j)];
-								}
-							}
-						}
-						else
-						{
 
-						}
-					}
-					else
-					{
-						visited.push_back(wall);
-					}
-				}
-				else
-				{
-					visited.push_back(wall);
-				}
-			}
-			else
-			{
-				visited.push_back(wall);
-			}
+		}
+		else
+		{
+			visited.push_back(wall);
 		}
 		if (walls.empty())
 		{
