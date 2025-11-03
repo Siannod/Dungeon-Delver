@@ -8,26 +8,31 @@
 #include <string>
 
 constexpr int wall_min = 0;
-constexpr int wall_max = 15;
+constexpr int wall_max = 21;
 
 class Generator
 {
+private:
+
 public:
 	bool finished = false;
 
 	//DUNGEON LEVEL
-	int dungeon[15][15];
+	int dungeon[wall_max][wall_max];
 
 	//CO-ORDS
 	int tempx;
 	int tempy;
-
-	int wallx = 1;
-	int wally = 1;
+	int loop = 0;
+	int size;
+	int back;
+	int wall_x = 1;
+	int wall_y = 1;
 	int rand_wall = 0;
 	int directionx;
 	int directiony;
 	int move;
+	int new_wall;
 	std::vector<int> wall;
 
 	int wall_store[2] = { wallx, wally };
@@ -58,15 +63,7 @@ public:
 	
 	int random(int min, int max);
 
-	bool valid();
-
 	void print_dungeon();
 
-	void new_walls();
-
-	void print_visited();
-
-	void print_walls();
-
-	void generate_2();
+	void check_new_walls();
 };

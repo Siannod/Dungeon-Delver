@@ -1,11 +1,15 @@
 #pragma once
 
 #include "dungeon_generator.h"
+//#include "player.h"
 
 int main()
 {
     Generator generator;
-    generator.fill_dungeon();
+    //Player player;
+
+    //player.level_up();
     generator.generate_2();
     generator.print_dungeon();
+    return 10;
 }
