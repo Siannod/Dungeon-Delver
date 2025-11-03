@@ -15,7 +15,6 @@ class Generator
 private:
 
 public:
-	bool finished = false;
 
 	//DUNGEON LEVEL
 	int dungeon[wall_max][wall_max];
@@ -23,32 +22,18 @@ public:
 	//CO-ORDS
 	int tempx;
 	int tempy;
-	int loop = 0;
-	int size;
 	int back;
 	int wall_x = 1;
 	int wall_y = 1;
-	int rand_wall = 0;
-	int directionx;
-	int directiony;
-	int move;
 	int new_wall;
+
+	//VECTORS
 	std::vector<int> wall;
-
-	int wall_store[2] = { wallx, wally };
-
 	std::vector<std::vector<int>> walls = { {4, 1 ,3}, {1, 4, 2} };
 	std::vector<std::vector<int>> visited;
 
-	std::map<int, std::vector<int>> directions =
-	{
-		{1, {-3, 0}},
-		{2, {0, 3}},
-		{3, {3, 0}},
-		{4, {0, -3}}
-	};
-
-	std::map<int, std::vector<int>> direction_fill =
+	//MAPS
+	std::map<int, std::vector<int>> direction =
 	{
 		{1, {-2, 0, -1, 0}},
 		{2, {0, 2, 0, 1}},

@@ -9,7 +9,7 @@ int main()
     //Player player;
 
     //player.level_up();
-    generator.generate_2();
+    generator.generate();
     generator.print_dungeon();
     return 10;
 }

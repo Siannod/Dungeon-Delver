@@ -49,7 +49,6 @@ void Generator::generate()
 	do
 	{
 		new_wall = random(0, walls.size() - 1);
-		loop += 1;
 		wall = walls[new_wall];
 		wall_x = wall[0];
 		wall_y = wall[1];
@@ -58,7 +57,7 @@ void Generator::generate()
 		if (dungeon[wall_x][wall_y] == 1)
 		{
 			dungeon[wall_x][wall_y] = 0;
-			dungeon[wall_x - direction_fill.at(back)[2]][wall_y - direction_fill.at(back)[3]] = 0;
+			dungeon[wall_x - direction.at(back)[2]][wall_y - direction_fill.at(back)[3]] = 0;
 		}
 
 		visited.push_back(wall);
@@ -67,14 +66,15 @@ void Generator::generate()
 		check_new_walls();
 
 	}while (walls.size() != 0);
+	
 }
 
 void Generator::check_new_walls()
 {
-	for (int i = 1; i < direction_fill.size() + 1; i++)
+	for (int i = 1; i < direction.size() + 1; i++)
 	{
-		tempx = wall_x + direction_fill.at(i)[0];
-		tempy = wall_y + direction_fill.at(i)[1];
+		tempx = wall_x + direction.at(i)[0];
+		tempy = wall_y + direction.at(i)[1];
 
 		if (0 < tempx && tempx < wall_max && 0 < tempy && tempy < wall_max)
 		{
