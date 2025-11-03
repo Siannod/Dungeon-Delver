@@ -47,6 +47,7 @@ void Generator::generate()
 {
 	do
 	{
+		print_dungeon();
 		rand_wall = random(0, walls.size());
 		wall = walls[rand_wall];
 		std::cout << wall[0] << wall[1] << wall[2] << std::endl;
@@ -101,7 +102,7 @@ void Generator::print_dungeon()
 
 void Generator::new_walls()
 {
-	std::cout << "test" << std::endl;
+	//std::cout << "test" << std::endl;
 	for (int i = 1; i < 5; i++)
 	{
 		tempx = wallx + directions.at(i)[0];
@@ -148,6 +149,7 @@ void Generator::generate_2()
 	dungeon[wallx][wally] = 0;
 	do
 	{
+		print_dungeon();
 		//std::cout << "test";
 		if (!(walls.empty()))
 		{
