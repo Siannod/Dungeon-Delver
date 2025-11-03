@@ -57,7 +57,7 @@ void Generator::generate()
 		if (dungeon[wall_x][wall_y] == 1)
 		{
 			dungeon[wall_x][wall_y] = 0;
-			dungeon[wall_x - direction.at(back)[2]][wall_y - direction_fill.at(back)[3]] = 0;
+			dungeon[wall_x - direction.at(back)[2]][wall_y - direction.at(back)[3]] = 0;
 		}
 
 		visited.push_back(wall);
