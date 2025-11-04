@@ -12,8 +12,6 @@ constexpr int wall_max = 21;
 
 class Generator
 {
-private:
-
 public:
 
 	//DUNGEON LEVEL
@@ -45,10 +43,11 @@ public:
 	void fill_dungeon();
 
 	void generate();
-	
+
 	int random(int min, int max);
 
 	void print_dungeon();
 
 	void check_new_walls();
+
 };

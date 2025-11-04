@@ -1,6 +1,5 @@
 #pragma once
-#include <string>
-#include <algorithm>
+
 #include "dungeon_generator.h"
 
 void Generator::fill_dungeon()
@@ -83,6 +82,3 @@ void Generator::print_dungeon()
 		std::cout << "\n";
 	}
 }
-
-
-
