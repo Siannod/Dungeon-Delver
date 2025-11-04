@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dungeon_generator.h"
+#include "player.h"
 //#include "player.h"
 
 int main()
@@ -11,5 +12,5 @@ int main()
     //player.level_up();
     generator.generate();
     generator.print_dungeon();
-    return 10;
+    return 0;
 }

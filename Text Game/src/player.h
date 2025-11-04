@@ -11,6 +11,7 @@ class Player
 private:
 	bool to_level = false;
 	bool valid = false;
+	int co_ords[2] = { 1, 1 };
 
 
 public:
