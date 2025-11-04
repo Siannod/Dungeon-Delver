@@ -123,12 +123,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\commands.cpp" />
     <ClCompile Include="src\dungeon_generator.cpp" />
+    <ClCompile Include="src\inventory.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\commands.h" />
     <ClInclude Include="src\dungeon_generator.h" />
+    <ClInclude Include="src\inventory.h" />
     <ClInclude Include="src\player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

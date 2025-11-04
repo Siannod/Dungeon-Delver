@@ -1,5 +1,7 @@
 #pragma once
 
+#include "inventory.h"
+
 #include <iostream>
 #include <map>
 #include <vector>
@@ -12,10 +14,11 @@ private:
 	bool to_level = true;
 	bool valid = false;
 	int co_ords[2] = { 1, 1 };
-
+	
 
 public:
-	//int health = level + stats.at("Constitution");
+	Inventory inventory;
+	
 	int level = 1;
 	int coin = 0;
 	int choice_int;
