@@ -2,21 +2,22 @@
 
 #include "dungeon_generator.h"
 
-void Generator::fill_dungeon()
+void Generator::fill_dungeon(std::vector<std::vector<int>> &dungeon)
 {
 	for (int i = 0; i < wall_max; i++)
 	{
+		dungeon.push_back({});
 		for (int j = 0; j < wall_max; j++)
 		{
-			dungeon[i][j] = 1;
+			dungeon[i].push_back(1);
 		}
 	}
 	dungeon[1][1] = 0;
 }
 
-void Generator::generate()
+void Generator::generate(std::vector<std::vector<int>> &dungeon)
 {
-	fill_dungeon();
+	fill_dungeon(dungeon);
 	wall_x = 1;
 	wall_y = 1;
 	walls = { {3, 1 ,3}, {1, 3, 2} };
@@ -36,11 +37,11 @@ void Generator::generate()
 		}
 		visited.push_back(wall);
 		walls.erase(find(walls.begin(), walls.end(), wall));
-		check_new_walls();
+		check_new_walls(dungeon);
 	} while (walls.size() != 0);
 }
 
-void Generator::check_new_walls()
+void Generator::check_new_walls(std::vector<std::vector<int>> dungeon)
 {
 	for (int i = 1; i < direction.size() + 1; i++)
 	{
@@ -68,17 +69,4 @@ int Generator::random(int min, int max)
 	}
 	srand(time(0));
 	return rand() % (max);
-}
-
-void Generator::print_dungeon()
-{
-	std::cout << "\n\n";
-	for (int i = 0; i < wall_max; i++)
-	{
-		for (int j = 0; j < wall_max; j++)
-		{
-			std::cout << dungeon[i][j] << " ";
-		}
-		std::cout << "\n";
-	}
 }

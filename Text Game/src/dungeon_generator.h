@@ -14,8 +14,10 @@ class Generator
 {
 public:
 
+	//std::vector<std::vector<int>> dungeon;
+
+
 	//DUNGEON LEVEL
-	int dungeon[wall_max][wall_max];
 
 	//CO-ORDS
 	int tempx;
@@ -40,14 +42,12 @@ public:
 	};
 
 	//FUNCTIONS
-	void fill_dungeon();
+	void fill_dungeon(std::vector<std::vector<int>> &dungeon);
 
-	void generate();
+	void generate(std::vector<std::vector<int>> &dungeon);
 
 	int random(int min, int max);
 
-	void print_dungeon();
-
-	void check_new_walls();
+	void check_new_walls(std::vector<std::vector<int>> dungeon);
 
 };

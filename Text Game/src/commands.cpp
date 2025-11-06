@@ -14,9 +14,8 @@ void Command::delimit(std::string input)
 
 void Command::get_help()
 {
-	std::cout << ">> view <index>: Prints out details of the item specified \n>> show_all: Shows all inventory slots and their details\n";
-	std::cout << ">> set <index> <itemid>: Set slot specified by index to item ID \n>> search_item <str>: Searches the item list for any item with given name\n";
-	std::cout << ">> items: shows all items \n>> exit: exits the program \n>> restart: restarts the session \n>> help: shows this list of commands \n>> clear: clears the inventory";
+	std::cout << ">> view <index>: Prints out details of the item specified \n>> view_all: Shows all inventory slots and their details\n";
+	std::cout << "\n>> back: goes back \n>> help: shows this list of commands \n>> drop <index>: drops specified item";
 }
 
 void Command::view(std::vector<InventorySpace::inventory_slot> inventory, std::map <int, std::string> items)
@@ -57,8 +56,9 @@ void Command::do_command(std::vector<InventorySpace::inventory_slot> inventory, 
 	if (command.empty()){std::cout << "[!] EMPTY COMMAND, TRY AGAIN.\n";}
 	else if (command[0] == "help"){get_help();}
 	else if (command[0] == "view"){view(inventory, items);}
-	else if (command[0] == "show_all"){view_all(inventory, items);}
+	else if (command[0] == "view_all"){view_all(inventory, items);}
 	else if (command[0] == "set"){set(inventory);}
+	else if (command[0] == "drop") { drop(inventory, stoi(command[1])); }
 	else{std::cout << "[!] INVALID COMMAND INPUT, TRY AGAIN\n";}
 	std::cout << "\n";
 }

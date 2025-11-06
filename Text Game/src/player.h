@@ -18,13 +18,15 @@ private:
 
 public:
 	Inventory inventory;
+
+	std::string player_name;
 	
 	int level = 1;
 	int coin = 0;
+
 	int choice_int;
 	std::string choice_string;
 	
-
 	std::map <std::string, int> stats =
 	{
 		{"Strength", 0},

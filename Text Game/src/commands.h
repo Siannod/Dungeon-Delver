@@ -28,4 +28,11 @@ public:
 	void set(std::vector<InventorySpace::inventory_slot>& inventory);
 
 	char convert_case(char letter);
+
+	void drop(std::vector<InventorySpace::inventory_slot>& inventory, int item_index)
+	{
+		inventory[item_index].item_id = 0;
+	}
+
+	void back();
 };
