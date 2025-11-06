@@ -9,10 +9,11 @@ int main()
     Generator generator;
     Player player;
 
-
-    player.inventory.initialise();
-    player.inventory.set(0, 1);
-    player.inventory.print();
+    generator.generate();
+    generator.print_dungeon();
+    //player.inventory.initialise();
+    //player.inventory.set(0, 1);
+    //player.inventory.print();
    
     return 0;
 }
