@@ -13,12 +13,6 @@ constexpr int wall_max = 21;
 class Generator
 {
 public:
-
-	//std::vector<std::vector<int>> dungeon;
-
-
-	//DUNGEON LEVEL
-
 	//CO-ORDS
 	int tempx;
 	int tempy;

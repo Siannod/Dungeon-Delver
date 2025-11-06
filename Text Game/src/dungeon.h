@@ -10,6 +10,14 @@ public:
 
 	Generator generator;
 
+	std::map<int, std::string> rooms =
+	{
+		{0, "path"},
+		{1, "wall"},
+		{2, "boss"},
+		{3, "room"}
+	};
+
 
 
 	//FUNCTIONS

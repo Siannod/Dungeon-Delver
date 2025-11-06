@@ -20,6 +20,9 @@ public:
 	Inventory inventory;
 
 	std::string player_name;
+
+	int player_x = 1;
+	int player_y = 1;
 	
 	int level = 1;
 	int coin = 0;
