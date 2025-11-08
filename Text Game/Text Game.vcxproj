@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\commands.cpp" />
+    <ClCompile Include="src\display.cpp" />
     <ClCompile Include="src\dungeon.cpp" />
     <ClCompile Include="src\dungeon_generator.cpp" />
     <ClCompile Include="src\inventory.cpp" />
@@ -132,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\commands.h" />
+    <ClInclude Include="src\display.h" />
     <ClInclude Include="src\dungeon.h" />
     <ClInclude Include="src\dungeon_generator.h" />
     <ClInclude Include="src\inventory.h" />
