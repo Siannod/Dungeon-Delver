@@ -43,5 +43,4 @@ public:
 	int random(int min, int max);
 
 	void check_new_walls(std::vector<std::vector<int>> dungeon);
-
 };

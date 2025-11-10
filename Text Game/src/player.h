@@ -1,6 +1,7 @@
 #pragma once
 
 #include "inventory.h"
+#include "stack.h"
 
 #include <iostream>
 #include <map>
@@ -11,16 +12,18 @@
 class Player
 {
 private:
-	bool to_level = true;
+	bool to_level = false;
 	bool valid = false;
-	int co_ords[2] = { 1, 1 };
+	
 	
 
 public:
+	//CLASSES
 	Inventory inventory;
+	Stack location;
 
-	std::string player_name;
-
+	
+	//INTS
 	int player_x = 1;
 	int player_y = 1;
 	
@@ -28,8 +31,12 @@ public:
 	int coin = 0;
 
 	int choice_int;
+
+	//STRINGS
 	std::string choice_string;
+	std::string player_name;
 	
+	//MAPS
 	std::map <std::string, int> stats =
 	{
 		{"Strength", 0},
@@ -37,8 +44,10 @@ public:
 		{"Constitution", 0}
 	};
 
+	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};
-
+	std::vector<int> temp;
+	std::vector<int> co_ords = { 1, 1, 2 };
 
 	//FUNCTIONS
 	void level_up();

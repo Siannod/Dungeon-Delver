@@ -1,4 +1,8 @@
 #pragma once
+#include "dungeon_generator.h"
+#include "player.h"
+#include "dungeon.h"
+
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
@@ -6,6 +10,11 @@
 
 class Display
 {
+private:
+	Player player;
+	Dungeon dungeon;
+
+
 public:
 	int choice_int;
 	int min;
@@ -14,6 +23,8 @@ public:
 
 	std::string statement;
 	std::string choice_string;
+
+	std::vector<int> temp;
 
 	//FUNCTONS
 	void clear();

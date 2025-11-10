@@ -21,6 +21,8 @@ void Display::main_menu()
 
 void Display::move_options()
 {
+	temp = {};
+	dungeon.check_paths(player.co_ords, temp);
 
 }
 
