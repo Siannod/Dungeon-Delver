@@ -7,8 +7,7 @@ void Inventory::initialise()
     
     for (int i = 0; i < inventory_size; i++)
     {
-        inventory[i].slot = i;
-        inventory[i].item_id = 0;
+        inventory.push_back({i, 0});
     }
 }
 

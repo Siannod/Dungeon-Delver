@@ -20,7 +20,7 @@ private:
 
 public:
 
-    InventorySpace::inventory_slot inventory[10];
+    std::vector<InventorySpace::inventory_slot> inventory;
 
     std::map <int, std::string> items =
     {

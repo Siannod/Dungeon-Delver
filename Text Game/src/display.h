@@ -2,6 +2,7 @@
 #include "dungeon_generator.h"
 #include "player.h"
 #include "dungeon.h"
+#include "commands.h"
 
 #include <iostream>
 #include <conio.h>
@@ -17,6 +18,8 @@ private:
 public:
 	Player player;
 	Dungeon dungeon;
+	Command command;
+
 	int choice_int;
 	int min;
 	int max;
@@ -28,6 +31,8 @@ public:
 	std::vector<int> temp;
 
 	//FUNCTONS
+	void setup();
+
 	void clear();
 
 	void main_menu();
@@ -36,4 +41,5 @@ public:
 
 	bool input_validation(int min, int max, std::string statement, bool valid);
 
+	void inventory(bool valid = false);
 };

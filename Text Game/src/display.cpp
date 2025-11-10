@@ -1,6 +1,12 @@
 #pragma once
 #include "display.h"
 
+void Display::setup()
+{
+	dungeon.generate();
+	player.inventory.initialise();
+}
+
 void Display::clear()
 {
 	system("cls");
@@ -16,6 +22,7 @@ void Display::main_menu()
 	if (input_validation(1, 4, "- Select menu option: ", false))
 	{
 		if (choice_int == 1) { clear();  move_options(); }
+		if (choice_int == 2) { clear(), inventory(); }
 	}
 }
 
@@ -38,6 +45,7 @@ void Display::move_options()
 		clear();
 		move_options();
 	}
+	else { clear(); main_menu(); }
 }
 
 bool Display::input_validation(int min, int max, std::string statement, bool valid)
@@ -63,4 +71,21 @@ bool Display::input_validation(int min, int max, std::string statement, bool val
 			std::cout << statement;
 		}
 	}
+}
+
+void Display::inventory(bool valid)
+{
+	std::cin.ignore();
+	while (!command.go_back)
+	{
+		command.view_all(player.inventory.inventory, player.inventory.items);
+		std::cout << ">> Type 'help' for more commands" << std::endl;
+		std::cout << "- ";
+		std::getline(std::cin, choice_string);
+		command.delimit(choice_string);
+		command.do_command(player.inventory.inventory, player.inventory.items);
+		_getch();
+		clear();
+	}
+	main_menu();
 }

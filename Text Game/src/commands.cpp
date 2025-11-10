@@ -15,7 +15,7 @@ void Command::delimit(std::string input)
 void Command::get_help()
 {
 	std::cout << ">> view <index>: Prints out details of the item specified \n>> view_all: Shows all inventory slots and their details\n";
-	std::cout << "\n>> back: goes back \n>> help: shows this list of commands \n>> drop <index>: drops specified item";
+	std::cout << ">> back: goes back \n>> help: shows this list of commands \n>> drop <index>: drops specified item";
 }
 
 void Command::view(std::vector<InventorySpace::inventory_slot> inventory, std::map <int, std::string> items)
@@ -59,6 +59,17 @@ void Command::do_command(std::vector<InventorySpace::inventory_slot> inventory, 
 	else if (command[0] == "view_all"){view_all(inventory, items);}
 	else if (command[0] == "set"){set(inventory);}
 	else if (command[0] == "drop") { drop(inventory, stoi(command[1])); }
+	else if (command[0] == "back") { back(); }
 	else{std::cout << "[!] INVALID COMMAND INPUT, TRY AGAIN\n";}
 	std::cout << "\n";
+}
+
+void Command::drop(std::vector<InventorySpace::inventory_slot>& inventory, int item_index)
+{
+	inventory[item_index].item_id = 0;
+}
+
+void Command::back()
+{
+	go_back = true;
 }
