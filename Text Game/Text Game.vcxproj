@@ -130,6 +130,7 @@
     <ClCompile Include="src\inventory.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\commands.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="src\dungeon_generator.h" />
     <ClInclude Include="src\inventory.h" />
     <ClInclude Include="src\player.h" />
+    <ClInclude Include="src\stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
