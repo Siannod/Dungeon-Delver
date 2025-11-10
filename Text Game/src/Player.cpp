@@ -50,3 +50,14 @@ void Player::print_stats()
 		std::cout << ">> " << (i + 1) << "- " << stat_names[i] << ": " << stats.at(stat_names[i]) << std::endl;
 	}
 }
+
+void Player::move(int x_mod, int y_mod)
+{
+	location.push(co_ords);
+	player_x = co_ords[0] + x_mod;
+	//std::cout << "temp" << player_x;
+	player_y = co_ords[1] + y_mod;
+	co_ords = { player_x, player_y};
+	
+
+}

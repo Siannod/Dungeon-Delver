@@ -44,10 +44,12 @@ public:
 		{"Constitution", 0}
 	};
 
+
+
 	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};
 	std::vector<int> temp;
-	std::vector<int> co_ords = { 1, 1, 2 };
+	std::vector<int> co_ords = { 1, 1 };
 
 	//FUNCTIONS
 	void level_up();
@@ -55,4 +57,6 @@ public:
 	void print_stats();
 
 	bool range_validation(int min, int max, std::string statement, bool valid = false);
+	
+	void move(int x_mod, int y_mod);
 };

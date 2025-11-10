@@ -11,11 +11,12 @@
 class Display
 {
 private:
-	Player player;
-	Dungeon dungeon;
+	
 
 
 public:
+	Player player;
+	Dungeon dungeon;
 	int choice_int;
 	int min;
 	int max;

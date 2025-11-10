@@ -15,15 +15,29 @@ void Display::main_menu()
 	std::cout << "- Select menu option: ";
 	if (input_validation(1, 4, "- Select menu option: ", false))
 	{
-		if (choice_int == 1) { move_options(); }
+		if (choice_int == 1) { clear();  move_options(); }
 	}
 }
 
 void Display::move_options()
 {
-	temp = {};
+	dungeon.print_dungeon();
+	temp.clear();
 	dungeon.check_paths(player.co_ords, temp);
-
+	for (int i = 0; i < temp.size(); i++)
+	{		
+		//std::cout << temp[i];
+		std::cout << ">> " << i+1 << ". " << dungeon.directions.at(temp[i]) << std::endl;
+	}
+	std::cout << ">> "<< temp.size()+1 << ". Back to main menu" << std::endl;
+	std::cout << "- ";
+	input_validation(1, temp.size()+1, "- ", false);
+	if (choice_int < temp.size() + 1)
+	{
+		player.move(dungeon.direction.at(temp[choice_int-1])[0], dungeon.direction.at(temp[choice_int-1])[1]);
+		clear();
+		move_options();
+	}
 }
 
 bool Display::input_validation(int min, int max, std::string statement, bool valid)
