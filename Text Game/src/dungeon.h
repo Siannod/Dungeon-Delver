@@ -9,7 +9,7 @@ public:
 	
 	Generator generator;
 	
-	std::vector<std::vector<int>> dungeon;
+	std::vector<std::vector<std::string>> dungeon;
 
 	std::map<int, std::string> rooms =
 	{
@@ -43,4 +43,6 @@ public:
 	void check_paths(std::vector<int> coords, std::vector<int> &temp);
 
 	bool range();
+
+	void move_player(int old_x, int old_y, int new_x, int new_y);
 };

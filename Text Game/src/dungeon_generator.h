@@ -36,11 +36,11 @@ public:
 	};
 
 	//FUNCTIONS
-	void fill_dungeon(std::vector<std::vector<int>> &dungeon);
+	void fill_dungeon(std::vector<std::vector<std::string>> &dungeon);
 
-	void generate(std::vector<std::vector<int>> &dungeon);
+	void generate(std::vector<std::vector<std::string>> &dungeon);
 
 	int random(int min, int max);
 
-	void check_new_walls(std::vector<std::vector<int>> dungeon);
+	void check_new_walls(std::vector<std::vector<std::string>> dungeon);
 };

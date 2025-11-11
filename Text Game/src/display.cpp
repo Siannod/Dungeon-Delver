@@ -41,7 +41,10 @@ void Display::move_options()
 	input_validation(1, temp.size()+1, "- ", false);
 	if (choice_int < temp.size() + 1)
 	{
-		player.move(dungeon.direction.at(temp[choice_int-1])[0], dungeon.direction.at(temp[choice_int-1])[1]);
+		x_mod = dungeon.direction.at(temp[choice_int - 1])[0];
+		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
+		dungeon.move_player(player.player_x, player.player_y, x_mod, y_mod);
+		player.move(x_mod, y_mod);
 		clear();
 		move_options();
 	}
