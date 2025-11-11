@@ -13,11 +13,12 @@ constexpr int wall_max = 21;
 class Generator
 {
 public:
-	
-	Generator(std::map<int, std::string> room, std::map<int, int> room_count)
+	std::map<int, std::string> rooms;
+	std::map<int, int> room_count;
+	Generator(std::map<int, std::string> room, std::map<int, int> &room_counts)
 	{
-		std::map<int, std::string> rooms = room;
-		std::map<int, int> room_count = room_count;
+		rooms = room;
+		room_count = room_counts;
 	}
 	//CO-ORDS
 	int tempx;

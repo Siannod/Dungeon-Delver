@@ -11,6 +11,11 @@ public:
 
 	std::vector<std::vector<std::string>> dungeon;
 
+
+	//ROOM GENERATION
+	const int boss_max = 1;
+	const int monster_max = 4;
+	const int loot_max = 2;
 	std::map<int, std::string> rooms =
 	{
 		{2, "boss"},

@@ -17,13 +17,18 @@ void Dungeon::print_dungeon()
 			{
 				std::cout << "X ";
 			}
-			else if (dungeon[i][j] != "1")
+			else if (dungeon[i][j] == "0")
 			{
+				//std::cout << dungeon[i][j] << " ";
 				std::cout << "0 ";
+			}
+			else if (dungeon[i][j] == "1")
+			{
+				std::cout << "1 ";
 			}
 			else
 			{
-				std::cout << "1 ";
+				std::cout << "P ";
 			}
 		}
 		std::cout << "\n";

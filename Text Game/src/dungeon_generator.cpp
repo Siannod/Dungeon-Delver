@@ -32,7 +32,7 @@ void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 		back = wall[2];
 		if (dungeon[wall_x][wall_y] == "1")
 		{
-			dungeon[wall_x][wall_y] = get_room_type();
+			dungeon[wall_x][wall_y] = std::to_string(get_room_type());
 			dungeon[wall_x - direction.at(back)[2]][wall_y - direction.at(back)[3]] = "0";
 		}
 		visited.push_back(wall);
@@ -47,9 +47,23 @@ int Generator::get_room_type()
 	while (new_room)
 	{
 		room_type = random(0, 4);
-		if (room_type != 0)
+		if (room_type == 1)
 		{
-
+			return 0;
+		}
+		else if (room_type != 0)
+		{
+			if (room_type == 2 && room_count.at(3) == 0 && room_count.at(4) == 0)
+			{
+				room_count.at(room_type) = room_count.at(room_type) - 1;
+				return room_type;
+			}
+			else
+			{
+				//std::cout << room_count.at(room_type);
+				room_count.at(room_type) = room_count.at(room_type) - 1;
+				return room_type;
+			}
 		}
 		else
 		{
