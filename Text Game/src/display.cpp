@@ -22,7 +22,7 @@ void Display::main_menu()
 	if (input_validation(1, 4, "- Select menu option: ", false))
 	{
 		if (choice_int == 1) { clear();  move_options(); }
-		if (choice_int == 2) { clear(), inventory(); }
+		else if (choice_int == 2) { clear(), inventory(); }
 	}
 }
 
@@ -33,7 +33,6 @@ void Display::move_options()
 	dungeon.check_paths(player.co_ords, temp);
 	for (int i = 0; i < temp.size(); i++)
 	{		
-		//std::cout << temp[i];
 		std::cout << ">> " << i+1 << ". " << dungeon.directions.at(temp[i]) << std::endl;
 	}
 	std::cout << ">> "<< temp.size()+1 << ". Back to main menu" << std::endl;

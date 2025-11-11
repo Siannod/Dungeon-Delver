@@ -13,7 +13,18 @@ void Dungeon::print_dungeon()
 	{
 		for (int j = 0; j < wall_max; j++)
 		{
-			std::cout << dungeon[i][j] << " ";
+			if (dungeon[i][j] == "X")
+			{
+				std::cout << "X ";
+			}
+			else if (dungeon[i][j] != "1")
+			{
+				std::cout << "0 ";
+			}
+			else
+			{
+				std::cout << "1 ";
+			}
 		}
 		std::cout << "\n";
 	}
@@ -27,7 +38,6 @@ void Dungeon::check_paths(std::vector<int> coords, std::vector<int>& temp)
 		temp_y = coords[1] + generator.direction.at(i)[3];
 		if (range())
 		{
-			std::cout << "range";
 			if (dungeon[temp_x][temp_y] != "1")
 			{
 				temp.push_back(i);
