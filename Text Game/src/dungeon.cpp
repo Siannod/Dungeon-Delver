@@ -23,17 +23,13 @@ void Dungeon::check_paths(std::vector<int> coords, std::vector<int>& temp)
 {
 	for (int i = 1; i < 5; i++)
 	{
-		std::cout << i;
 		temp_x = coords[0] + generator.direction.at(i)[2];
 		temp_y = coords[1] + generator.direction.at(i)[3];
 		if (range())
 		{
-			std::cout << "range";
 			if (dungeon[temp_x][temp_y] != 1)
 			{
-				std::cout << "wall";
 				temp.push_back(i);
-				//std::cout << temp[i];
 			}
 		}
 	}
