@@ -28,7 +28,7 @@ void Dungeon::check_paths(std::vector<int> coords, std::vector<int>& temp)
 		if (range())
 		{
 			std::cout << "range";
-			if (dungeon[temp_x][temp_y] != 1)
+			if (dungeon[temp_x][temp_y] != "1")
 			{
 				temp.push_back(i);
 			}
