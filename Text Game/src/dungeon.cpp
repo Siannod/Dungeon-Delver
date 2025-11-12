@@ -13,23 +13,7 @@ void Dungeon::print_dungeon()
 	{
 		for (int j = 0; j < wall_max; j++)
 		{
-			if (dungeon[i][j] == "X")
-			{
-				std::cout << "X ";
-			}
-			else if (dungeon[i][j] == "0")
-			{
-				//std::cout << dungeon[i][j] << " ";
-				std::cout << "0 ";
-			}
-			else if (dungeon[i][j] == "1")
-			{
-				std::cout << "1 ";
-			}
-			else
-			{
-				std::cout << "P ";
-			}
+			std::cout << dungeon[i][j] << " ";
 		}
 		std::cout << "\n";
 	}

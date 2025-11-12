@@ -44,34 +44,20 @@ void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 
 int Generator::get_room_type()
 {
-	while (new_room)
+	
+	while (new_room > 3)
 	{
-		room_type = random(0, 4);
-		if (room_type == 1)
+		room_type = random(2, 5);
+		if (room_type == 5)
 		{
+			new_room = 0;
 			return 0;
 		}
-		else if (room_type != 0)
-		{
-			if (room_type == 2 && room_count.at(3) == 0 && room_count.at(4) == 0)
-			{
-				room_count.at(room_type) = room_count.at(room_type) - 1;
-				return room_type;
-			}
-			else
-			{
-				//std::cout << room_count.at(room_type);
-				room_count.at(room_type) = room_count.at(room_type) - 1;
-				return room_type;
-			}
-		}
-		else
-		{
-			new_room = false;
-			return 0;
-		}
+		//GET ROOM GEN TO WORK
+
+		
 	}
-	new_room = true;
+	new_room += 1;
 	return 0;
 }
 
@@ -103,6 +89,6 @@ int Generator::random(int min, int max)
 		return 0;
 	}
 	srand(time(0));
-	return rand() % (max);
+	return min + rand() % (max - min);
 }
 

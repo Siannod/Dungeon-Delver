@@ -29,7 +29,7 @@ public:
 	int new_wall;
 
 	//ROOM GENERATION
-	bool new_room = false;
+	int new_room = 0;
 	int room_type = 0;
 
 	//VECTORS
