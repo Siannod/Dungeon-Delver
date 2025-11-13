@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\combat.cpp" />
     <ClCompile Include="src\commands.cpp" />
     <ClCompile Include="src\display.cpp" />
     <ClCompile Include="src\dungeon.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="src\stack.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\combat.h" />
     <ClInclude Include="src\commands.h" />
     <ClInclude Include="src\display.h" />
     <ClInclude Include="src\dungeon.h" />

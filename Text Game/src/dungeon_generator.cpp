@@ -70,9 +70,7 @@ void Generator::gen_rooms(std::vector<std::vector<std::string>>& dungeon, bool g
 			}
 			nodes.erase(nodes.begin() + new_room);
 		}
-		
-
-		if (room_count.at(2) == 0 && room_count.at(3) == 0 && room_count.at(4) == 0)
+		else if (room_count.at(2) == 0 && room_count.at(3) == 0 && room_count.at(4) == 0)
 		{
 			generating = false;
 		}
