@@ -39,7 +39,7 @@ public:
 
 	void main_menu();
 
-	void move_options();
+	void dungeon_move_options();
 
 	bool input_validation(int min, int max, std::string statement, bool valid);
 

@@ -19,6 +19,10 @@ private:
     int inventory_size = 10;
 
 public:
+    Inventory()
+    {
+        initialise();
+    }
 
     std::vector<InventorySpace::inventory_slot> inventory;
 

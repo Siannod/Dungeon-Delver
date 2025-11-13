@@ -46,7 +46,7 @@ public:
 		{4, "West"}
 	};
 
-	Generator generator = Generator(rooms, room_count);
+	Generator generator = Generator(rooms, room_count, dungeon);
 
 	//FUNCTIONS
 	void print_dungeon();

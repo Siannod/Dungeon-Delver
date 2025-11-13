@@ -1,12 +1,6 @@
 #pragma once
 #include "display.h"
 
-void Display::setup()
-{
-	dungeon.generate();
-	player.inventory.initialise();
-}
-
 void Display::clear()
 {
 	system("cls");
@@ -21,12 +15,12 @@ void Display::main_menu()
 	std::cout << "- Select menu option: ";
 	if (input_validation(1, 4, "- Select menu option: ", false))
 	{
-		if (choice_int == 1) { clear();  move_options(); }
+		if (choice_int == 1) { clear();  dungeon_move_options(); }
 		else if (choice_int == 2) { clear(), inventory(); }
 	}
 }
 
-void Display::move_options()
+void Display::dungeon_move_options()
 {
 	dungeon.print_dungeon();
 	temp.clear();
@@ -44,8 +38,12 @@ void Display::move_options()
 		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
 		dungeon.move_player(player.player_x, player.player_y, x_mod, y_mod);
 		player.move(x_mod, y_mod);
+		if (dungeon.dungeon[player.player_x][player.player_y] != "0")
+		{
+
+		}
 		clear();
-		move_options();
+		dungeon_move_options();
 	}
 	else { clear(); main_menu(); }
 }

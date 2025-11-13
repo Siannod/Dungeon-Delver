@@ -15,10 +15,14 @@ class Generator
 public:
 	std::map<int, std::string> rooms;
 	std::map<int, int> room_count;
-	Generator(std::map<int, std::string> room, std::map<int, int> &room_counts)
+	std::vector<std::vector<std::string>> dungeon_temp;
+	Generator(std::map<int, std::string> room, std::map<int, int> &room_counts, std::vector<std::vector<std::string>>& dungeon)
 	{
 		rooms = room;
 		room_count = room_counts;
+		dungeon_temp = dungeon;
+		fill_dungeon(dungeon);
+		generate(dungeon);
 	}
 	int temp;
 	//CO-ORDS
