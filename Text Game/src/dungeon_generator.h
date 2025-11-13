@@ -13,6 +13,13 @@ constexpr int wall_max = 21;
 class Generator
 {
 public:
+	std::map<int, std::string> rooms;
+	std::map<int, int> room_count;
+	Generator(std::map<int, std::string> room, std::map<int, int> &room_counts)
+	{
+		rooms = room;
+		room_count = room_counts;
+	}
 	//CO-ORDS
 	int tempx;
 	int tempy;
@@ -20,6 +27,10 @@ public:
 	int wall_x = 1;
 	int wall_y = 1;
 	int new_wall;
+
+	//ROOM GENERATION
+	int new_room = 0;
+	int room_type = 0;
 
 	//VECTORS
 	std::vector<int> wall;
@@ -34,13 +45,16 @@ public:
 		{3, {2, 0, 1, 0}},
 		{4, {0, -2, 0, -1}}
 	};
+	
 
 	//FUNCTIONS
-	void fill_dungeon(std::vector<std::vector<int>> &dungeon);
+	void fill_dungeon(std::vector<std::vector<std::string>> &dungeon);
 
-	void generate(std::vector<std::vector<int>> &dungeon);
+	void generate(std::vector<std::vector<std::string>> &dungeon);
 
 	int random(int min, int max);
 
-	void check_new_walls(std::vector<std::vector<int>> dungeon);
+	void check_new_walls(std::vector<std::vector<std::string>> dungeon);
+
+	int get_room_type();
 };

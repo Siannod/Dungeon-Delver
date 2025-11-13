@@ -2,27 +2,27 @@
 
 #include "dungeon_generator.h"
 
-void Generator::fill_dungeon(std::vector<std::vector<int>> &dungeon)
+void Generator::fill_dungeon(std::vector<std::vector<std::string>> &dungeon)
 {
 	for (int i = 0; i < wall_max; i++)
 	{
 		dungeon.push_back({});
 		for (int j = 0; j < wall_max; j++)
 		{
-			dungeon[i].push_back(1);
+			dungeon[i].push_back("1");
 		}
 	}
-	dungeon[1][1] = 0;
+	dungeon[1][1] = "0";
 }
 
-void Generator::generate(std::vector<std::vector<int>> &dungeon)
+void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 {
 	fill_dungeon(dungeon);
 	wall_x = 1;
 	wall_y = 1;
 	walls = { {3, 1 ,3}, {1, 3, 2} };
 	visited = {};
-	dungeon[1][1] = 0;
+	dungeon[1][1] = "0";
 	do
 	{
 		new_wall = random(0, walls.size() - 1);
@@ -30,18 +30,39 @@ void Generator::generate(std::vector<std::vector<int>> &dungeon)
 		wall_x = wall[0];
 		wall_y = wall[1];
 		back = wall[2];
-		if (dungeon[wall_x][wall_y] == 1)
+		if (dungeon[wall_x][wall_y] == "1")
 		{
-			dungeon[wall_x][wall_y] = 0;
-			dungeon[wall_x - direction.at(back)[2]][wall_y - direction.at(back)[3]] = 0;
+			dungeon[wall_x][wall_y] = std::to_string(get_room_type());
+			dungeon[wall_x - direction.at(back)[2]][wall_y - direction.at(back)[3]] = "0";
 		}
 		visited.push_back(wall);
 		walls.erase(find(walls.begin(), walls.end(), wall));
 		check_new_walls(dungeon);
 	} while (walls.size() != 0);
+	dungeon[1][1] = "X";
 }
 
-void Generator::check_new_walls(std::vector<std::vector<int>> dungeon)
+int Generator::get_room_type()
+{
+	
+	while (new_room > 3)
+	{
+		room_type = random(2, 5);
+		if (room_type == 5)
+		{
+			new_room = 0;
+			return 0;
+		}
+		//GET ROOM GEN TO WORK
+
+		
+	}
+	new_room += 1;
+	return 0;
+}
+
+
+void Generator::check_new_walls(std::vector<std::vector<std::string>> dungeon)
 {
 	for (int i = 1; i < direction.size() + 1; i++)
 	{
@@ -49,7 +70,7 @@ void Generator::check_new_walls(std::vector<std::vector<int>> dungeon)
 		tempy = wall_y + direction.at(i)[1];
 		if (0 < tempx && tempx < wall_max && 0 < tempy && tempy < wall_max)
 		{
-			if (dungeon[tempx][tempy] == 1)
+			if (dungeon[tempx][tempy] == "1")
 			{
 				wall = { tempx, tempy, i };
 				if (find(visited.begin(), visited.end(), wall) == visited.end())
@@ -68,5 +89,6 @@ int Generator::random(int min, int max)
 		return 0;
 	}
 	srand(time(0));
-	return rand() % (max);
+	return min + rand() % (max - min);
 }
+

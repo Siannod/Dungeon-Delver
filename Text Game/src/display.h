@@ -23,6 +23,8 @@ public:
 	int choice_int;
 	int min;
 	int max;
+	int x_mod;
+	int y_mod;
 	bool valid = false;
 
 	std::string statement;

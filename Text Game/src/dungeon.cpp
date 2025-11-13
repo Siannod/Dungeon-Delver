@@ -27,7 +27,7 @@ void Dungeon::check_paths(std::vector<int> coords, std::vector<int>& temp)
 		temp_y = coords[1] + generator.direction.at(i)[3];
 		if (range())
 		{
-			if (dungeon[temp_x][temp_y] != 1)
+			if (dungeon[temp_x][temp_y] != "1")
 			{
 				temp.push_back(i);
 			}
@@ -45,4 +45,10 @@ bool Dungeon::range()
 	{
 		return false;
 	}
+}
+
+void Dungeon::move_player(int old_x, int old_y, int move_x, int move_y)
+{
+	dungeon[old_x][old_y] = "0";
+	dungeon[old_x + move_x][old_y + move_y] = "X";
 }
