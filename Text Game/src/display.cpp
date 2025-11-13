@@ -6,20 +6,30 @@ void Display::clear()
 	system("cls");
 }
 
+void Display::wait()
+{
+	_getch();
+}
+
 void Display::main_menu()
 {
-	std::cout << menu_top << std::endl;
-	std::cout << "| 1. Move	 2. Inventory |" << std::endl;
-	std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
-	std::cout << menu_top << std::endl;
-	std::cout << "- Select menu option: ";
-	if (input_validation(1, 4, "- Select menu option: ", false))
+	do
 	{
-		if (choice_int == 1) { clear();  dungeon_move_options(); }
-		else if (choice_int == 2) { clear(), inventory(); }
-	}
+		clear();
+		std::cout << menu_top << std::endl;
+		std::cout << "| 1. Move	 2. Inventory |" << std::endl;
+		std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
+		std::cout << menu_top << std::endl;
+		std::cout << "- Select menu option: ";
+		if (input_validation(1, 4, "- Select menu option: ", false))
+		{
+			if (choice_int == 1) { clear();  dungeon_move_options(); }
+			else if (choice_int == 2) { clear(), inventory(); }
+
+			else if (choice_int == 4) { clear(), player.print_stats(); wait(); }
+		}
+	} while (running);
 }
-//
 
 void Display::dungeon_move_options()
 {
@@ -86,7 +96,7 @@ void Display::inventory(bool valid)
 		std::getline(std::cin, choice_string);
 		command.delimit(choice_string);
 		command.do_command(player.inventory.inventory, player.inventory.items);
-		_getch();
+		wait();
 		clear();
 	}
 	main_menu();
@@ -109,7 +119,7 @@ void Display::monster_encounter(bool alive)
 				clear();
 				combat.print_field();
 				std::cout << "[!] NO MORE MOVES LEFT THIS TURN";
-				_getch();
+				wait();
 
 			}
 			else

@@ -59,8 +59,6 @@ public:
 		{"Constitution", 0}
 	};
 
-	
-
 	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};
 	std::vector<int> temp;

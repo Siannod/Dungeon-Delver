@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 #include <vector>
+    
+#include "commands.h"
 
 namespace InventorySpace
 {
@@ -10,6 +12,10 @@ namespace InventorySpace
     {
         int slot;
         int item_id;
+        int item_type;
+        int damage;
+        int dmg_bonus;
+        std::string name;
     };
 };
 
@@ -23,6 +29,8 @@ public:
     {
         initialise();
     }
+    Command command;
+    std::string command_word;
 
     std::vector<InventorySpace::inventory_slot> inventory;
 
@@ -30,18 +38,23 @@ public:
     {
         {0, "Empty"},
         {1, "Sword"},
-        {2, "Shield"},
-        {3, "Healing Potion"}
+        {2, "Bow"},
+        {3, "Shield"},
+        {4, "Healing Potion"}
     };
 
-    
-
-
-    
     //FUNCTION
     void initialise();
+
+    void do_command();
 
     void print();
 
     int set(int index, int id);
+
+    void view();
+
+    void set();
+
+    void back();
 };

@@ -13,7 +13,7 @@
 class Display
 {
 private:
-	
+	bool running = true;
 
 
 public:
@@ -37,9 +37,9 @@ public:
 	std::vector<int> temp;
 
 	//FUNCTONS
-	void setup();
-
 	void clear();
+
+	void wait();
 
 	void main_menu();
 

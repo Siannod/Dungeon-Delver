@@ -49,6 +49,7 @@ void Player::print_stats()
 	{
 		std::cout << ">> " << (i + 1) << "- " << stat_names[i] << ": " << stats.at(stat_names[i]) << std::endl;
 	}
+	std::cout << ">> Press enter to return...";
 }
 
 void Player::move(int x_mod, int y_mod)
@@ -102,4 +103,7 @@ void Player::create_character()
 			std::cout << "[!] INVALID INPUT, PLEASE TRY AGAIN" << std::endl;
 		}
 	} while (!valid);
+	std::cout << ">> Enter your name: " << std::endl;
+	std::cout << "- ";
+	std::cin >> player_name;
 }
