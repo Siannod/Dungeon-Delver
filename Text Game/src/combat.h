@@ -45,6 +45,11 @@ public:
 
 	bool alive;
 
+	int moves_left = 5;
+	bool action_left;
+	
+	int temp;
+
 	//FUNCTIONS
 	void fill_field();
 
@@ -53,4 +58,8 @@ public:
 	void move_player();
 
 	void check_moves();
+
+	bool flee(int dex);
+
+	int random(int min, int max);
 };

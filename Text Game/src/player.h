@@ -44,7 +44,8 @@ public:
 		{"Constitution", 0}
 	};
 
-
+	int health_max;
+	int health_current;
 
 	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};

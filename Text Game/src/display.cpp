@@ -95,22 +95,39 @@ void Display::inventory(bool valid)
 void Display::monster_encounter(bool alive)
 {
 	clear();
-	std::cout << ">> As you continue along your path, dark shadows masking the way forwards a monster looms out of the darkness" << std::endl;
+	
 	do
 	{
 		clear();
+		std::cout << ">> As you continue along your path, dark shadows masking the way forwards a monster looms out of the darkness" << std::endl;
 		combat.print_field();
 		combat_menu();
-		if (choice_int == 1) { combat_move(); }
+		
+		if (choice_int == 1) {
+			if (combat.moves_left == 0)
+			{
+				clear();
+				combat.print_field();
+				std::cout << "[!] NO MORE MOVES LEFT THIS TURN";
+				_getch();
+
+			}
+			else
+			{
+				combat_move();
+			}	
+		}
+		if (choice_int == 2) { inventory(); }
+		if (choice_int == 4) { combat.flee(player.stats.at("Dexterity")); }
 	} while (alive);
 }
 
 void Display::combat_menu()
 {
-	std::cout << menu_top << std::endl;
-	std::cout << "|   1. Move	  2. Items    |" << std::endl;
-	std::cout << "|   3. Fight      4. Flee     |" << std::endl;
-	std::cout << menu_top << std::endl;
+	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
+	std::cout << "| 1. Move    2. Items | Health: " << player.health_current << " |" << std::endl;
+	std::cout << "| 3. Fight   4. Flee  | Moves: " << combat.moves_left << "  |" << std::endl;
+	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
 	std::cout << "- ";
 	input_validation(1, 4, "- ", false);
 }
@@ -129,6 +146,7 @@ void Display::combat_move()
 	input_validation(1, combat.options.size()+1, "- ", false);
 	if (choice_int < combat.options.size() + 1)
 	{
+		combat.moves_left -= 1;
 		combat.new_x = combat.player_x + combat.moves.at(combat.options[choice_int - 1])[0];
 		combat.new_y = combat.player_y + combat.moves.at(combat.options[choice_int - 1])[1];
 		combat.move_player();

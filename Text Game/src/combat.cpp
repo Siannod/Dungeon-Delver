@@ -81,3 +81,27 @@ void Combat::check_moves()
 		}
 	}
 }
+
+bool Combat::flee(int dex)
+{
+	temp = random(1, 6);
+	if (temp + dex > 5)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int Combat::random(int min, int max)
+{
+	if (max == 0)
+	{
+		return 0;
+	}
+	srand(time(0));
+	temp = min + rand() % (max - min);
+	return temp;
+}
