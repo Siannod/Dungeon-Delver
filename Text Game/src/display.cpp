@@ -25,7 +25,7 @@ void Display::dungeon_move_options()
 {
 	dungeon.print_dungeon();
 	temp.clear();
-	dungeon.check_paths(player.co_ords, temp);
+	dungeon.check_paths({player.player_x, player.player_y}, temp);
 	for (int i = 0; i < temp.size(); i++)
 	{		
 		std::cout << ">> " << i+1 << ". " << dungeon.directions.at(temp[i]) << std::endl;

@@ -21,20 +21,35 @@ public:
 	//CLASSES
 	Inventory inventory;
 	Stack location;
+	
+	Player()
+	{
+		upgrade_points = 5;
+		create_character();
 
-	
-	//INTS
-	int player_x = 1;
-	int player_y = 1;
-	
+	}
+	//PLAYER STATS
+	//ints
 	int level = 1;
 	int coin = 0;
-
-	int choice_int;
-
-	//STRINGS
-	std::string choice_string;
+	int health_max;
+	int health_current;
+	int upgrade_points;
+	
+	int player_x = 1;
+	int player_y = 1;
+	//strings
 	std::string player_name;
+	
+	
+	
+	//CHOICES
+	//int
+	int choice_int;
+	//string
+	std::string choice_string;
+	//bool
+	
 	
 	//MAPS
 	std::map <std::string, int> stats =
@@ -44,15 +59,16 @@ public:
 		{"Constitution", 0}
 	};
 
-	int health_max;
-	int health_current;
+	
 
 	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};
 	std::vector<int> temp;
-	std::vector<int> co_ords = { 1, 1 };
+
 
 	//FUNCTIONS
+	void create_character();
+
 	void level_up();
 
 	void print_stats();
