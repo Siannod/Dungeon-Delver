@@ -4,7 +4,7 @@
 
 void Combat::fill_field()
 {
-	for (int i = 0; i < 21; i++)
+	for (int i = 0; i < (FIELD_SIZE*2)+1; i++)
 	{
 		battle_field.push_back({});
 		if (i % 2 == 0)
@@ -15,7 +15,7 @@ void Combat::fill_field()
 		{
 			start = "mid_";
 		}
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < FIELD_SIZE; j++)
 		{
 			if (j == 0)
 			{
@@ -28,6 +28,7 @@ void Combat::fill_field()
 			battle_field[i].push_back(field_pieces.at(start + end));
 		}
 	}
+	battle_field[player_x][player_y][2] = char('X');
 }
 
 void Combat::print_field()
@@ -39,5 +40,44 @@ void Combat::print_field()
 			std::cout << piece;
 		}
 		std::cout << "\n";
+	}
+}
+
+void Combat::move_player()
+{
+	if (player_y == 0) 
+	{
+		battle_field[player_x][player_y][2] = char(' ');
+	}
+	else
+	{
+		battle_field[player_x][player_y][1] = char(' ');
+	}
+	if (new_y == 0)
+	{
+		battle_field[new_x][new_y][2] = char('X');
+	}
+	else
+	{
+		battle_field[new_x][new_y][1] = char('X');
+	}
+	player_x = new_x;
+	player_y = new_y;
+}
+
+void Combat::check_moves()
+{
+	options.clear();
+	for (int i = 1; i < 5; i++)
+	{
+		new_x = player_x + moves[i].at(0);
+		new_y = player_y + moves[i].at(1);
+		if (new_x < FIELD_SIZE && -1 < new_x)
+		{
+			if (new_y < FIELD_SIZE && -1 < new_y && battle_field[new_x][new_y][2] == char(' '))
+			{
+				options.push_back(i);
+			}
+		}
 	}
 }

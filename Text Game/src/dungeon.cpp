@@ -9,10 +9,10 @@ void Dungeon::generate()
 void Dungeon::print_dungeon()
 {
 	std::cout << "\n\n";
-	for (auto line : dungeon)
+	for (std::vector<std::string> line : dungeon)
 	{
 		
-		for (auto colummn : line)
+		for (std::string colummn : line)
 		{
 			std::cout << colummn << " ";
 		}
@@ -48,8 +48,8 @@ bool Dungeon::range()
 	}
 }
 
-void Dungeon::move_player(int old_x, int old_y, int move_x, int move_y)
+void Dungeon::move_player(int new_x, int new_y, int move_x, int move_y)
 {
-	dungeon[old_x][old_y] = "0";
-	dungeon[old_x + move_x][old_y + move_y] = "X";
+	dungeon[new_x][new_y] = "X";
+	dungeon[new_x - move_x][new_y - move_y] = "0";
 }

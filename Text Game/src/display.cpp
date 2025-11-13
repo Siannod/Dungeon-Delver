@@ -8,10 +8,10 @@ void Display::clear()
 
 void Display::main_menu()
 {
-	std::cout << "+ - - - - - - - - - - - - - - +" << std::endl;
+	std::cout << menu_top << std::endl;
 	std::cout << "| 1. Move	 2. Inventory |" << std::endl;
 	std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
-	std::cout << "+ - - - - - - - - - - - - - - +" << std::endl;
+	std::cout << menu_top << std::endl;
 	std::cout << "- Select menu option: ";
 	if (input_validation(1, 4, "- Select menu option: ", false))
 	{
@@ -19,6 +19,7 @@ void Display::main_menu()
 		else if (choice_int == 2) { clear(), inventory(); }
 	}
 }
+//
 
 void Display::dungeon_move_options()
 {
@@ -36,9 +37,13 @@ void Display::dungeon_move_options()
 	{
 		x_mod = dungeon.direction.at(temp[choice_int - 1])[0];
 		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
-		dungeon.move_player(player.player_x, player.player_y, x_mod, y_mod);
+		
 		player.move(x_mod, y_mod);
-		if (dungeon.dungeon[player.player_x][player.player_y] == "3"){monster_encounter();}
+		std::cout << dungeon.dungeon[player.player_x][player.player_y] << std::endl;
+		if (dungeon.dungeon[player.player_x][player.player_y] == "3") { monster_encounter(); }
+		dungeon.move_player(player.player_x, player.player_y, x_mod, y_mod);
+		std::cout << dungeon.dungeon[player.player_x][player.player_y];
+		
 		clear();
 		dungeon_move_options();
 	}
@@ -87,8 +92,49 @@ void Display::inventory(bool valid)
 	main_menu();
 }
 
-void Display::monster_encounter()
+void Display::monster_encounter(bool alive)
 {
 	clear();
 	std::cout << ">> As you continue along your path, dark shadows masking the way forwards a monster looms out of the darkness" << std::endl;
+	do
+	{
+		clear();
+		combat.print_field();
+		combat_menu();
+		if (choice_int == 1) { combat_move(); }
+	} while (alive);
+}
+
+void Display::combat_menu()
+{
+	std::cout << menu_top << std::endl;
+	std::cout << "|   1. Move	  2. Items    |" << std::endl;
+	std::cout << "|   3. Fight      4. Flee     |" << std::endl;
+	std::cout << menu_top << std::endl;
+	std::cout << "- ";
+	input_validation(1, 4, "- ", false);
+}
+
+void Display::combat_move()
+{
+	clear();
+	combat.print_field();
+	combat.check_moves();
+	for (int i = 0; i < combat.options.size(); i ++)
+	{
+		std::cout << ">> " << i+1 << ". " << dungeon.directions.at(combat.options[i]) << std::endl;
+	}
+	std::cout << ">> " << combat.options.size() + 1 << ". back" << std::endl;
+	std::cout << "- ";
+	input_validation(1, combat.options.size()+1, "- ", false);
+	if (choice_int < combat.options.size() + 1)
+	{
+		combat.new_x = combat.player_x + combat.moves.at(combat.options[choice_int - 1])[0];
+		combat.new_y = combat.player_y + combat.moves.at(combat.options[choice_int - 1])[1];
+		combat.move_player();
+	}
+	else
+	{
+		monster_encounter();
+	}
 }

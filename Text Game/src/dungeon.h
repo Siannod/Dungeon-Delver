@@ -58,6 +58,4 @@ public:
 	bool range();
 
 	void move_player(int old_x, int old_y, int new_x, int new_y);
-
-	
 };

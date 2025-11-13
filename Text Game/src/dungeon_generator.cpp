@@ -17,7 +17,6 @@ void Generator::fill_dungeon(std::vector<std::vector<std::string>> &dungeon)
 
 void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 {
-	fill_dungeon(dungeon);
 	wall_x = 1;
 	wall_y = 1;
 	walls = { {3, 1 ,3}, {1, 3, 2} };
@@ -39,6 +38,8 @@ void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 		visited.push_back(wall);
 		walls.erase(find(walls.begin(), walls.end(), wall));
 		check_new_walls(dungeon);
+		
+	
 	} while (walls.size() != 0);
 	dungeon[1][1] = "X";
 	gen_rooms(dungeon);

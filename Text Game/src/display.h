@@ -3,6 +3,7 @@
 #include "player.h"
 #include "dungeon.h"
 #include "commands.h"
+#include "combat.h"
 
 #include <iostream>
 #include <conio.h>
@@ -19,6 +20,7 @@ public:
 	Player player;
 	Dungeon dungeon;
 	Command command;
+	Combat combat;
 
 	int choice_int;
 	int min;
@@ -29,6 +31,8 @@ public:
 
 	std::string statement;
 	std::string choice_string;
+	std::string menu_top = "+ - - - - - - - - - - - - - - +";
+
 
 	std::vector<int> temp;
 
@@ -45,5 +49,9 @@ public:
 
 	void inventory(bool valid = false);
 
-	void monster_encounter();
+	void monster_encounter(bool alive = true);
+
+	void combat_menu();
+
+	void combat_move();
 };
