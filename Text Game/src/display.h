@@ -44,4 +44,6 @@ public:
 	bool input_validation(int min, int max, std::string statement, bool valid);
 
 	void inventory(bool valid = false);
+
+	void monster_encounter();
 };
