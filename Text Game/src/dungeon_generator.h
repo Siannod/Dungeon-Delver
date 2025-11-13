@@ -20,6 +20,7 @@ public:
 		rooms = room;
 		room_count = room_counts;
 	}
+	int temp;
 	//CO-ORDS
 	int tempx;
 	int tempy;
@@ -31,11 +32,13 @@ public:
 	//ROOM GENERATION
 	int new_room = 0;
 	int room_type = 0;
+	bool generating = true;
 
 	//VECTORS
 	std::vector<int> wall;
 	std::vector<std::vector<int>> walls = { {4, 1 ,3}, {1, 4, 2} };
 	std::vector<std::vector<int>> visited;
+	std::vector<std::vector<int>> nodes;
 
 	//MAPS
 	std::map<int, std::vector<int>> direction =
@@ -56,5 +59,5 @@ public:
 
 	void check_new_walls(std::vector<std::vector<std::string>> dungeon);
 
-	int get_room_type();
+	void gen_rooms(std::vector<std::vector<std::string>>& dungeon, bool generating = true);
 };

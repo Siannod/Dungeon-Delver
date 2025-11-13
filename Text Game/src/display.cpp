@@ -16,7 +16,7 @@ void Display::main_menu()
 {
 	std::cout << "+ - - - - - - - - - - - - - - +" << std::endl;
 	std::cout << "| 1. Move	 2. Inventory |" << std::endl;
-	std::cout << "| 3. Spells	 4. Stats      |" << std::endl;
+	std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
 	std::cout << "+ - - - - - - - - - - - - - - +" << std::endl;
 	std::cout << "- Select menu option: ";
 	if (input_validation(1, 4, "- Select menu option: ", false))

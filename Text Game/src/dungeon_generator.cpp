@@ -32,7 +32,8 @@ void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 		back = wall[2];
 		if (dungeon[wall_x][wall_y] == "1")
 		{
-			dungeon[wall_x][wall_y] = std::to_string(get_room_type());
+			dungeon[wall_x][wall_y] = "0";
+			nodes.push_back(wall);
 			dungeon[wall_x - direction.at(back)[2]][wall_y - direction.at(back)[3]] = "0";
 		}
 		visited.push_back(wall);
@@ -40,25 +41,43 @@ void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 		check_new_walls(dungeon);
 	} while (walls.size() != 0);
 	dungeon[1][1] = "X";
+	gen_rooms(dungeon);
 }
 
-int Generator::get_room_type()
+void Generator::gen_rooms(std::vector<std::vector<std::string>>& dungeon, bool generating)
 {
-	
-	while (new_room > 3)
+	do
 	{
 		room_type = random(2, 5);
-		if (room_type == 5)
+		if (room_count.at(room_type) != 0)
 		{
-			new_room = 0;
-			return 0;
+			new_room = random(0, nodes.size());
+			wall = nodes[new_room];
+			wall_x = wall[0];
+			wall_y = wall[1];
+			if (room_type == 2)
+			{
+				if (wall_x > 15 && wall_y > 15)
+				{
+					dungeon[wall_x][wall_y] = "2";
+					room_count.at(2) = 0;
+				}
+			}
+			else
+			{
+				dungeon[wall_x][wall_y] = std::to_string(room_type);
+				room_count.at(room_type) = room_count.at(room_type) - 1;
+			}
+			nodes.erase(nodes.begin() + new_room);
 		}
-		//GET ROOM GEN TO WORK
-
 		
-	}
-	new_room += 1;
-	return 0;
+
+		if (room_count.at(2) == 0 && room_count.at(3) == 0 && room_count.at(4) == 0)
+		{
+			generating = false;
+		}
+	} while (generating);
+	std::cout << "\n";
 }
 
 
@@ -89,6 +108,7 @@ int Generator::random(int min, int max)
 		return 0;
 	}
 	srand(time(0));
-	return min + rand() % (max - min);
+	temp = min + rand() % (max - min);
+	return temp;
 }
 
