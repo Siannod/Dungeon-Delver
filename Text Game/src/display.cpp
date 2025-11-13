@@ -38,10 +38,7 @@ void Display::dungeon_move_options()
 		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
 		dungeon.move_player(player.player_x, player.player_y, x_mod, y_mod);
 		player.move(x_mod, y_mod);
-		if (dungeon.dungeon[player.player_x][player.player_y] == "3")
-		{
-			monster_encounter();
-		}
+		if (dungeon.dungeon[player.player_x][player.player_y] == "3"){monster_encounter();}
 		clear();
 		dungeon_move_options();
 	}
@@ -92,5 +89,6 @@ void Display::inventory(bool valid)
 
 void Display::monster_encounter()
 {
-
+	clear();
+	std::cout << ">> As you continue along your path, dark shadows masking the way forwards a monster looms out of the darkness" << std::endl;
 }
