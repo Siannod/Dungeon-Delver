@@ -2,7 +2,7 @@
 #include "dungeon_generator.h"
 #include "player.h"
 #include "dungeon.h"
-#include "commands.h"
+#include "inventory.h"
 #include "combat.h"
 
 #include <iostream>
@@ -19,7 +19,7 @@ private:
 public:
 	Player player;
 	Dungeon dungeon;
-	Command command;
+	Inventory inventory;
 	Combat combat;
 
 	int choice_int;
@@ -47,7 +47,7 @@ public:
 
 	bool input_validation(int min, int max, std::string statement, bool valid);
 
-	void inventory(bool valid = false);
+	void print_inventory(bool valid = false);
 
 	void monster_encounter(bool alive = true);
 

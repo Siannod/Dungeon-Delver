@@ -24,7 +24,7 @@ void Display::main_menu()
 		if (input_validation(1, 4, "- Select menu option: ", false))
 		{
 			if (choice_int == 1) { clear();  dungeon_move_options(); }
-			else if (choice_int == 2) { clear(), inventory(); }
+			else if (choice_int == 2) { clear(), print_inventory(); }
 
 			else if (choice_int == 4) { clear(), player.print_stats(); wait(); }
 		}
@@ -85,17 +85,17 @@ bool Display::input_validation(int min, int max, std::string statement, bool val
 	}
 }
 
-void Display::inventory(bool valid)
+void Display::print_inventory(bool valid)
 {
 	std::cin.ignore();
-	while (!command.go_back)
+	while (!player.inventory.command.go_back)
 	{
-		command.view_all(player.inventory.inventory, player.inventory.items);
+		player.inventory.print();
 		std::cout << ">> Type 'help' for more commands" << std::endl;
 		std::cout << "- ";
 		std::getline(std::cin, choice_string);
-		command.delimit(choice_string);
-		command.do_command(player.inventory.inventory, player.inventory.items);
+		player.inventory.command.delimit(choice_string);
+		player.inventory.command.do_command();
 		wait();
 		clear();
 	}
@@ -127,7 +127,7 @@ void Display::monster_encounter(bool alive)
 				combat_move();
 			}	
 		}
-		if (choice_int == 2) { inventory(); }
+		if (choice_int == 2) { print_inventory(); }
 		if (choice_int == 4) { combat.flee(player.stats.at("Dexterity")); }
 	} while (alive);
 }
