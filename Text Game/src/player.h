@@ -19,13 +19,18 @@ private:
 
 public:
 	//CLASSES
-	Inventory inventory;
+	Inventory inventory = Inventory(true);
 	Stack location;
 	
-	Player()
+	Player(bool run)
 	{
 		upgrade_points = 5;
 		create_character();
+
+	}
+	Player()
+	{
+		
 
 	}
 	//PLAYER STATS

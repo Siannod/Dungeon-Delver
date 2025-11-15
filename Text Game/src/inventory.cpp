@@ -4,14 +4,13 @@
 
 void Inventory::initialise()
 {
-    //Command command;
     for (int i = 0; i < inventory_size; i++)
     {
-        inventory.push_back({i, 0});
+        inventory.push_back(items.at(0));
     }
     do
     {
-        std::cout << ">> You get " << starting_items << "starting items from the following: " << std::endl;
+        std::cout << ">> You get " << 2 - starting_items << " starting items from the following: " << std::endl;
         for (std::pair<int, InventorySpace::inventory_slot> item : items)
         {
             if (item.first == 0 || item.first == choice_int)
@@ -22,10 +21,31 @@ void Inventory::initialise()
         }
         std::cout << "- ";
         input_validation(1, 4, "- ");
-        inventory[starting_items].item_id = choice_int;
-        inventory[starting_items].dmg_bonus = 0;
-
+        inventory[starting_items] = items.at(choice_int);
+        starting_items += 1;
     } while (starting_items < 2);
+    system("cls");
+    print();
+    do
+    {
+        std::cout << "Are you happy with your starting items? (y/n) ";
+        std::cin >> choice_string;
+        if (choice_string == "y" || choice_string == "Y")
+        {
+            system("cls");
+            item_picked = true;
+        }
+        else if (choice_string == "n" || choice_string == "N")
+        {
+            system("cls");
+            inventory.clear();
+            initialise();
+        }
+        else
+        {
+            std::cout << "[!] INVALID INPUT, PLEASE TRY AGAIN" << std::endl;
+        }
+    } while (!item_picked);
 
 }
 
@@ -64,13 +84,14 @@ void Inventory::do_command()
     else if (command_word == "back") { back(); }
     else { std::cout << "[!] INVALID COMMAND INPUT, TRY AGAIN\n"; }
     std::cout << "\n";
+    system("cls");
 }
 
 void Inventory::print()
 {
     for (int i = 0; i < inventory_size; i++)
     {
-        std::cout << ">> " << i << ": " << items.at(inventory[i].item_id).name << "\n";
+        std::cout << ">> " << i << ": " << inventory[i].name << "\n";
     }
 }
 
@@ -89,4 +110,21 @@ void Inventory::view()
 void Inventory::set()
 {
     inventory[std::stoi(command.command[1])].item_id = 0;
+}
+
+void Inventory::back()
+{
+    go_back = false;
+}
+
+void Inventory::find_weapons()
+{
+    weapon_index.clear();
+    for (int i = 0; i < inventory_size; i++)
+    {
+        if (inventory[i].item_type == 1 || inventory[i].item_type == 2)
+        {
+            weapon_index.push_back(i);
+        }
+    }
 }

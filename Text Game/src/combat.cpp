@@ -105,3 +105,16 @@ int Combat::random(int min, int max)
 	temp = min + rand() % (max - min);
 	return temp;
 }
+
+void Combat::fight()
+{
+	player.inventory.find_weapons();
+	system("cls");
+	temp = 0;
+	for (int item : player.inventory.weapon_index)
+	{
+		std::cout << ">> " << temp << ". " << player.inventory.inventory[item].name << std::endl;
+		temp += 1;
+	}
+	std::cin >> temp;
+}

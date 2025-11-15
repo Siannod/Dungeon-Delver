@@ -3,14 +3,17 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "player.h"
 
 class Combat
 {
 public:
 	const int FIELD_SIZE = 10;
-	Combat()
+	Player player;
+	Combat(Player &p)
 	{
 		fill_field();
+		player = p;
 	}
 	std::map <std::string, std::string> field_pieces =
 	{
@@ -46,7 +49,7 @@ public:
 	bool alive;
 
 	int moves_left = 5;
-	bool action_left;
+	bool action_left = true;
 	
 	int temp;
 
@@ -62,4 +65,6 @@ public:
 	bool flee(int dex);
 
 	int random(int min, int max);
+
+	void fight();
 };

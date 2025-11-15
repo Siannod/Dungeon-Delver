@@ -13,22 +13,18 @@ void Display::wait()
 
 void Display::main_menu()
 {
-	do
+	clear();
+	std::cout << menu_top << std::endl;
+	std::cout << "| 1. Move	 2. Inventory |" << std::endl;
+	std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
+	std::cout << menu_top << std::endl;
+	std::cout << "- Select menu option: ";
+	if (input_validation(1, 4, "- Select menu option: ", false))
 	{
-		clear();
-		std::cout << menu_top << std::endl;
-		std::cout << "| 1. Move	 2. Inventory |" << std::endl;
-		std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
-		std::cout << menu_top << std::endl;
-		std::cout << "- Select menu option: ";
-		if (input_validation(1, 4, "- Select menu option: ", false))
-		{
-			if (choice_int == 1) { clear();  dungeon_move_options(); }
-			else if (choice_int == 2) { clear(), print_inventory(); }
-
-			else if (choice_int == 4) { clear(), player.print_stats(); wait(); }
-		}
-	} while (running);
+		if (choice_int == 1) { clear();  dungeon_move_options(); }
+		else if (choice_int == 2) { clear(), print_inventory(); }
+		else if (choice_int == 4) { clear(), player.print_stats(); wait(); }
+	}
 }
 
 void Display::dungeon_move_options()
@@ -88,14 +84,14 @@ bool Display::input_validation(int min, int max, std::string statement, bool val
 void Display::print_inventory(bool valid)
 {
 	std::cin.ignore();
-	while (!player.inventory.command.go_back)
+	while (!player.inventory.go_back)
 	{
 		player.inventory.print();
 		std::cout << ">> Type 'help' for more commands" << std::endl;
 		std::cout << "- ";
 		std::getline(std::cin, choice_string);
 		player.inventory.command.delimit(choice_string);
-		player.inventory.command.do_command();
+		player.inventory.do_command();
 		wait();
 		clear();
 	}
@@ -113,22 +109,23 @@ void Display::monster_encounter(bool alive)
 		combat.print_field();
 		combat_menu();
 		
-		if (choice_int == 1) {
+		if (choice_int == 1) 
+		{
 			if (combat.moves_left == 0)
 			{
 				clear();
 				combat.print_field();
 				std::cout << "[!] NO MORE MOVES LEFT THIS TURN";
 				wait();
-
 			}
 			else
 			{
 				combat_move();
-			}	
-		}
-		if (choice_int == 2) { print_inventory(); }
-		if (choice_int == 4) { combat.flee(player.stats.at("Dexterity")); }
+			}
+		}	
+		else if (choice_int == 2) { print_inventory(); }
+		else if (choice_int == 3 && combat.action_left) { combat.fight(); }
+		else if (choice_int == 4) { combat.flee(player.stats.at("Dexterity")); }
 	} while (alive);
 }
 

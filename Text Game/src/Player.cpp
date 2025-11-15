@@ -106,4 +106,5 @@ void Player::create_character()
 	std::cout << ">> Enter your name: " << std::endl;
 	std::cout << "- ";
 	std::cin >> player_name;
+	system("cls");
 }

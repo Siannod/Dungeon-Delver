@@ -6,7 +6,7 @@
 int main()
 {
     Display display;
-    Combat combat;
+    //Combat combat;
     //display.dungeon.generate();
     //display.setup();
     display.main_menu();

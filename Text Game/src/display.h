@@ -17,10 +17,9 @@ private:
 
 
 public:
-	Player player;
+	Player player = Player(true);
 	Dungeon dungeon;
-	Inventory inventory;
-	Combat combat;
+	Combat combat = Combat(player);
 
 	int choice_int;
 	int min;

@@ -1,10 +1,11 @@
 #pragma once
+#include "commands.h"
 #include <iostream>
 #include <map>
 #include <string>
 #include <vector>
     
-#include "commands.h"
+
 
 namespace InventorySpace
 {
@@ -23,33 +24,45 @@ class Inventory
 private:
     int inventory_size = 10;
     int starting_items = 0;
+    
 public:
-    Inventory()
+    Command command;
+    Inventory(bool run)
     {
-        
         initialise();
     }
-    class Command command;
+
+    Inventory()
+    {
+        choice_int = 1;
+    }
+
+    
     std::string command_word;
     std::string choice_string;
     int choice_int;
     int index;
 
+    bool go_back = true;
+    bool item_picked = false;
+
     std::vector<InventorySpace::inventory_slot> inventory;
+    std::vector<int> weapon_index;
 
     std::map <int, InventorySpace::inventory_slot> items =
     {
+          //ID TYPE DMG DMG_BONUS NAME
         {0, {0, 0, 0, 0, "Empty"}},
         {1, {1, 1, 8, 0, "Sword"}},
-        {2, {2, 2, 6, 0, "Bow"}},
-        {3, {3, 3, 0, 0, "Shield"}},
-        {4, {4, 4, 0, 0, "Health Potion"}}
+        {2, {2, 1, 6, 0, "Bow"}},
+        {3, {3, 2, 0, 0, "Shield"}},
+        {4, {4, 3, -2, 0, "Health Potion"}}
     };
 
     std::map <int, std::string> item_type =
     {
         {0, "Empty"},
-        {1, "Mele Weapon"},
+        {1, "Weapon"},
         {2, "Ranged Weapon"},
         {3, "Defense"},
         {4, "Potion"}
@@ -71,4 +84,7 @@ public:
     void set();
 
     void back();
+
+    void find_weapons();
+
 };
