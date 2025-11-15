@@ -21,6 +21,10 @@ void Combat::fill_field()
 			{
 				end = "first";
 			}
+			else if (j == FIELD_SIZE - 1 && start == "top_")
+			{
+				continue;
+			}
 			else
 			{
 				end = "rest";
@@ -28,7 +32,7 @@ void Combat::fill_field()
 			battle_field[i].push_back(field_pieces.at(start + end));
 		}
 	}
-	battle_field[player_x][player_y][2] = char('X');
+	battle_field[player_x][player_y][1] = char('X');
 }
 
 void Combat::print_field()
@@ -45,22 +49,8 @@ void Combat::print_field()
 
 void Combat::move_player()
 {
-	if (player_y == 0) 
-	{
-		battle_field[player_x][player_y][2] = char(' ');
-	}
-	else
-	{
-		battle_field[player_x][player_y][1] = char(' ');
-	}
-	if (new_y == 0)
-	{
-		battle_field[new_x][new_y][2] = char('X');
-	}
-	else
-	{
-		battle_field[new_x][new_y][1] = char('X');
-	}
+	battle_field[player_x][player_y][1] = char(' ');
+	battle_field[new_x][new_y][1] = char('X');
 	player_x = new_x;
 	player_y = new_y;
 }
@@ -68,15 +58,15 @@ void Combat::move_player()
 void Combat::check_moves()
 {
 	options.clear();
-	for (int i = 1; i < 5; i++)
+	for (std::pair < int, std::vector<int>> direction : moves)
 	{
-		new_x = player_x + moves[i].at(0);
-		new_y = player_y + moves[i].at(1);
-		if (new_x < FIELD_SIZE && -1 < new_x)
+		new_x = player_x + direction.second[0];
+		new_y = player_y + direction.second[1];
+		if (new_x < FIELD_SIZE && 0 < new_x)
 		{
-			if (new_y < FIELD_SIZE && -1 < new_y && battle_field[new_x][new_y][2] == char(' '))
+			if (new_y < FIELD_SIZE && 0 < new_y && battle_field[new_x][new_y][2] == char(' '))
 			{
-				options.push_back(i);
+				options.push_back(direction.first);
 			}
 		}
 	}
@@ -106,15 +96,22 @@ int Combat::random(int min, int max)
 	return temp;
 }
 
-void Combat::fight()
+bool Combat::check_for_enemy(int range)
 {
-	player.inventory.find_weapons();
-	system("cls");
-	temp = 0;
-	for (int item : player.inventory.weapon_index)
+	for (std::pair<int, std::vector<int >> direction : moves) //check every direction
 	{
-		std::cout << ">> " << temp << ". " << player.inventory.inventory[item].name << std::endl;
-		temp += 1;
+		for (int j = 0; j <= range; j++)
+		{
+			if (j != 0)
+			{
+				new_x = player_x + (direction.second[0] * j);
+				new_y = player_y + (direction.second[1] * j);
+				if (battle_field[new_x][new_y][2] != char(' '))
+				{
+					return true;
+				}
+			}
+		}
 	}
-	std::cin >> temp;
+	return false;
 }

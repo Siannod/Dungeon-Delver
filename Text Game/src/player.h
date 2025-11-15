@@ -26,12 +26,6 @@ public:
 	{
 		upgrade_points = 5;
 		create_character();
-
-	}
-	Player()
-	{
-		
-
 	}
 	//PLAYER STATS
 	//ints

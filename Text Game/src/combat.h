@@ -8,17 +8,15 @@
 class Combat
 {
 public:
-	const int FIELD_SIZE = 10;
-	Player player;
-	Combat(Player &p)
+	const int FIELD_SIZE = 11;
+	Combat()
 	{
 		fill_field();
-		player = p;
 	}
 	std::map <std::string, std::string> field_pieces =
 	{
 		{"top_first" , "+-=-+"},
-		{"mid_first", "|   |"},
+		{"mid_first", "|"},
 		{"top_rest", "-=-+"},
 		{"mid_rest", "   |"}
 	};
@@ -41,7 +39,7 @@ public:
 	std::string end;
 
 	int player_x = 1;
-	int player_y = 0;
+	int player_y = 1;
 
 	int new_x;
 	int new_y;
@@ -67,4 +65,6 @@ public:
 	int random(int min, int max);
 
 	void fight();
+
+	bool check_for_enemy(int range);
 };

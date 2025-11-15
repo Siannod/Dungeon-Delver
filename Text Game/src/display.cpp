@@ -124,7 +124,7 @@ void Display::monster_encounter(bool alive)
 			}
 		}	
 		else if (choice_int == 2) { print_inventory(); }
-		else if (choice_int == 3 && combat.action_left) { combat.fight(); }
+		else if (choice_int == 3 && combat.action_left) { combat_fight(); }
 		else if (choice_int == 4) { combat.flee(player.stats.at("Dexterity")); }
 	} while (alive);
 }
@@ -161,5 +161,30 @@ void Display::combat_move()
 	else
 	{
 		monster_encounter();
+	}
+}
+
+void Display::combat_fight()
+{
+	clear();
+	player.inventory.find_weapons();
+	count = 1;
+	if (player.inventory.weapon_index.size() != 0)
+	{
+		for (int item : player.inventory.weapon_index)
+		{
+			temp_item = player.inventory.inventory[item];
+			if (temp_item.item_type == 1 || temp_item.item_type == 2)
+			{
+				std::cout << ">> " << count << ". " << temp_item.name << std::endl;
+			}
+			count += 1;
+			
+		}
+		input_validation(1, count, "- ", false);
+	}
+	else
+	{
+		std::cout << "[!] YOU HAVE NO WEAPONS YOU CAN ONLY FLEE" << std::endl;
 	}
 }

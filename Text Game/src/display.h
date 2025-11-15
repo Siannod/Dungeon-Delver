@@ -19,7 +19,7 @@ private:
 public:
 	Player player = Player(true);
 	Dungeon dungeon;
-	Combat combat = Combat(player);
+	Combat combat;
 
 	int choice_int;
 	int min;
@@ -27,6 +27,7 @@ public:
 	int x_mod;
 	int y_mod;
 	bool valid = false;
+	int count;
 
 	std::string statement;
 	std::string choice_string;
@@ -34,6 +35,7 @@ public:
 
 
 	std::vector<int> temp;
+	InventorySpace::inventory_slot temp_item;
 
 	//FUNCTONS
 	void clear();
@@ -53,4 +55,6 @@ public:
 	void combat_menu();
 
 	void combat_move();
+
+	void combat_fight();
 };

@@ -84,7 +84,6 @@ void Inventory::do_command()
     else if (command_word == "back") { back(); }
     else { std::cout << "[!] INVALID COMMAND INPUT, TRY AGAIN\n"; }
     std::cout << "\n";
-    system("cls");
 }
 
 void Inventory::print()
@@ -104,7 +103,10 @@ int Inventory::set(int index, int id)
 void Inventory::view()
 {
     index = stoi(command.command[1]);
-    std::cout << ">> Inventory slot " << index << " details:\n>> Name: " << inventory[index].name;
+    std::cout << ">> Inventory slot " << index << " details:" << std::endl;
+    std::cout << ">> Name: " << inventory[index].name << std::endl;
+    std::cout << ">> Damage: 1 - " << item_type.at(inventory[index].item_type).damage << std::endl;
+    std::cout << ">> Range: " << item_type.at(inventory[index].item_type).range << std::endl;
 }
 
 void Inventory::set()
@@ -114,14 +116,15 @@ void Inventory::set()
 
 void Inventory::back()
 {
-    go_back = false;
+    go_back = true;
 }
 
 void Inventory::find_weapons()
 {
     weapon_index.clear();
+
     for (int i = 0; i < inventory_size; i++)
-    {
+    {   
         if (inventory[i].item_type == 1 || inventory[i].item_type == 2)
         {
             weapon_index.push_back(i);
