@@ -23,5 +23,6 @@ bool Monster::player_in_range()
 
 void Monster::path_to_player()
 {
+	aim.clear();
 
 }
