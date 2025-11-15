@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include "player.h"
+#include "monster.h"
 
 class Combat
 {
@@ -57,6 +58,8 @@ public:
 	void print_field();
 
 	void move_player();
+
+	void move_monster();
 
 	void check_moves();
 

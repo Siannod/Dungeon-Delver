@@ -28,6 +28,7 @@ public:
 	int y_mod;
 	bool valid = false;
 	int count;
+	int index;
 
 	std::string statement;
 	std::string choice_string;

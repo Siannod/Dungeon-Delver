@@ -182,6 +182,17 @@ void Display::combat_fight()
 			
 		}
 		input_validation(1, count, "- ", false);
+		index = player.inventory.weapon_index[choice_int];
+		temp_item = player.inventory.inventory[index];
+		if (combat.check_for_enemy(player.inventory.item_type.at(temp_item.item_type).range))
+		{
+
+			combat.action_left = false;
+		}
+		else
+		{
+			std::cout << "[!] NO ENEMIES IN RANGE, MOVE AND TRY AGAIN" << std::endl;
+		}
 	}
 	else
 	{
