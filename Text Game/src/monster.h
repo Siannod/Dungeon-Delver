@@ -23,6 +23,7 @@ public:
 	int monster_y = 8;
 	int new_x;
 	int new_y;
+	std::vector<std::vector<int>> aim;
 	int player_x;
 	int player_y;
 	int SIZE;

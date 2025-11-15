@@ -115,3 +115,8 @@ bool Combat::check_for_enemy(int range)
 	}
 	return false;
 }
+
+void Combat::move_monster(int direction)
+{
+
+}

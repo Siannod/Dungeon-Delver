@@ -31,25 +31,25 @@ void Display::dungeon_move_options()
 {
 	dungeon.print_dungeon();
 	temp.clear();
-	dungeon.check_paths({player.player_x, player.player_y}, temp);
+	dungeon.check_paths({ player.player_x, player.player_y }, temp);
 	for (int i = 0; i < temp.size(); i++)
-	{		
-		std::cout << ">> " << i+1 << ". " << dungeon.directions.at(temp[i]) << std::endl;
+	{
+		std::cout << ">> " << i + 1 << ". " << dungeon.directions.at(temp[i]) << std::endl;
 	}
-	std::cout << ">> "<< temp.size()+1 << ". Back to main menu" << std::endl;
+	std::cout << ">> " << temp.size() + 1 << ". Back to main menu" << std::endl;
 	std::cout << "- ";
-	input_validation(1, temp.size()+1, "- ", false);
+	input_validation(1, temp.size() + 1, "- ", false);
 	if (choice_int < temp.size() + 1)
 	{
 		x_mod = dungeon.direction.at(temp[choice_int - 1])[0];
 		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
-		
+
 		player.move(x_mod, y_mod);
 		std::cout << dungeon.dungeon[player.player_x][player.player_y] << std::endl;
 		if (dungeon.dungeon[player.player_x][player.player_y] == "3") { monster_encounter(); }
 		dungeon.move_player(player.player_x, player.player_y, x_mod, y_mod);
 		std::cout << dungeon.dungeon[player.player_x][player.player_y];
-		
+
 		clear();
 		dungeon_move_options();
 	}
@@ -101,15 +101,15 @@ void Display::print_inventory(bool valid)
 void Display::monster_encounter(bool alive)
 {
 	clear();
-	
 	do
 	{
+		player.able_to_flee = true;
 		clear();
 		std::cout << ">> As you continue along your path, dark shadows masking the way forwards a monster looms out of the darkness" << std::endl;
 		combat.print_field();
 		combat_menu();
-		
-		if (choice_int == 1) 
+		//MOVE
+		if (choice_int == 1)
 		{
 			if (combat.moves_left == 0)
 			{
@@ -122,10 +122,36 @@ void Display::monster_encounter(bool alive)
 			{
 				combat_move();
 			}
-		}	
-		else if (choice_int == 2) { print_inventory(); }
+		} 
+		//SEE INVENTORY
+		else if (choice_int == 2) { print_inventory(); } 
 		else if (choice_int == 3 && combat.action_left) { combat_fight(); }
-		else if (choice_int == 4) { combat.flee(player.stats.at("Dexterity")); }
+		//FLEE
+		else if (choice_int == 4)
+		{
+			if(player.able_to_flee)
+			{
+				player.able_to_flee = false;
+				if (combat.flee(player.stats.at("Dexterity")))
+				{
+					clear();
+					std::cout << ">> You succesfully fled the monster" << std::endl;
+					player.able_to_flee = true;
+					wait();
+					main_menu();
+				}
+				else
+				{
+					std::cout << ">> You were unsuccessful in fleeing the monster, you must stay and fight" << std::endl;
+					wait();
+				}
+			}
+			else
+			{
+				std::cout << ">> You cannot try to flee again this round, you must stay and fight" << std::endl;
+				wait();
+			}
+		} 
 	} while (alive);
 }
 

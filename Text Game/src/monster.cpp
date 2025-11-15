@@ -3,7 +3,7 @@
 
 bool Monster::player_in_range()
 {
-	for (std::pair<int, std::vector<int >> direction : moves) //check every direction
+	for (std::pair<int, std::vector<int >> direction : moves)
 	{
 		for (int j = 0; j <= range; j++)
 		{
@@ -18,4 +18,10 @@ bool Monster::player_in_range()
 			}
 		}
 	}
+	return false;
+}
+
+void Monster::path_to_player()
+{
+
 }

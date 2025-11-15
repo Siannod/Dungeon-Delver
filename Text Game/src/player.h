@@ -39,7 +39,8 @@ public:
 	int player_y = 1;
 	//strings
 	std::string player_name;
-	
+	//bool
+	bool able_to_flee = true;
 	
 	
 	//CHOICES

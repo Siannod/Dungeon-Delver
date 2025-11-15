@@ -9,6 +9,7 @@
 class Combat
 {
 public:
+	Monster monster = Monster(player_x, player_y, FIELD_SIZE);
 	const int FIELD_SIZE = 11;
 	Combat()
 	{
@@ -59,7 +60,7 @@ public:
 
 	void move_player();
 
-	void move_monster();
+	void move_monster(int direction);
 
 	void check_moves();
 
