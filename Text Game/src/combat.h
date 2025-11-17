@@ -9,7 +9,7 @@
 class Combat
 {
 public:
-	Monster monster = Monster(player_x, player_y, FIELD_SIZE);
+	Monster monster = Monster(player_x, player_y, FIELD_SIZE, battle_field);
 	const int FIELD_SIZE = 11;
 	Combat()
 	{

@@ -11,7 +11,7 @@ class Monster
 public:
 	Stack route;
 	std::vector<std::vector<std::string>> battle_field;
-	Monster(int &x, int &y, int size, std::vector<std::vector<std::string>> field)
+	Monster(int &x, int &y, int size, std::vector<std::vector<std::string>> &field)
 	{
 		player_x = x;
 		player_y = y;
