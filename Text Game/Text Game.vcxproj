@@ -132,6 +132,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\monster.cpp" />
     <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\queue.cpp" />
     <ClCompile Include="src\stack.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="src\inventory.h" />
     <ClInclude Include="src\monster.h" />
     <ClInclude Include="src\player.h" />
+    <ClInclude Include="src\queue.h" />
     <ClInclude Include="src\stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
