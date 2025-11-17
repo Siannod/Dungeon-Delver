@@ -2,15 +2,22 @@
 #include <iostream>
 #include <vector>
 
+struct Node
+{
+	std::vector<std::vector<int>> queue;
+	int cost;
+	int x;
+	int y;
+};
 class Stack
 {
 public:
-	std::vector<std::vector<int>> stack;
+	std::vector<Node> stack;
 	int top = -1;
 
 
 	//FUNCTIONS
-	void push(std::vector<int> item);
+	void push(Node item);
 
 	void pop(std::vector<int> &temp);
 

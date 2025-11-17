@@ -23,7 +23,7 @@ bool Monster::player_in_range()
 
 void Monster::player_spots()
 {
-	aim[0] == 1000;
+	aim[0] = 1000;
 	for (int i = range; i > range - 3; i--)
 	{
 		if (i > 0)
@@ -65,30 +65,50 @@ void Monster::path_to_player_healthy()
 {
 	aim_x = aim[1];
 	aim_y = aim[2];
-	route.push({ 0 + abs(aim_x - monster_x) + abs(aim_y - monster_y), monster_x, monster_y });
+	start_cost = 0 + abs(aim_x - monster_x) + abs(aim_y - monster_y);
+	queue.add({ start_cost, monster_x, monster_y });
+	temp_node = { queue.queue, monster_x, monster_y };
+	route.push(temp_node);
 	for (int i = 0; i < 5; i++)
 	{
-		for (std::pair <int, std::vector<int>> direction : moves)
-		{
-			new_x = monster_x + direction.second[0];
-			new_y = monster_y + direction.second[1];
-			if (check_in_range(new_x, new_y))
-			{
-
-			}
-
-		}
+		temp_node = route.stack[route.top];
+		temp_set = queue.remove();
+		
 	}
 }
 
-bool Monster::check_in_range(int x, int y)
+bool Monster::check_in_range_visited(int x, int y)
 {
 	if (x > 0 && x < SIZE && y > 0 && y < SIZE)
 	{
+		for (int i = 0; i < visited.size(); i++)
+		{
+			if (visited[i][0] == x && visited[i][1] == y)
+			{
+				return false;
+			}
+		}
 		return true;
 	}
 	else
 	{
 		return false;
+	}
+}
+
+void Monster::check_next_step(int i)
+{
+	for (std::pair <int, std::vector<int>> direction : moves)
+	{
+		temp_x = new_x + direction.second[0];
+		temp_y = new_y + direction.second[1];
+		temp_cost = new_cost + 1;
+		if (check_in_range_visited(temp_x, temp_y))
+		{
+			visited.push_back({ temp_x, temp_y });
+			queue.add({ i + abs(aim_x - temp_x) + abs(aim_y - temp_y), temp_x, temp_y });
+		}
+
+
 	}
 }

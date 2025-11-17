@@ -5,11 +5,13 @@
 #include <string>
 
 #include "stack.h"
+#include "queue.h"
 
 class Monster
 {
 public:
 	Stack route;
+	Queue queue = Queue(100);
 	std::vector<std::vector<std::string>> battle_field;
 	Monster(int &x, int &y, int size, std::vector<std::vector<std::string>> &field)
 	{
@@ -26,6 +28,10 @@ public:
 
 	int monster_x = 11;
 	int monster_y = 8;
+	std::vector<int> temp_set;
+	int temp_x;
+	int temp_y;
+	int temp_cost;
 
 	int x_diff;
 	int y_diff;
@@ -33,6 +39,7 @@ public:
 
 	int new_x;
 	int new_y;
+	int new_cost;
 
 	int aim[3];
 	int aim_x;
@@ -54,6 +61,14 @@ public:
 		{4, {0, -1}}
 	};
 
+	
+	std::vector<std::vector<int>> visited;
+
+	//STACK VARS
+	Node temp_node;
+	int start_cost;
+
+
 	//FUNCTIONS
 	void player_spots();
 
@@ -63,6 +78,7 @@ public:
 
 	void path_to_player_healthy();
 
-	bool check_in_range(int x, int y);
+	bool check_in_range_visited(int x, int y);
 
+	void check_next_step(int i);
 };
