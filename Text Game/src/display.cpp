@@ -152,10 +152,20 @@ void Display::monster_encounter(bool alive)
 				wait();
 			}
 		} 
-		else if (choice_int == 5) { combat.monster_turn(); }
-		if (!combat.action_left && combat.moves_left == 0)
+		if (choice_int == 5 || (!combat.action_left && combat.moves_left == 0))
 		{
 			combat.monster_turn();
+			combat.monster.route.print_stack();
+			int_temp = combat.monster.route.top;
+			for (int i = 0; i < int_temp; i++)
+			{
+				combat.next_step = combat.monster.route.pop();
+				combat.move_monster(combat.next_step.x, combat.next_step.y);
+				Sleep(2000);
+				clear();
+				combat.print_field();
+				combat.monster.route.print_stack();
+			}
 		}
 	} while (alive);
 }

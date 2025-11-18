@@ -18,8 +18,10 @@ class Stack
 {
 public:
 	std::vector<Node> stack;
+	std::vector<Node> reversed_stack;
 	Node temp;
 	int top = -1;
+	int reversed_top = -1;
 
 
 	//FUNCTIONS
@@ -32,4 +34,7 @@ public:
 	void empty();
 
 	void print_stack();
+
+	void reverse_stack();
+
 };

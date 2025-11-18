@@ -13,8 +13,8 @@ void Queue::add(QueueSpace::Node item)
 {
 	if (is_empty())
 	{
-		queue.push_back(item);
 		end += 1;
+		queue[end] = item;
 	}
 	else if (!is_full())
 	{
@@ -73,5 +73,13 @@ bool Queue::is_full()
 	else
 	{
 		return false;
+	}
+}
+
+void Queue::empty()
+{
+	while (!is_empty())
+	{
+		remove();
 	}
 }

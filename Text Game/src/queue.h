@@ -38,5 +38,6 @@ public:
 
 	bool is_full();
 
+	void empty();
 };
 

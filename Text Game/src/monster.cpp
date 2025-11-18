@@ -11,7 +11,7 @@ bool Monster::player_in_range()
 			{
 				new_x = monster_x + (direction.second[0] * j);
 				new_y = monster_y + (direction.second[1] * j);
-				if (new_x == player_x && new_y == player_y)
+				if (new_x == *player_x && new_y == *player_y)
 				{
 					return true;
 				}
@@ -24,21 +24,17 @@ bool Monster::player_in_range()
 void Monster::next_move()
 {
 	aim[0] = 1000;
-	std::cout << player_x << std::endl; 
-	std::cout << player_y << std::endl;
 	for (int i = range; i > range - 3; i--)
 	{
 		if (i > 0)
 		{
 			for (std::pair <int, std::vector<int>> direction : moves)
 			{
-				new_x = player_x + (direction.second[0] * i);
-				new_y = player_y + (direction.second[1] * i);
-				std::cout << new_x << std::endl;
-				std::cout << new_y << std::endl;
+				new_x = *player_x + (direction.second[0] * i);
+				new_y = *player_y + (direction.second[1] * i);
 				if (check_in_range_visited(new_x, new_y))
 				{
-					if (battle_field[new_x][new_y][1] == ' ')
+					if (battle_field->at(new_x)[new_y][1] == ' ')
 					{
 						compare_spot();
 					}
@@ -67,8 +63,8 @@ void Monster::compare_spot()
 
 void Monster::path_to_player_healthy()
 {
-	std::cout << "Aim X: " << aim[1] << std::endl;
-	std::cout << "Aim Y: " << aim[2] << std::endl;
+	route.empty();
+	queue.empty();
 	aim_x = aim[1];
 	aim_y = aim[2];
 
@@ -76,14 +72,12 @@ void Monster::path_to_player_healthy()
 
 	visited.push_back({ monster_x, monster_y });
 
-	current_node = { queue.queue, visited, monster_x, monster_y, 0 };
+	current_node = { queue.queue, visited, start_cost ,monster_x, monster_y, 0 };
 
 	route.push(current_node);
 
 	for (int i = 0; i < 5; i++)
 	{
-		route.print_stack();
-		std::cout << "\n";
 		current_node = route.stack[route.top];
 		i = current_node.i;
 		queue.queue = current_node.queue;
@@ -112,9 +106,9 @@ bool Monster::check_in_range_visited(int x, int y)
 	{
 		if (visited.size() != 0) //items in visited
 		{
-			for (int i = 0; i < visited.size(); i++) //check items in visited
+			for (std::vector<int> item : visited)
 			{
-				if (visited[i][0] == x && visited[i][1] == y)
+				if (item[0] == x && item[1] == y)
 				{
 					return false;
 				}
@@ -137,7 +131,8 @@ void Monster::check_next_steps(int i)
 		if (check_in_range_visited(temp_x, temp_y))
 		{
 			visited.push_back({ temp_x, temp_y });
-			queue.add({ i + abs(aim_x - temp_x) + abs(aim_y - temp_y), temp_x, temp_y });
+			temp_cost = i + abs(aim_x - temp_x) + abs(aim_y - temp_y);
+			queue.add({ temp_cost, temp_x, temp_y });
 		}
 	}
 }

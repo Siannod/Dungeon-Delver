@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string>
 
+
 class Display
 {
 private:
@@ -30,6 +31,7 @@ public:
 	int count;
 	int index;
 
+	int int_temp;
 	std::string statement;
 	std::string choice_string;
 	std::string menu_top = "+ - - - - - - - - - - - - - - +";

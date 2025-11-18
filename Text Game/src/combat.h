@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <Windows.h>
 #include "player.h"
 #include "monster.h"
 
@@ -11,7 +12,7 @@ class Combat
 public:
 	
 	const int FIELD_SIZE = 11;
-	Monster monster = Monster(player_x, player_y, FIELD_SIZE, battle_field);
+	
 	Combat()
 	{
 		fill_field();
@@ -28,6 +29,8 @@ public:
 	std::vector<std::string> field_rows = { "|", " ", " ", "|" };
 
 	std::vector<std::vector<std::string>> battle_field;
+
+	std::vector<std::vector<std::string>>* field_ptr = &battle_field;
 
 	std::map <int, std::vector<int>> moves =
 	{
@@ -55,7 +58,12 @@ public:
 	
 	int temp;
 
-	
+	int* x_ptr = &player_x;
+	int* y_ptr = &player_y;
+
+	Node next_step;
+
+	Monster monster = Monster(x_ptr, y_ptr, FIELD_SIZE, field_ptr);
 	//FUNCTIONS
 	void fill_field();
 
@@ -63,7 +71,7 @@ public:
 
 	void move_player();
 
-	void move_monster(int direction);
+	void move_monster(int x, int y);
 
 	void check_moves();
 

@@ -7,6 +7,12 @@ void Stack::push(Node item)
 	stack.push_back(item);
 }
 
+void Stack::empty()
+{
+	stack.clear();
+	top = -1;
+}
+
 Node Stack::pop()
 {
 	if (is_empty())
@@ -47,4 +53,15 @@ void Stack::print_stack()
 		std::cout << "i: " << item.i << std::endl;
 		std::cout << "\n";
 	}
+}
+
+void Stack::reverse_stack()
+{
+	while (!is_empty())
+	{
+		reversed_stack.push_back(pop());
+		reversed_top += 1;
+	}
+	stack = reversed_stack;
+	top = reversed_top;
 }

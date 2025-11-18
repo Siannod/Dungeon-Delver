@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #include "stack.h"
 #include "queue.h"
@@ -12,18 +13,13 @@ class Monster
 public:
 	Stack route;
 	Queue queue = Queue(100);
-	std::vector<std::vector<std::string>> battle_field;
-	Monster(int &x, int &y, int size, std::vector<std::vector<std::string>> &field)
+	std::vector<std::vector<std::string>>* battle_field;
+	Monster(int* x, int* y, int size, std::vector<std::vector<std::string>>* field_ptr)
 	{
 		player_x = x;
 		player_y = y;
 		SIZE = size;
-		battle_field = field;
-	}
-
-	Monster()
-	{
-
+		battle_field = field_ptr;
 	}
 	const int MAX_MOVES = 5;
 	int MAX_HEALTH;
@@ -49,8 +45,8 @@ public:
 	int aim[3];
 	int aim_x;
 	int aim_y;
-	int player_x;
-	int player_y;
+	int* player_x;
+	int* player_y;
 
 	int SIZE;
 
