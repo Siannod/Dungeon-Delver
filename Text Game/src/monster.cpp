@@ -3,20 +3,11 @@
 
 bool Monster::player_in_range()
 {
-	for (std::pair<int, std::vector<int >> direction : moves)
+	x_diff = abs(*player_x - monster_x);
+	y_diff = abs(*player_y - monster_y);
+	if ((x_diff == 2 && y_diff == 0) || (x_diff == 0 && y_diff == 1))
 	{
-		for (int j = 0; j <= range; j++)
-		{
-			if (j != 0)
-			{
-				new_x = monster_x + (direction.second[0] * j);
-				new_y = monster_y + (direction.second[1] * j);
-				if (new_x == *player_x && new_y == *player_y)
-				{
-					return true;
-				}
-			}
-		}
+		return true;
 	}
 	return false;
 }

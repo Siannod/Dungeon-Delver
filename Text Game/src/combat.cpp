@@ -100,20 +100,15 @@ int Combat::random(int min, int max)
 
 bool Combat::check_for_enemy(int range)
 {
-	for (std::pair<int, std::vector<int >> direction : moves) //check every direction
+	x_diff = abs(player_x - monster.monster_x);
+	y_diff = abs(player_y - monster.monster_y);
+	if (x_diff <= (range * 2) && y_diff == 0)
 	{
-		for (int j = 0; j <= range; j++)
-		{
-			if (j != 0)
-			{
-				new_x = player_x + (direction.second[0] * j);
-				new_y = player_y + (direction.second[1] * j);
-				if (battle_field[new_x][new_y][2] != char(' '))
-				{
-					return true;
-				}
-			}
-		}
+		return true;
+	}
+	else if (x_diff == 0 && y_diff <= range)
+	{
+		return true;
 	}
 	return false;
 }

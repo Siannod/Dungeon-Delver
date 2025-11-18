@@ -50,6 +50,8 @@ public:
 
 	int new_x;
 	int new_y;
+	int x_diff;
+	int y_diff;
 
 	bool alive;
 
