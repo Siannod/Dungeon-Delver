@@ -65,6 +65,7 @@ void Monster::path_to_player_healthy()
 {
 	route.empty();
 	queue.empty();
+	visited.clear();
 	aim_x = aim[1];
 	aim_y = aim[2];
 
@@ -86,6 +87,7 @@ void Monster::path_to_player_healthy()
 		next_node = queue.remove();
 		if (current_node.x == aim_x && current_node.y == aim_y) // get to end
 		{
+			route.push({ queue.queue, visited, next_node.cost, current_node.x, current_node.y, i + 1 });
 			break;
 		}
 		else if (next_node.cost <= current_node.cost)
@@ -98,6 +100,7 @@ void Monster::path_to_player_healthy()
 		}
 		
 	}
+	std::cout << ";";
 }
 
 bool Monster::check_in_range_visited(int x, int y)
@@ -131,7 +134,7 @@ void Monster::check_next_steps(int i)
 		if (check_in_range_visited(temp_x, temp_y))
 		{
 			visited.push_back({ temp_x, temp_y });
-			temp_cost = i + abs(aim_x - temp_x) + abs(aim_y - temp_y);
+			temp_cost = abs(aim_x - temp_x) + abs(aim_y - temp_y);
 			queue.add({ temp_cost, temp_x, temp_y });
 		}
 	}

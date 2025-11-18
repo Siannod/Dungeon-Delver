@@ -64,4 +64,6 @@ void Stack::reverse_stack()
 	}
 	stack = reversed_stack;
 	top = reversed_top;
+	reversed_stack = {};
+	reversed_top = -1;
 }

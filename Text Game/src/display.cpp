@@ -157,6 +157,8 @@ void Display::monster_encounter(bool alive)
 			combat.monster_turn();
 			combat.monster.route.print_stack();
 			int_temp = combat.monster.route.top;
+			//combat.battle_field[3][1][1] = char('Q');
+			//combat.print_field();
 			for (int i = 0; i < int_temp; i++)
 			{
 				combat.next_step = combat.monster.route.pop();
@@ -164,7 +166,7 @@ void Display::monster_encounter(bool alive)
 				Sleep(2000);
 				clear();
 				combat.print_field();
-				combat.monster.route.print_stack();
+				//combat.monster.route.print_stack();
 			}
 		}
 	} while (alive);
