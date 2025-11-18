@@ -20,10 +20,15 @@ public:
 		SIZE = size;
 		battle_field = field;
 	}
+
+	Monster()
+	{
+
+	}
 	const int MAX_MOVES = 5;
 	int MAX_HEALTH;
 	int health;
-	int range;
+	int range = 1;
 	int damage;
 
 	int monster_x = 11;

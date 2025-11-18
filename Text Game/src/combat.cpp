@@ -34,6 +34,7 @@ void Combat::fill_field()
 	}
 	battle_field[player_x][player_y][1] = char('X');
 	battle_field[monster.monster_x][monster.monster_y][1] = char('O');
+	monster.battle_field = battle_field;
 }
 
 void Combat::print_field()

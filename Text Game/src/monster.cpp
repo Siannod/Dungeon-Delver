@@ -24,6 +24,8 @@ bool Monster::player_in_range()
 void Monster::next_move()
 {
 	aim[0] = 1000;
+	std::cout << player_x << std::endl; 
+	std::cout << player_y << std::endl;
 	for (int i = range; i > range - 3; i--)
 	{
 		if (i > 0)
@@ -32,6 +34,8 @@ void Monster::next_move()
 			{
 				new_x = player_x + (direction.second[0] * i);
 				new_y = player_y + (direction.second[1] * i);
+				std::cout << new_x << std::endl;
+				std::cout << new_y << std::endl;
 				if (check_in_range_visited(new_x, new_y))
 				{
 					if (battle_field[new_x][new_y][1] == ' ')
@@ -63,10 +67,8 @@ void Monster::compare_spot()
 
 void Monster::path_to_player_healthy()
 {
-	for (int item : aim)
-	{
-		std::cout << item << std::endl;
-	}
+	std::cout << "Aim X: " << aim[1] << std::endl;
+	std::cout << "Aim Y: " << aim[2] << std::endl;
 	aim_x = aim[1];
 	aim_y = aim[2];
 
@@ -106,13 +108,16 @@ void Monster::path_to_player_healthy()
 
 bool Monster::check_in_range_visited(int x, int y)
 {
-	if (x > 0 && x < SIZE && y > 0 && y < SIZE)
+	if (x > 0 && x < SIZE && y > 0 && y < SIZE) // in range
 	{
-		for (int i = 0; i < visited.size(); i++)
+		if (visited.size() != 0) //items in visited
 		{
-			if (visited[i][0] == x && visited[i][1] == y)
+			for (int i = 0; i < visited.size(); i++) //check items in visited
 			{
-				return false;
+				if (visited[i][0] == x && visited[i][1] == y)
+				{
+					return false;
+				}
 			}
 		}
 		return true;

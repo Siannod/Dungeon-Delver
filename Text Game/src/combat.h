@@ -9,11 +9,13 @@
 class Combat
 {
 public:
-	Monster monster = Monster(player_x, player_y, FIELD_SIZE, battle_field);
+	
 	const int FIELD_SIZE = 11;
+	Monster monster = Monster(player_x, player_y, FIELD_SIZE, battle_field);
 	Combat()
 	{
 		fill_field();
+		
 	}
 	std::map <std::string, std::string> field_pieces =
 	{
@@ -53,6 +55,7 @@ public:
 	
 	int temp;
 
+	
 	//FUNCTIONS
 	void fill_field();
 
