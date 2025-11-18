@@ -68,7 +68,7 @@ public:
 
 	int random(int min, int max);
 
-	void fight();
-
 	bool check_for_enemy(int range);
+
+	void monster_turn();
 };

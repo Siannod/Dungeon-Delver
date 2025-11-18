@@ -33,6 +33,7 @@ void Combat::fill_field()
 		}
 	}
 	battle_field[player_x][player_y][1] = char('X');
+	battle_field[monster.monster_x][monster.monster_y][1] = char('O');
 }
 
 void Combat::print_field()
@@ -116,7 +117,10 @@ bool Combat::check_for_enemy(int range)
 	return false;
 }
 
-void Combat::move_monster(int direction)
+void Combat::monster_turn()
 {
-
+	monster.next_move();
+	monster.path_to_player_healthy();
+	monster.route.print_stack();
+	std::cout << "test";
 }

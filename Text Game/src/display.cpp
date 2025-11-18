@@ -152,6 +152,11 @@ void Display::monster_encounter(bool alive)
 				wait();
 			}
 		} 
+		else if (choice_int == 5) { combat.monster_turn(); }
+		if (!combat.action_left && combat.moves_left == 0)
+		{
+			combat.monster_turn();
+		}
 	} while (alive);
 }
 
@@ -160,9 +165,10 @@ void Display::combat_menu()
 	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
 	std::cout << "| 1. Move    2. Items | Health: " << player.health_current << " |" << std::endl;
 	std::cout << "| 3. Fight   4. Flee  | Moves: " << combat.moves_left << "  |" << std::endl;
+	std::cout << "| 5. End Turn         |           |" << std::endl;
 	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
 	std::cout << "- ";
-	input_validation(1, 4, "- ", false);
+	input_validation(1, 5, "- ", false);
 }
 
 void Display::combat_move()

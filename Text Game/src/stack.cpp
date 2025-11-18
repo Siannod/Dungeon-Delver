@@ -33,3 +33,18 @@ bool Stack::is_empty()
 		return false;
 	}
 }
+
+void Stack::print_stack()
+{
+	for (Node item : stack)
+	{
+		std::cout << "+=-=-=-=-=+" << std::endl;
+		std::cout << "Cost: " << item.cost << std::endl;
+		std::cout << "Queue: #" << std::endl;
+		std::cout << "Visited: #" << std::endl;
+		std::cout << "X: " << item.x << std::endl;
+		std::cout << "Y: " << item.y << std::endl;
+		std::cout << "i: " << item.i << std::endl;
+		std::cout << "\n";
+	}
+}

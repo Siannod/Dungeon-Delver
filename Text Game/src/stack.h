@@ -10,6 +10,7 @@ struct Node
 	int cost;
 	int x;
 	int y;
+	int i;
 };
 
 
@@ -29,4 +30,6 @@ public:
 	bool is_empty();
 
 	void empty();
+
+	void print_stack();
 };

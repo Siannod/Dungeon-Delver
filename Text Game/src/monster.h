@@ -70,15 +70,18 @@ public:
 
 
 	//FUNCTIONS
-	void player_spots();
-
-	void compare_spot();
-
-	bool player_in_range();
+	//external
+	void next_move();
 
 	void path_to_player_healthy();
 
+	bool player_in_range();
+
+	//internal
+
+	void compare_spot();
+
 	bool check_in_range_visited(int x, int y);
 
-	void check_next_step(int i);
+	void check_next_steps(int i);
 };
