@@ -20,7 +20,6 @@ private:
 public:
 	//CLASSES
 	Inventory inventory = Inventory(true);
-	Stack location;
 	
 	Player(bool run)
 	{

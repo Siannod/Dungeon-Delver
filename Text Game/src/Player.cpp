@@ -54,7 +54,6 @@ void Player::print_stats()
 
 void Player::move(int x_mod, int y_mod)
 {
-	location.push({player_x, player_y});
 	player_x = player_x + x_mod;
 	player_y = player_y + y_mod;
 }

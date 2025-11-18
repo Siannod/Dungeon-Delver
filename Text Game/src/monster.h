@@ -28,7 +28,7 @@ public:
 
 	int monster_x = 11;
 	int monster_y = 8;
-	std::vector<int> temp_set;
+	QueueSpace::Node next_node;
 	int temp_x;
 	int temp_y;
 	int temp_cost;
@@ -65,7 +65,7 @@ public:
 	std::vector<std::vector<int>> visited;
 
 	//STACK VARS
-	Node temp_node;
+	Node current_node;
 	int start_cost;
 
 

@@ -1,13 +1,13 @@
 #pragma once
 #include "stack.h"
 
-void Stack::push(std::vector<int> item)
+void Stack::push(Node item)
 {
 	top += 1;
 	stack.push_back(item);
 }
 
-void Stack::pop(std::vector<int> &temp)
+Node Stack::pop()
 {
 	if (is_empty())
 	{
@@ -18,6 +18,7 @@ void Stack::pop(std::vector<int> &temp)
 		temp = stack[top];
 		stack.pop_back();
 		top -= 1;
+		return temp;
 	}
 }
 

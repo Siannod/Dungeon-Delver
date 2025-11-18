@@ -9,7 +9,7 @@ void Queue::fill_queue()
 	}
 }
 
-void Queue::add(std::vector<int> item)
+void Queue::add(QueueSpace::Node item)
 {
 	if (is_empty())
 	{
@@ -26,7 +26,7 @@ void Queue::add(std::vector<int> item)
 				end += 1;
 				break;
 			}
-			else if (item[0] < queue[i][0])
+			else if (item.cost < queue[i].cost)
 			{
 				queue.insert(queue.begin() + i, item);
 				end += 1;
@@ -36,7 +36,7 @@ void Queue::add(std::vector<int> item)
 	}
 }
 
-std::vector<int> Queue::remove()
+QueueSpace::Node Queue::remove()
 {
 	if (!is_empty())
 	{

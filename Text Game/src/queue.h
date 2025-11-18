@@ -1,18 +1,25 @@
 #pragma once
 #include <iostream>
 #include <vector>
-
-
+namespace QueueSpace
+{
+	struct Node
+	{
+		int cost;
+		int x;
+		int y;
+	};
+};
 
 class Queue
 {
 private:
 	int MAX_SIZE;
-	const std::vector<int> blank_space = { 100, 0 ,0 };
+	const QueueSpace::Node blank_space = { 100, 0 ,0 };
 public:
-	std::vector<std::vector<int>> queue;
+	std::vector<QueueSpace::Node> queue;
 	int end = -1;
-	std::vector<int> temp;
+	QueueSpace::Node temp;
 	
 	Queue(int size)
 	{
@@ -23,9 +30,9 @@ public:
 	//FUNCTIONS
 	void fill_queue();
 
-	std::vector<int> remove();
+	QueueSpace::Node remove();
 
-	void add(std::vector<int> item);
+	void add(QueueSpace::Node item);
 
 	bool is_empty();
 
