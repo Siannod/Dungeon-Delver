@@ -32,7 +32,7 @@ void Combat::fill_field()
 			battle_field[i].push_back(field_pieces.at(start + end));
 		}
 	}
-	battle_field[player_x][player_y][1] = char('X');
+	battle_field[player.x][player.y][1] = char('X');
 	battle_field[monster.monster.x][monster.monster.y][1] = char('O');
 	//monster.battle_field = battle_field;
 }
@@ -51,10 +51,10 @@ void Combat::print_field()
 
 void Combat::move_player()
 {
-	battle_field[player_x][player_y][1] = char(' ');
-	battle_field[new_x][new_y][1] = char('X');
-	player_x = new_x;
-	player_y = new_y;
+	battle_field[player.x][player.y][1] = char(' ');
+	battle_field[new_coords.x][new_coords.y][1] = char('X');
+	player.x = new_coords.x;
+	player.y = new_coords.y;
 }
 
 void Combat::check_moves()
@@ -62,11 +62,11 @@ void Combat::check_moves()
 	options.clear();
 	for (std::pair < int, std::vector<int>> direction : moves)
 	{
-		new_x = player_x + direction.second[0];
-		new_y = player_y + direction.second[1];
-		if (new_x < FIELD_SIZE && 0 < new_x)
+		new_coords.x = player.x + direction.second[0];
+		new_coords.y = player.y + direction.second[1];
+		if (new_coords.x < FIELD_SIZE && 0 < new_coords.x)
 		{
-			if (new_y < FIELD_SIZE && 0 < new_y && battle_field[new_x][new_y][2] == char(' '))
+			if (new_coords.y < FIELD_SIZE && 0 < new_coords.y && battle_field[new_coords.x][new_coords.y][2] == char(' '))
 			{
 				options.push_back(direction.first);
 			}
@@ -100,13 +100,13 @@ int Combat::random(int min, int max)
 
 bool Combat::check_for_enemy(int range)
 {
-	x_diff = abs(player_x - monster.monster.x);
-	y_diff = abs(player_y - monster.monster.y);
-	if (x_diff <= (range * 2) && y_diff == 0)
+	diff.x = abs(player.x - monster.monster.x);
+	diff.y = abs(player.y - monster.monster.y);
+	if (diff.x <= (range * 2) && diff.y == 0)
 	{
 		return true;
 	}
-	else if (x_diff == 0 && y_diff <= range)
+	else if (diff.x == 0 && diff.y <= range)
 	{
 		return true;
 	}

@@ -10,13 +10,11 @@
 class Combat
 {
 public:
-	
 	const int FIELD_SIZE = 11;
 	
 	Combat()
 	{
 		fill_field();
-		
 	}
 	std::map <std::string, std::string> field_pieces =
 	{
@@ -45,13 +43,10 @@ public:
 	std::string start;
 	std::string end;
 
-	int player_x = 1;
-	int player_y = 1;
+	coords player = { 1, 1, 0 };
+	coords new_coords;
+	coords diff;
 
-	int new_x;
-	int new_y;
-	int x_diff;
-	int y_diff;
 
 	bool alive;
 
@@ -60,8 +55,8 @@ public:
 	
 	int temp;
 
-	int* x_ptr = &player_x;
-	int* y_ptr = &player_y;
+	int* x_ptr = &player.x;
+	int* y_ptr = &player.y;
 
 	Node next_step;
 
