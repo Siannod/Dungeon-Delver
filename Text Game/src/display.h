@@ -49,7 +49,7 @@ public:
 
 	void dungeon_move_options();
 
-	bool input_validation(int min, int max, std::string statement, bool valid);
+	bool input_validation(int min, int max, std::string statement);
 
 	void print_inventory(bool valid = false);
 

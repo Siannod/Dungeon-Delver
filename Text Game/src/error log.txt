@@ -1,0 +1,1 @@
+X after fleeing monster viewing stats on return it takes you back into combat.

@@ -19,7 +19,7 @@ void Display::main_menu()
 	std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
 	std::cout << menu_top << std::endl;
 	std::cout << "- Select menu option: ";
-	if (input_validation(1, 4, "- Select menu option: ", false))
+	if (input_validation(1, 4, "- Select menu option: "))
 	{
 		if (choice_int == 1) { clear();  dungeon_move_options(); }
 		else if (choice_int == 2) { clear(), print_inventory(); }
@@ -38,7 +38,7 @@ void Display::dungeon_move_options()
 	}
 	std::cout << ">> " << temp.size() + 1 << ". Back to main menu" << std::endl;
 	std::cout << "- ";
-	input_validation(1, temp.size() + 1, "- ", false);
+	input_validation(1, temp.size() + 1, "- ");
 	if (choice_int < temp.size() + 1)
 	{
 		x_mod = dungeon.direction.at(temp[choice_int - 1])[0];
@@ -56,8 +56,9 @@ void Display::dungeon_move_options()
 	else { clear(); main_menu(); }
 }
 
-bool Display::input_validation(int min, int max, std::string statement, bool valid)
+bool Display::input_validation(int min, int max, std::string statement)
 {
+	bool valid = false;
 	while (!valid)
 	{
 		std::cin >> choice_string;
@@ -180,7 +181,7 @@ void Display::combat_menu()
 	std::cout << "| 5. End Turn         |           |" << std::endl;
 	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
 	std::cout << "- ";
-	input_validation(1, 5, "- ", false);
+	input_validation(1, 5, "- ");
 }
 
 void Display::combat_move()
@@ -194,7 +195,7 @@ void Display::combat_move()
 	}
 	std::cout << ">> " << combat.options.size() + 1 << ". back" << std::endl;
 	std::cout << "- ";
-	input_validation(1, combat.options.size()+1, "- ", false);
+	input_validation(1, combat.options.size()+1, "- ");
 	if (choice_int < combat.options.size() + 1)
 	{
 		combat.moves_left -= 1;
@@ -225,7 +226,7 @@ void Display::combat_fight()
 			count += 1;
 			
 		}
-		input_validation(1, count, "- ", false);
+		input_validation(1, count, "- ");
 		index = player.inventory.weapon_index[choice_int];
 		temp_item = player.inventory.inventory[index];
 		if (combat.check_for_enemy(player.inventory.item_type.at(temp_item.item_type).range))

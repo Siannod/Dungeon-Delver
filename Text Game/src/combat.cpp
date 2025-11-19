@@ -33,7 +33,7 @@ void Combat::fill_field()
 		}
 	}
 	battle_field[player_x][player_y][1] = char('X');
-	battle_field[monster.monster_x][monster.monster_y][1] = char('O');
+	battle_field[monster.monster.x][monster.monster.y][1] = char('O');
 	//monster.battle_field = battle_field;
 }
 
@@ -100,8 +100,8 @@ int Combat::random(int min, int max)
 
 bool Combat::check_for_enemy(int range)
 {
-	x_diff = abs(player_x - monster.monster_x);
-	y_diff = abs(player_y - monster.monster_y);
+	x_diff = abs(player_x - monster.monster.x);
+	y_diff = abs(player_y - monster.monster.y);
 	if (x_diff <= (range * 2) && y_diff == 0)
 	{
 		return true;
@@ -123,8 +123,8 @@ void Combat::monster_turn()
 
 void Combat::move_monster(int x, int y)
 {
-	battle_field[monster.monster_x][monster.monster_y][1] = char(' ');
-	monster.monster_x = x;
-	monster.monster_y = y;
-	battle_field[monster.monster_x][monster.monster_y][1] = char('O');
+	battle_field[monster.monster.x][monster.monster.y][1] = char(' ');
+	monster.monster.x = x;
+	monster.monster.y = y;
+	battle_field[monster.monster.x][monster.monster.y][1] = char('O');
 }

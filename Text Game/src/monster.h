@@ -8,6 +8,23 @@
 #include "stack.h"
 #include "queue.h"
 
+struct coords
+{
+	int x;
+	int y;
+	int cost;
+};
+
+struct MonsterStats
+{
+	int MAX_HEALTH;
+	int health;
+	int range;
+	int damage;
+	int moves_left = MAX_MOVES;
+	const int MAX_MOVES = 5;
+};
+
 class Monster
 {
 public:
@@ -21,36 +38,18 @@ public:
 		SIZE = size;
 		battle_field = field_ptr;
 	}
-	const int MAX_MOVES = 5;
-	int MAX_HEALTH;
-	int health;
-	int range = 1;
-	int damage;
+	MonsterStats stats;
 
-	int monster_x = 11;
-	int monster_y = 8;
 	QueueSpace::Node next_node;
-	int temp_x;
-	int temp_y;
-	int temp_cost;
+	coords temp;
+	coords diff;
+	coords new_coords;
+	coords aim;
+	coords monster = { 11, 8, 0 };
 
-	int x_diff;
-	int y_diff;
-	int total_diff;
-
-	int new_x;
-	int new_y;
-	int new_cost;
-
-	int aim[3];
-	int aim_x;
-	int aim_y;
 	int* player_x;
 	int* player_y;
-
 	int SIZE;
-
-	int moves_left = MAX_MOVES;
 
 	bool route_found = false;
 

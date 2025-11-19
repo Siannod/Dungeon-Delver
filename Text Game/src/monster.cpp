@@ -3,9 +3,9 @@
 
 bool Monster::player_in_range()
 {
-	x_diff = abs(*player_x - monster_x);
-	y_diff = abs(*player_y - monster_y);
-	if ((x_diff == 2 && y_diff == 0) || (x_diff == 0 && y_diff == 1))
+	diff.x = abs(*player_x - monster.x);
+	diff.y = abs(*player_y - monster.y);
+	if ((diff.x == 2 && diff.y == 0) || (diff.x == 0 && diff.y == 1))
 	{
 		return true;
 	}
@@ -14,41 +14,44 @@ bool Monster::player_in_range()
 
 void Monster::next_move()
 {
-	aim[0] = 1000;
-	for (int i = range; i > range - 3; i--)
+	if (aim.x != monster.x && aim.y != monster.y)
 	{
-		if (i > 0)
+		aim.cost = 1000;
+		for (int i = stats.range; i > stats.range - 3; i--)
 		{
-			for (std::pair <int, std::vector<int>> direction : moves)
+			if (i > 0)
 			{
-				new_x = *player_x + (direction.second[0] * i);
-				new_y = *player_y + (direction.second[1] * i);
-				if (check_in_range_visited(new_x, new_y))
+				for (std::pair <int, std::vector<int>> direction : moves)
 				{
-					if (battle_field->at(new_x)[new_y][1] == ' ')
+					new_coords.x = *player_x + (direction.second[0] * i);
+					new_coords.y = *player_y + (direction.second[1] * i);
+					if (check_in_range_visited(new_coords.x, new_coords.y))
 					{
-						compare_spot();
+						if (battle_field->at(new_coords.x)[new_coords.y][1] == ' ')
+						{
+							compare_spot();
+						}
 					}
 				}
 			}
-		}
-		else
-		{
-			break;
+			else
+			{
+				break;
+			}
 		}
 	}
 }
 
 void Monster::compare_spot()
 {
-	x_diff = abs(monster_x - new_x);
-	y_diff = abs(monster_y - new_y);
-	total_diff = x_diff + y_diff;
-	if (aim[0] > total_diff)
+	diff.x = abs(monster.x - new_coords.x);
+	diff.y = abs(monster.y - new_coords.y);
+	diff.cost = diff.x + diff.y;
+	if (aim.cost > diff.cost)
 	{
-		aim[0] = total_diff;
-		aim[1] = new_x;
-		aim[2] = new_y;
+		aim.cost = diff.cost;
+		aim.x = new_coords.x;
+		aim.y = new_coords.y;
 	}
 }
 
@@ -57,14 +60,12 @@ void Monster::path_to_player_healthy()
 	route.empty();
 	queue.empty();
 	visited.clear();
-	aim_x = aim[1];
-	aim_y = aim[2];
 
-	start_cost = 0 + abs(aim_x - monster_x) + abs(aim_y - monster_y);
+	start_cost = 0 + abs(aim.x - monster.x) + abs(aim.y - monster.y);
 
-	visited.push_back({ monster_x, monster_y });
+	visited.push_back({ monster.x, monster.y });
 
-	current_node = { queue.queue, visited, start_cost ,monster_x, monster_y, 0 };
+	current_node = { queue.queue, visited, start_cost ,monster.x, monster.y, 0 };
 
 	route.push(current_node);
 
@@ -76,7 +77,7 @@ void Monster::path_to_player_healthy()
 		visited = current_node.visited;
 		check_next_steps(i);
 		next_node = queue.remove();
-		if (current_node.x == aim_x && current_node.y == aim_y) // get to end
+		if (current_node.x == aim.x && current_node.y == aim.y) // get to end
 		{
 			route.push({ queue.queue, visited, next_node.cost, current_node.x, current_node.y, i + 1 });
 			break;
@@ -96,7 +97,7 @@ void Monster::path_to_player_healthy()
 
 bool Monster::check_in_range_visited(int x, int y)
 {
-	if (x > 0 && x < SIZE && y > 0 && y < SIZE) // in range
+	if (x > 0 && x < SIZE && y > 0 && y < SIZE && battle_field->at(x)[y][1] == char(' ')) // in range
 	{
 		if (visited.size() != 0) //items in visited
 		{
@@ -120,13 +121,13 @@ void Monster::check_next_steps(int i)
 {
 	for (std::pair <int, std::vector<int>> direction : moves)
 	{
-		temp_x = current_node.x + direction.second[0];
-		temp_y = current_node.y + direction.second[1];
-		if (check_in_range_visited(temp_x, temp_y))
+		temp.x = current_node.x + direction.second[0];
+		temp.y = current_node.y + direction.second[1];
+		if (check_in_range_visited(temp.x, temp.y))
 		{
-			visited.push_back({ temp_x, temp_y });
-			temp_cost = abs(aim_x - temp_x) + abs(aim_y - temp_y);
-			queue.add({ temp_cost, temp_x, temp_y });
+			visited.push_back({ temp.x, temp.y });
+			temp.cost = abs(aim.x - temp.x) + abs(aim.y - temp.y);
+			queue.add({ temp.cost, temp.x, temp.y });
 		}
 	}
 }
