@@ -1,29 +1,14 @@
 #pragma once
 #include "commands.h"
+#include "structs.h"
 #include <iostream>
 #include <map>
 #include <string>
 #include <vector>
-    
 
 
-namespace InventorySpace
-{
-    struct inventory_slot
-    {
-        int item_id;
-        int item_type;
-        int dmg_bonus;
-        std::string name;
-    };
 
-    struct item_type
-    {
-        std::string name;
-        int range;
-        int damage;
-    };
-};
+
 
 class Inventory
 {
@@ -72,14 +57,15 @@ public:
         {4, {"Potion", 0 ,0}}
     };
 
-    
+    int healing;
+    bool valid;
 
     //FUNCTION
     void initialise();
 
-    bool input_validation(int min, int max, std::string statement, bool valid = false);
+    bool input_validation(int min, int max, std::string statement);
 
-    void do_command();
+    void do_command(PlayerStats &stats);
 
     void print();
 
@@ -95,4 +81,9 @@ public:
 
     bool find_item_of_type(int type);
 
+    void use(PlayerStats &stats);
+
+    void use_health_potion(PlayerStats& stats);
+
+    int random(int min, int max);
 };

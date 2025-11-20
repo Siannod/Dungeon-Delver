@@ -49,8 +49,9 @@ void Inventory::initialise()
 
 }
 
-bool Inventory::input_validation(int min, int max, std::string statement, bool valid)
+bool Inventory::input_validation(int min, int max, std::string statement)
 {
+    valid = false;
     while (!valid)
     {
         std::cin >> choice_string;
@@ -74,7 +75,7 @@ bool Inventory::input_validation(int min, int max, std::string statement, bool v
     }
 }
 
-void Inventory::do_command()
+void Inventory::do_command(PlayerStats &stats)
 {
     command_word = command.command[0];
     if (command.command.empty()) { std::cout << "[!] EMPTY COMMAND, TRY AGAIN.\n"; }
@@ -82,6 +83,7 @@ void Inventory::do_command()
     else if (command_word == "view") { view(); }
     else if (command_word == "drop") { set(); }
     else if (command_word == "back") { back(); }
+    else if (command_word == "use") { use(stats); }
     else { std::cout << "[!] INVALID COMMAND INPUT, TRY AGAIN\n"; }
     std::cout << "\n";
 }
@@ -142,4 +144,42 @@ bool Inventory::find_item_of_type(int type)
         }
     }
     return false;
+}
+
+void Inventory::use(PlayerStats &stats)
+{
+    if (command.command[1] == "health_potion") 
+    { 
+        use_health_potion(stats); 
+    }
+    else
+    {
+        std::cout << "[!] NO ITEM FOUND THAT CAN BE USED" << std::endl;
+    }
+}
+
+void Inventory::use_health_potion(PlayerStats& stats)
+{
+    valid = false;
+    do
+    {
+        healing = stats.level + random(2, 8);
+        if (healing + stats.health <= stats.MAX_HEALTH)
+        {
+            valid = true;
+        }
+    } while (!valid);
+    stats.health += healing;
+}
+
+int Inventory::random(int min, int max)
+{
+    int temp;
+    if (max == 0)
+    {
+        return 0;
+    }
+    srand(time(0));
+    temp = min + rand() % (max - min);
+    return temp;
 }

@@ -8,23 +8,8 @@
 #include "player.h"
 #include "stack.h"
 #include "queue.h"
+#include "structs.h"
 
-struct coords
-{
-	int x;
-	int y;
-	int cost;
-};
-
-struct MonsterStats
-{
-	int MAX_HEALTH;
-	int health;
-	int range;
-	int damage;
-	int moves_left = 5;
-	const int MAX_MOVES = 5;
-};
 
 class Monster
 {

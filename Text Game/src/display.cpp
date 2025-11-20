@@ -25,7 +25,17 @@ void Display::main_menu()
 		{
 			if (choice_int == 1) { clear();  dungeon_move_options(); }
 			else if (choice_int == 2) { clear(), print_inventory(); }
-			else if (choice_int == 4) { clear(), player.print_stats(); wait(); }
+			else if (choice_int == 4)
+			{
+				clear(); 
+				player.print_stats(); 
+				wait();
+				if (player.check_level_up())
+				{
+					clear();
+					player.level_up();
+				}
+			}
 		}
 	} while (running);
 }
@@ -90,11 +100,12 @@ void Display::print_inventory(bool valid)
 	while (!player.inventory.go_back)
 	{
 		player.inventory.print();
+		std::cout << ">> Coins: " << player.stats.coin << std::endl;
 		std::cout << ">> Type 'help' for more commands" << std::endl;
 		std::cout << "- ";
 		std::getline(std::cin, choice_string);
 		player.inventory.command.delimit(choice_string);
-		player.inventory.do_command();
+		player.inventory.do_command(player.stats);
 		wait();
 		clear();
 	}
@@ -136,6 +147,7 @@ void Display::monster_encounter(bool alive)
 				clear();
 				std::cout << ">> Congratulations! You defeated the monster, you gained " << combat.monster.coin_worth(player.stats.level) << std::endl;
 				player.stats.coin += combat.monster.value;
+				player.stats.monsters_killed += 1;
 			}
 			wait(); 
 		}

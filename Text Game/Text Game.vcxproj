@@ -146,6 +146,7 @@
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\queue.h" />
     <ClInclude Include="src\stack.h" />
+    <ClInclude Include="src\structs.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\error log.txt" />

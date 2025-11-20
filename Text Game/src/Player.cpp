@@ -3,13 +3,14 @@
 
 void Player::level_up()
 {
-	//to_level = true;
 	if (to_level)
 	{
 		print_stats();
 		std::cout << "- Which stat do you want to level up? ";
 
 		range_validation(1, stats.stats.size(), "- Which stat do you want to level up? ");
+		stats.level += 1;
+
 	}
 	else
 	{
@@ -49,7 +50,14 @@ void Player::print_stats()
 	{
 		std::cout << ">> " << (i + 1) << "- " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
 	}
-	std::cout << ">> Press enter to return...";
+	if (check_level_up)
+	{
+		std::cout << ">> Level Up Available! Press Enter to level up." << std::endl;
+	}
+	else
+	{
+		std::cout << ">> Press enter to return...";
+	}
 }
 
 void Player::move(int x_mod, int y_mod)
@@ -106,6 +114,16 @@ void Player::create_character()
 	stats.health = stats.MAX_HEALTH;
 	std::cout << ">> Enter your name: " << std::endl;
 	std::cout << "- ";
-	std::cin >> player_name;
+	std::cin >> stats.name;
 	system("cls");
+}
+
+bool Player::check_level_up()
+{
+	if (stats.monsters_killed > stats.level * 1.2)
+	{
+		to_level = true;
+		return true;
+	}
+	return false;
 }

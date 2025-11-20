@@ -2,29 +2,14 @@
 
 #include "inventory.h"
 #include "stack.h"
+#include "structs.h"
 
 #include <iostream>
 #include <map>
 #include <vector>
 #include <algorithm>
 #include <string>
-struct PlayerStats
-{
-	int x = 1;
-	int y = 1;
-	int MAX_HEALTH;
-	int health = MAX_HEALTH;
-	int level;
-	int coin;
-	int upgrade_points;
-	std::string name;
-	std::map <std::string, int> stats =
-	{
-		{"Strength", 0},
-		{"Dexterity", 0},
-		{"Constitution", 0}
-	};
-};
+
 
 
 class Player
@@ -49,7 +34,7 @@ public:
 	PlayerStats* stats_ptr = &stats;
 
 	//strings
-	std::string player_name;
+	//std::string player_name;
 	//bool
 	bool able_to_flee = true;
 	
@@ -80,4 +65,6 @@ public:
 	bool range_validation(int min, int max, std::string statement, bool valid = false);
 	
 	void move(int x_mod, int y_mod);
+
+	bool check_level_up();
 };
