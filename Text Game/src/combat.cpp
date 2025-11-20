@@ -128,3 +128,14 @@ void Combat::move_monster(int x, int y)
 	monster.monster.y = y;
 	battle_field[monster.monster.x][monster.monster.y][1] = char('O');
 }
+
+int Combat::calculate_damage(struct InventorySpace::inventory_slot weapon)
+{
+	int damage;
+	if (weapon.item_type == 1)
+	{
+		damage = monster.random(1, inv.item_types[1].damage);
+		damage = damage + weapon.dmg_bonus + stats->stats.at("Strength");
+		return damage;
+	}
+}

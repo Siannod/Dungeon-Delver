@@ -6,15 +6,18 @@
 #include <Windows.h>
 #include "player.h"
 #include "monster.h"
+#include "inventory.h"
 
 class Combat
 {
 public:
+	Inventory inv = Inventory(true);
 	const int FIELD_SIZE = 11;
-	
-	Combat()
+	PlayerStats* stats;
+	Combat(PlayerStats* stats_ptr)
 	{
 		fill_field();
+		stats = stats_ptr;
 	}
 	std::map <std::string, std::string> field_pieces =
 	{
@@ -60,7 +63,7 @@ public:
 
 	Node next_step;
 
-	Monster monster = Monster(x_ptr, y_ptr, FIELD_SIZE, field_ptr);
+	Monster monster = Monster(stats, FIELD_SIZE, field_ptr);
 	//FUNCTIONS
 	void fill_field();
 
@@ -79,4 +82,6 @@ public:
 	bool check_for_enemy(int range);
 
 	void monster_turn();
+
+	int calculate_damage(struct InventorySpace::inventory_slot weapon);
 };

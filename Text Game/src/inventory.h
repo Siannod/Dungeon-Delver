@@ -51,7 +51,7 @@ public:
 
     std::map <int, InventorySpace::inventory_slot> items =
     {
-          //ID TYPE DMG_BONUS NAME
+      //ID TYPE DMG_BONUS NAME
         {0, {0, 0, 0, "Empty"}},
         {1, {1, 1, 0, "Sword"}},
         {2, {2, 2, 0, "Bow"}},
@@ -59,7 +59,7 @@ public:
         {4, {4, 4, 0, "Health Potion"}}
     };
 
-    std::map <int, InventorySpace::item_type> item_type =
+    std::map <int, InventorySpace::item_type> item_types =
     {
         {0, {"Empty", NULL, NULL}},
         {1, {"Weapon", 1, 8}},

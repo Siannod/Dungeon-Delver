@@ -20,7 +20,7 @@ private:
 public:
 	Player player = Player(true);
 	Dungeon dungeon;
-	Combat combat;
+	Combat combat = Combat(player.stats_ptr);
 
 	int choice_int;
 	int min;

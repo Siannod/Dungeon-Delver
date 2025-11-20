@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 
+#include "player.h"
 #include "stack.h"
 #include "queue.h"
 
@@ -21,7 +22,7 @@ struct MonsterStats
 	int health;
 	int range;
 	int damage;
-	int moves_left = MAX_MOVES;
+	int moves_left = 5;
 	const int MAX_MOVES = 5;
 };
 
@@ -31,10 +32,10 @@ public:
 	Stack route;
 	Queue queue = Queue(100);
 	std::vector<std::vector<std::string>>* battle_field;
-	Monster(int* x, int* y, int size, std::vector<std::vector<std::string>>* field_ptr)
+	PlayerStats* player_stats_ptr;
+	Monster(PlayerStats* stats_ptr, int size, std::vector<std::vector<std::string>>* field_ptr)
 	{
-		player_x = x;
-		player_y = y;
+		player_stats_ptr = stats_ptr;
 		SIZE = size;
 		battle_field = field_ptr;
 	}
@@ -49,6 +50,7 @@ public:
 
 	int* player_x;
 	int* player_y;
+
 	int SIZE;
 
 	bool route_found = false;
@@ -79,9 +81,13 @@ public:
 
 	//internal
 
+	void create_monster();
+
 	void compare_spot();
 
 	bool check_in_range_visited(int x, int y);
 
 	void check_next_steps(int i);
+
+	int random(int min, int max);
 };

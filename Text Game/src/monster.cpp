@@ -1,6 +1,31 @@
 #pragma once
 #include "monster.h"
 
+void Monster::create_monster()
+{
+	//HEALTH
+	stats.MAX_HEALTH = player_stats_ptr->MAX_HEALTH + random(0, 3 * player_stats_ptr->level);
+	//RANGE
+	int temp = random(0, 1);
+	if (temp == 0)
+	{
+		stats.range = 1;
+	}
+	else
+	{
+		stats.range = 7;
+	}
+	//DAMAGE
+	if (stats.range == 1)
+	{
+		stats.damage = random(4, 8 + player_stats_ptr->level);
+	}
+	else
+	{
+		stats.damage = random(3, 6 + player_stats_ptr->level);
+	}
+}
+
 bool Monster::player_in_range()
 {
 	diff.x = abs(*player_x - monster.x);
@@ -130,4 +155,16 @@ void Monster::check_next_steps(int i)
 			queue.add({ temp.cost, temp.x, temp.y });
 		}
 	}
+}
+
+int Monster::random(int min, int max)
+{
+	int temp;
+	if (max == 0)
+	{
+		return 0;
+	}
+	srand(time(0));
+	temp = min + rand() % (max - min);
+	return temp;
 }

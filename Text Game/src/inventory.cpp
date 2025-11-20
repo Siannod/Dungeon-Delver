@@ -105,8 +105,8 @@ void Inventory::view()
     index = stoi(command.command[1]);
     std::cout << ">> Inventory slot " << index << " details:" << std::endl;
     std::cout << ">> Name: " << inventory[index].name << std::endl;
-    std::cout << ">> Damage: 1 - " << item_type.at(inventory[index].item_type).damage << std::endl;
-    std::cout << ">> Range: " << item_type.at(inventory[index].item_type).range << std::endl;
+    std::cout << ">> Damage: 1 - " << item_types.at(inventory[index].item_type).damage << std::endl;
+    std::cout << ">> Range: " << item_types.at(inventory[index].item_type).range << std::endl;
 }
 
 void Inventory::set()

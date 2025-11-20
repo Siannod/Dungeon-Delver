@@ -8,6 +8,24 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+struct PlayerStats
+{
+	int x;
+	int y;
+	int MAX_HEALTH;
+	int health = MAX_HEALTH;
+	int level;
+	int coin;
+	int upgrade_points;
+	std::string name;
+	std::map <std::string, int> stats =
+	{
+		{"Strength", 0},
+		{"Dexterity", 0},
+		{"Constitution", 0}
+	};
+};
+
 
 class Player
 {
@@ -23,19 +41,13 @@ public:
 	
 	Player(bool run)
 	{
-		upgrade_points = 5;
+		stats.upgrade_points = 5;
 		create_character();
 	}
-	//PLAYER STATS
-	//ints
-	int level = 1;
-	int coin = 0;
-	int health_max;
-	int health_current;
-	int upgrade_points;
-	
-	int player_x = 1;
-	int player_y = 1;
+
+	PlayerStats stats;
+	PlayerStats* stats_ptr = &stats;
+
 	//strings
 	std::string player_name;
 	//bool
@@ -51,12 +63,7 @@ public:
 	
 	
 	//MAPS
-	std::map <std::string, int> stats =
-	{
-		{"Strength", 0},
-		{"Dexterity", 0},
-		{"Constitution", 0}
-	};
+	
 
 	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};

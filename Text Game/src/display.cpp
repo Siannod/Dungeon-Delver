@@ -31,7 +31,7 @@ void Display::dungeon_move_options()
 {
 	dungeon.print_dungeon();
 	temp.clear();
-	dungeon.check_paths({ player.player_x, player.player_y }, temp);
+	dungeon.check_paths({ player.stats.x, player.stats.y }, temp);
 	for (int i = 0; i < temp.size(); i++)
 	{
 		std::cout << ">> " << i + 1 << ". " << dungeon.directions.at(temp[i]) << std::endl;
@@ -45,10 +45,10 @@ void Display::dungeon_move_options()
 		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
 
 		player.move(x_mod, y_mod);
-		std::cout << dungeon.dungeon[player.player_x][player.player_y] << std::endl;
-		if (dungeon.dungeon[player.player_x][player.player_y] == "3") { monster_encounter(); }
-		dungeon.move_player(player.player_x, player.player_y, x_mod, y_mod);
-		std::cout << dungeon.dungeon[player.player_x][player.player_y];
+		std::cout << dungeon.dungeon[player.stats.x][player.stats.y] << std::endl;
+		if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") { monster_encounter(); }
+		dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
+		std::cout << dungeon.dungeon[player.stats.x][player.stats.y];
 
 		clear();
 		dungeon_move_options();
@@ -58,7 +58,6 @@ void Display::dungeon_move_options()
 
 bool Display::input_validation(int min, int max, std::string statement)
 {
-	bool valid = false;
 	while (!valid)
 	{
 		std::cin >> choice_string;
@@ -99,9 +98,10 @@ void Display::print_inventory(bool valid)
 	main_menu();
 }
 
-void Display::monster_encounter(bool alive)
+void Display::monster_encounter(bool alive) 
 {
 	clear();
+	combat.monster.create_monster();
 	do
 	{
 		player.able_to_flee = true;
@@ -133,13 +133,13 @@ void Display::monster_encounter(bool alive)
 			if(player.able_to_flee)
 			{
 				player.able_to_flee = false;
-				if (combat.flee(player.stats.at("Dexterity")))
+				if (combat.flee(player.stats.stats.at("Dexterity")))
 				{
 					clear();
 					std::cout << ">> You succesfully fled the monster" << std::endl;
 					player.able_to_flee = true;
+					alive = false;
 					wait();
-					main_menu();
 				}
 				else
 				{
@@ -156,7 +156,10 @@ void Display::monster_encounter(bool alive)
 		if (choice_int == 5 || (!combat.action_left && combat.moves_left == 0))
 		{
 			combat.monster_turn();
+			combat.monster.route.print_stack();
 			int_temp = combat.monster.route.top;
+			//combat.battle_field[3][1][1] = char('Q');
+			//combat.print_field();
 			for (int i = 0; i < int_temp; i++)
 			{
 				combat.next_step = combat.monster.route.pop();
@@ -164,6 +167,7 @@ void Display::monster_encounter(bool alive)
 				Sleep(2000);
 				clear();
 				combat.print_field();
+				//combat.monster.route.print_stack();
 			}
 		}
 	} while (alive);
@@ -172,7 +176,7 @@ void Display::monster_encounter(bool alive)
 void Display::combat_menu()
 {
 	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
-	std::cout << "| 1. Move    2. Items | Health: " << player.health_current << " |" << std::endl;
+	std::cout << "| 1. Move    2. Items | Health: " << player.stats.health << " |" << std::endl;
 	std::cout << "| 3. Fight   4. Flee  | Moves: " << combat.moves_left << "  |" << std::endl;
 	std::cout << "| 5. End Turn         |           |" << std::endl;
 	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
@@ -195,8 +199,8 @@ void Display::combat_move()
 	if (choice_int < combat.options.size() + 1)
 	{
 		combat.moves_left -= 1;
-		combat.new_x = combat.player_x + combat.moves.at(combat.options[choice_int - 1])[0];
-		combat.new_y = combat.player_y + combat.moves.at(combat.options[choice_int - 1])[1];
+		combat.new_coords.x = combat.player.x + combat.moves.at(combat.options[choice_int - 1])[0];
+		combat.new_coords.y = combat.player.y + combat.moves.at(combat.options[choice_int - 1])[1];
 		combat.move_player();
 	}
 	else
@@ -212,22 +216,24 @@ void Display::combat_fight()
 	count = 1;
 	if (player.inventory.weapon_index.size() != 0)
 	{
-		for (int item : player.inventory.weapon_index)
+		
+		
+		if (combat.check_for_enemy(player.inventory.item_types.at(temp_item.item_type).range))
 		{
-			temp_item = player.inventory.inventory[item];
-			if (temp_item.item_type == 1 || temp_item.item_type == 2)
+			for (int item : player.inventory.weapon_index)
 			{
-				std::cout << ">> " << count << ". " << temp_item.name << std::endl;
-			}
-			count += 1;
-			
-		}
-		input_validation(1, count, "- ");
-		index = player.inventory.weapon_index[choice_int];
-		temp_item = player.inventory.inventory[index];
-		if (combat.check_for_enemy(player.inventory.item_type.at(temp_item.item_type).range))
-		{
+				temp_item = player.inventory.inventory[item];
+				if (temp_item.item_type == 1 || temp_item.item_type == 2)
+				{
+					std::cout << ">> " << count << ". " << temp_item.name << std::endl;
+				}
+				count += 1;
 
+			}
+			input_validation(1, count, "- ");
+			index = player.inventory.weapon_index[choice_int];
+			temp_item = player.inventory.inventory[index];
+			
 			combat.action_left = false;
 		}
 		else
