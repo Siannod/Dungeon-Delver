@@ -34,6 +34,7 @@ void Display::main_menu()
 				{
 					clear();
 					player.level_up();
+					
 				}
 			}
 		}
@@ -58,10 +59,10 @@ void Display::dungeon_move_options()
 		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
 
 		player.move(x_mod, y_mod);
-		std::cout << dungeon.dungeon[player.stats.x][player.stats.y] << std::endl;
+
 		if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") { monster_encounter(); }
+		if (dungeon.dungeon[player.stats.x][player.stats.y] == "4") { loot_room(); }
 		dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
-		std::cout << dungeon.dungeon[player.stats.x][player.stats.y];
 
 		clear();
 		dungeon_move_options();
@@ -285,4 +286,65 @@ void Display::monster_attack()
 			wait();
 		}
 	}
+}
+
+void Display::loot_room()
+{
+	clear();
+	index = combat.random(0, player.inventory.items.size());
+	statement = player.inventory.items.at(index).name;
+	bonus = combat.random(0, player.stats.level);
+	std::cout << ">> As you make your way through the dungeon you come across a door." << std::endl;
+	std::cout << ">> Opening it reveals a sturdy chest in the centre, wrought iron bands wrap around securing it in place" << std::endl;
+	if (0 < player.inventory.items.at(index).item_type && player.inventory.items.at(index).item_type < 4 && bonus > 0)
+	{
+		
+		std::cout << ">> Prying the bands away and lifting the heavy lid reveals a +" << bonus << " " << statement << std::endl;
+	}
+	else
+	{
+		bonus = 0;
+		std::cout << ">> Prying the bands away and lifting the heavy lid reveals a " << statement << std::endl;
+	}
+	valid = false;
+	if (yes_no_validation("[?] Do you wish to take it? (y/n) "))
+	{
+		for (int i = 0; i < player.inventory.inventory.size(); i++)
+		{
+			if (player.inventory.inventory[i].item_id == 0)
+			{
+				player.inventory.set(i, index);
+				player.inventory.inventory[i].dmg_bonus = bonus;
+				break;
+			}
+		}
+	}
+	else
+	{
+		std::cout << ">> You decide not to take the " << statement << std::endl;
+	}
+}
+
+bool Display::yes_no_validation(std::string question)
+{
+	valid = false;
+	do
+	{
+		std::cout << question;
+		std::cin >> choice_string;
+		if (choice_string == "y")
+		{
+			valid = true;
+			return true;
+		}
+		else if (choice_string == "n")
+		{
+			valid = false;
+			return false;
+		}
+		else
+		{
+			std::cout << "[!] INVALID INPUT, TRY AGAIN." << std::endl;
+		}
+	} while (!valid);
 }

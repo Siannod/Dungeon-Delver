@@ -3,19 +3,31 @@
 
 void Player::level_up()
 {
-	if (to_level)
+	do
 	{
 		print_stats();
 		std::cout << "- Which stat do you want to level up? ";
 
 		range_validation(1, stats.stats.size(), "- Which stat do you want to level up? ");
 		stats.level += 1;
-
-	}
-	else
-	{
-		std::cout << "[!] You cannot level up at this time." << std::endl;
-	}
+		stat_name = stat_names[choice_int - 1];
+		std::cout << ">> You wish to increase " << stat_name << " from " << stats.stats.at(stat_name) << " to " << stats.stats.at(stat_name) + 1 << "? (y/n) ";
+		std::cin >> choice_string;
+		if (choice_string == "y")
+		{
+			stats.stats.at(choice_string) += 1;
+			to_level = false;
+		}
+		else if (choice_string == "n")
+		{
+			system("cls");
+		}
+		else
+		{
+			std::cout << "[!] Invalid Input, try again." << std::endl;
+			_getch();
+		}
+	} while (to_level);
 }
 
 bool Player::range_validation(int min, int max, std::string statement, bool valid)
@@ -50,7 +62,7 @@ void Player::print_stats()
 	{
 		std::cout << ">> " << (i + 1) << "- " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
 	}
-	if (check_level_up)
+	if (check_level_up())
 	{
 		std::cout << ">> Level Up Available! Press Enter to level up." << std::endl;
 	}
@@ -120,7 +132,7 @@ void Player::create_character()
 
 bool Player::check_level_up()
 {
-	if (stats.monsters_killed > stats.level * 1.2)
+	if (stats.monsters_killed >= (stats.level * 1.2))
 	{
 		to_level = true;
 		return true;

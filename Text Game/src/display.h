@@ -30,6 +30,7 @@ public:
 	bool valid = false;
 	int count;
 	int index;
+	int bonus;
 
 	int int_temp;
 	std::string statement;
@@ -66,4 +67,8 @@ public:
 	void print_monster_moves();
 
 	void monster_attack();
+
+	void loot_room();
+
+	bool yes_no_validation(std::string question);
 };

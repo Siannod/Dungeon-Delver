@@ -9,6 +9,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <conio.h>
+
 
 
 
@@ -52,6 +54,7 @@ public:
 
 	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};
+	std::string stat_name;
 	std::vector<int> temp;
 
 

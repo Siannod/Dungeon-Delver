@@ -98,7 +98,7 @@ void Inventory::print()
 
 int Inventory::set(int index, int id)
 {
-    inventory[index].item_id = id;
+    inventory[index] = items[id];
     return 0;
 }
 
@@ -136,12 +136,14 @@ void Inventory::find_weapons()
 
 bool Inventory::find_item_of_type(int type)
 {
+    index = 0;
     for (InventorySpace::inventory_slot item : inventory)
     {
         if (item.item_type == type)
         {
             return true;
         }
+        index += 1;
     }
     return false;
 }
@@ -150,7 +152,10 @@ void Inventory::use(PlayerStats &stats)
 {
     if (command.command[1] == "health_potion") 
     { 
-        use_health_potion(stats); 
+        if (find_item_of_type(4))
+        {
+            use_health_potion(stats);
+        }
     }
     else
     {
@@ -163,14 +168,25 @@ void Inventory::use_health_potion(PlayerStats& stats)
     valid = false;
     do
     {
-        healing = stats.level + random(2, 8);
-        if (healing + stats.health <= stats.MAX_HEALTH)
+        if (stats.health == stats.MAX_HEALTH)
         {
+            std::cout << ">> Health is already at max." << std::endl;
             valid = true;
+        }
+        else
+        {
+            healing = stats.level + random(2, 8);
+            if (healing + stats.health <= stats.MAX_HEALTH)
+            {
+                set(index, 0);
+                valid = true;
+            }
         }
     } while (!valid);
     stats.health += healing;
 }
+
+
 
 int Inventory::random(int min, int max)
 {
