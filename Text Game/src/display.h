@@ -60,4 +60,10 @@ public:
 	void combat_move();
 
 	void combat_fight();
+
+	void print_weapons();
+
+	void print_monster_moves();
+
+	void monster_attack();
 };

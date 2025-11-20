@@ -128,32 +128,21 @@ void Display::monster_encounter(bool alive)
 		} 
 		//SEE INVENTORY
 		else if (choice_int == 2) { print_inventory(); } 
-		else if (choice_int == 3 && combat.action_left) { combat_fight(); }
+		else if (choice_int == 3) 
+		{ 
+			combat_fight(); 
+			if (!combat.check_monster_alive())
+			{
+				clear();
+				std::cout << ">> Congratulations! You defeated the monster, you gained " << combat.monster.coin_worth(player.stats.level) << std::endl;
+				player.stats.coin += combat.monster.value;
+			}
+			wait(); 
+		}
 		//FLEE
 		else if (choice_int == 4)
 		{
-			if(player.able_to_flee)
-			{
-				player.able_to_flee = false;
-				if (combat.flee(player.stats.stats.at("Dexterity")))
-				{
-					clear();
-					std::cout << ">> You succesfully fled the monster" << std::endl;
-					player.able_to_flee = true;
-					alive = false;
-					wait();
-				}
-				else
-				{
-					std::cout << ">> You were unsuccessful in fleeing the monster, you must stay and fight" << std::endl;
-					wait();
-				}
-			}
-			else
-			{
-				std::cout << ">> You cannot try to flee again this round, you must stay and fight" << std::endl;
-				wait();
-			}
+			combat.flee(player.able_to_flee, player.stats.stats.at("Dexterity"));
 		} 
 		if (choice_int == 5 || (!combat.action_left && combat.moves_left == 0))
 		{
@@ -161,36 +150,9 @@ void Display::monster_encounter(bool alive)
 			combat.moves_left = 5;
 			combat.action_left = true;
 			combat.monster_turn();
-			combat.monster.route.print_stack();
 			int_temp = combat.monster.route.top;
-			for (int i = 0; i < int_temp; i++)
-			{
-				combat.next_step = combat.monster.route.pop();
-				combat.move_monster(combat.next_step.x, combat.next_step.y);
-				Sleep(2000);
-				clear();
-				combat.print_field();
-			}
-			if (combat.monster.player_in_range(combat.player.x, combat.player.y))
-			{
-				int damage = combat.monster.calculate_damage();
-				if (player.inventory.find_item_of_type(3))
-				{
-					if (combat.monster.does_hit())
-					{
-						std::cout << ">> The Monster did " << damage << " damage." << std::endl;
-						player.stats.health -= damage;
-						wait();
-					}
-				}
-				else
-				{
-					std::cout << ">> The Monster did " << damage << " damage." << std::endl;
-					player.stats.health -= damage;
-					wait();
-				}
-			}
-
+			print_monster_moves();
+			monster_attack();
 		}
 	} while (alive);
 }
@@ -220,10 +182,7 @@ void Display::combat_move()
 	input_validation(1, combat.options.size()+1, "- ");
 	if (choice_int < combat.options.size() + 1)
 	{
-		combat.moves_left -= 1;
-		combat.new_coords.x = combat.player.x + combat.moves.at(combat.options[choice_int - 1])[0];
-		combat.new_coords.y = combat.player.y + combat.moves.at(combat.options[choice_int - 1])[1];
-		combat.move_player();
+		combat.move_player(choice_int);
 	}
 	else
 	{
@@ -233,40 +192,85 @@ void Display::combat_move()
 
 void Display::combat_fight()
 {
-	clear();
-	player.inventory.find_weapons();
-	count = 1;
-	if (player.inventory.weapon_index.size() != 0)
+	if (combat.action_left)
 	{
-		
-		
-		if (combat.check_for_enemy(player.inventory.item_types.at(temp_item.item_type).range))
+		clear();
+		player.inventory.find_weapons();
+		count = 1;
+		if (player.inventory.weapon_index.size() != 0)
 		{
-			for (int item : player.inventory.weapon_index)
-			{
-				temp_item = player.inventory.inventory[item];
-				if (temp_item.item_type == 1 || temp_item.item_type == 2)
-				{
-					std::cout << ">> " << count << ". " << temp_item.name << std::endl;
-				}
-				count += 1;
-
-			}
+			print_weapons();
+			std::cout << "- ";
 			input_validation(1, count, "- ");
-			index = player.inventory.weapon_index[choice_int];
+			index = player.inventory.weapon_index[choice_int - 1];
 			temp_item = player.inventory.inventory[index];
-			combat.monster.stats.health -= combat.calculate_damage(temp_item);
-			combat.action_left = false;
+			if (combat.check_for_enemy(player.inventory.item_types.at(temp_item.item_type).range))
+			{
+
+				combat.monster.stats.health -= combat.calculate_damage(temp_item);
+				combat.action_left = false;
+				std::cout << ">> You dealt " << combat.damage << " damage the monster is now on " << combat.monster.stats.health << std::endl;
+			}
+			else
+			{
+				std::cout << "[!] NO ENEMIES IN RANGE, MOVE AND TRY AGAIN" << std::endl;
+			}
 		}
 		else
 		{
-			std::cout << "[!] NO ENEMIES IN RANGE, MOVE AND TRY AGAIN" << std::endl;
-			wait();
+			std::cout << "[!] YOU HAVE NO WEAPONS YOU CAN ONLY FLEE" << std::endl;
 		}
 	}
 	else
 	{
-		std::cout << "[!] YOU HAVE NO WEAPONS YOU CAN ONLY FLEE" << std::endl;
-		wait();
+		std::cout << "[!] YOU HAVE USED YOUR ATTACK FOR THIS TURN" << std::endl;
+	}
+}
+
+void Display::print_weapons()
+{
+	for (int item : player.inventory.weapon_index)
+	{
+		temp_item = player.inventory.inventory[item];
+		if (temp_item.item_type == 1 || temp_item.item_type == 2)
+		{
+			std::cout << ">> " << count << ". " << temp_item.name << std::endl;
+		}
+		count += 1;
+	}
+}
+
+void Display::print_monster_moves()
+{
+	for (int i = 0; i < int_temp; i++)
+	{
+		combat.next_step = combat.monster.route.pop();
+		combat.move_monster(combat.next_step.x, combat.next_step.y);
+		Sleep(2000);
+		clear();
+		combat.print_field();
+	}
+}
+
+void Display::monster_attack()
+{
+	if (combat.monster.player_in_range(combat.player.x, combat.player.y))
+	{
+		int damage = combat.monster.calculate_damage();
+		if (player.inventory.find_item_of_type(3))
+		{
+			if (combat.monster.does_hit())
+			{
+				std::cout << ">> The Monster did " << damage << " damage." << std::endl;
+				player.stats.health -= damage;
+				wait();
+			}
+		}
+		else
+		{
+			std::cout << ">> The Monster did " << damage << " damage." << std::endl;
+			player.stats.health -= damage;
+			wait();
+		}
 	}
 }

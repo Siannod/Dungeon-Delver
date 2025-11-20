@@ -49,8 +49,11 @@ void Combat::print_field()
 	}
 }
 
-void Combat::move_player()
+void Combat::move_player(int choice_int)
 {
+	moves_left -= 1;
+	new_coords.x = player.x + moves.at(options[choice_int - 1])[0];
+	new_coords.y = player.y + moves.at(options[choice_int - 1])[1];
 	battle_field[player.x][player.y][1] = char(' ');
 	battle_field[new_coords.x][new_coords.y][1] = char('X');
 	player.x = new_coords.x;
@@ -74,7 +77,7 @@ void Combat::check_moves()
 	}
 }
 
-bool Combat::flee(int dex)
+bool Combat::able_to_flee(int dex)
 {
 	temp = random(1, 6);
 	if (temp + dex > 5)
@@ -102,11 +105,17 @@ bool Combat::check_for_enemy(int range)
 {
 	for (std::pair<int, std::vector<int>> direction : moves)
 	{
-		new_coords.x = player.x + direction.second[0];
-		new_coords.y = player.y + direction.second[1];
-		if (battle_field[new_coords.x][new_coords.y][1] != char(' '))
+		for (int i = 1; i < range + 1; i++)
 		{
-			return true;
+			new_coords.x = player.x + direction.second[0] * i;
+			new_coords.y = player.y + direction.second[1] * i;
+			if (in_range(new_coords.x, new_coords.y))
+			{
+				if (battle_field[new_coords.x][new_coords.y][1] != char(' '))
+				{
+					return true;
+				}
+			}
 		}
 	}
 	return false;
@@ -130,7 +139,6 @@ void Combat::move_monster(int x, int y)
 
 int Combat::calculate_damage(struct InventorySpace::inventory_slot weapon)
 {
-	int damage;
 	if (weapon.item_type == 1)
 	{
 		damage = monster.random(1, inv.item_types[1].damage);
@@ -143,4 +151,45 @@ int Combat::calculate_damage(struct InventorySpace::inventory_slot weapon)
 		damage = damage + weapon.dmg_bonus + stats->stats.at("Dexterity");
 		return damage;
 	}
+}
+
+void Combat::flee(bool &flee, int dex)
+{
+	if (flee)
+	{
+		flee = false;
+		if (able_to_flee(dex))
+		{
+			system("cls");
+			std::cout << ">> You succesfully fled the monster" << std::endl;
+			flee = true;
+			alive = false;
+		}
+		else
+		{
+			std::cout << ">> You were unsuccessful in fleeing the monster, you must stay and fight" << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << ">> You cannot try to flee again this round, you must stay and fight" << std::endl;
+	}
+}
+
+bool Combat::in_range(int x, int y)
+{
+	if (0 < x && x < FIELD_SIZE && 0 < y && y < FIELD_SIZE)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Combat::check_monster_alive()
+{
+	if (monster.stats.health <= 0)
+	{
+		return false;
+	}
+	return true;
 }

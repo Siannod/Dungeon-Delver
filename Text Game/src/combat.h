@@ -57,6 +57,7 @@ public:
 	bool action_left = true;
 	
 	int temp;
+	int damage;
 
 	int* x_ptr = &player.x;
 	int* y_ptr = &player.y;
@@ -69,13 +70,13 @@ public:
 
 	void print_field();
 
-	void move_player();
+	void move_player(int choice_int);
 
 	void move_monster(int x, int y);
 
 	void check_moves();
 
-	bool flee(int dex);
+	bool able_to_flee(int dex);
 
 	int random(int min, int max);
 
@@ -84,4 +85,10 @@ public:
 	void monster_turn();
 
 	int calculate_damage(struct InventorySpace::inventory_slot weapon);
+
+	void flee(bool &flee, int dex);
+
+	bool in_range(int x, int y);
+
+	bool check_monster_alive();
 };

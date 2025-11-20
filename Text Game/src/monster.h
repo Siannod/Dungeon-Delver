@@ -47,6 +47,8 @@ public:
 	int* player_x;
 	int* player_y;
 
+	int value;
+
 	int SIZE;
 
 	bool route_found = false;
@@ -96,4 +98,6 @@ public:
 	int random(int min, int max);
 
 	bool does_hit();
+
+	int coin_worth(int level);
 };

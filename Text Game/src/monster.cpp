@@ -5,7 +5,7 @@ void Monster::create_monster(PlayerStats* player_stats)
 {
 	int level = (*player_stats).level;
 	//HEALTH
-	stats.MAX_HEALTH = player_stats->MAX_HEALTH + random(0, 3 * (player_stats->level));
+	stats.MAX_HEALTH = player_stats->MAX_HEALTH + random(3, 10 * (player_stats->level) + player_stats->stats.at("Strength"));
 	//RANGE
 	int temp = random(0, 1);
 	if (temp == 0)
@@ -118,7 +118,6 @@ void Monster::path_to_player_healthy()
 		}
 		
 	}
-	std::cout << ";";
 }
 
 bool Monster::check_in_range_visited(int x, int y)
@@ -175,6 +174,7 @@ int Monster::calculate_damage()
 	int damage = random(1, stats.damage);
 	return damage;
 }
+
 bool Monster::does_hit()
 {
 	if (random(0, 1))
@@ -182,4 +182,16 @@ bool Monster::does_hit()
 		return true;
 	}
 	return false;
+}
+
+int Monster::coin_worth(int level)
+{
+	value = 0;
+	//HEALTH
+	value = stats.MAX_HEALTH / 2;
+	//DAMAGE
+	value += abs(stats.damage - 3);
+	//LEVEL
+	value += level;
+	return value;
 }
