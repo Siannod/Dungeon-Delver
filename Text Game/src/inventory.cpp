@@ -131,3 +131,15 @@ void Inventory::find_weapons()
         }
     }
 }
+
+bool Inventory::find_item_of_type(int type)
+{
+    for (InventorySpace::inventory_slot item : inventory)
+    {
+        if (item.item_type == type)
+        {
+            return true;
+        }
+    }
+    return false;
+}

@@ -31,14 +31,10 @@ class Monster
 public:
 	Stack route;
 	Queue queue = Queue(100);
+
 	std::vector<std::vector<std::string>>* battle_field;
+	
 	PlayerStats* player_stats_ptr;
-	Monster(PlayerStats* stats_ptr, int size, std::vector<std::vector<std::string>>* field_ptr)
-	{
-		player_stats_ptr = stats_ptr;
-		SIZE = size;
-		battle_field = field_ptr;
-	}
 	MonsterStats stats;
 
 	QueueSpace::Node next_node;
@@ -70,18 +66,26 @@ public:
 	Node current_node;
 	int start_cost;
 
+	Monster(PlayerStats* stats_ptr, int size, std::vector<std::vector<std::string>>* field_ptr)
+	{
+		player_stats_ptr = stats_ptr;
+		SIZE = size;
+		battle_field = field_ptr;
+	}
 
 	//FUNCTIONS
 	//external
-	void next_move();
+	void next_move(int player_x, int player_y);
 
 	void path_to_player_healthy();
 
-	bool player_in_range();
+	bool player_in_range(int player_x, int player_y);
+
+	int calculate_damage();
 
 	//internal
 
-	void create_monster();
+	void create_monster(PlayerStats* stats);
 
 	void compare_spot();
 
@@ -90,4 +94,6 @@ public:
 	void check_next_steps(int i);
 
 	int random(int min, int max);
+
+	bool does_hit();
 };

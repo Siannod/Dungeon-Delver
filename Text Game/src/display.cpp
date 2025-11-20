@@ -13,18 +13,21 @@ void Display::wait()
 
 void Display::main_menu()
 {
-	clear();
-	std::cout << menu_top << std::endl;
-	std::cout << "| 1. Move	 2. Inventory |" << std::endl;
-	std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
-	std::cout << menu_top << std::endl;
-	std::cout << "- Select menu option: ";
-	if (input_validation(1, 4, "- Select menu option: "))
+	do
 	{
-		if (choice_int == 1) { clear();  dungeon_move_options(); }
-		else if (choice_int == 2) { clear(), print_inventory(); }
-		else if (choice_int == 4) { clear(), player.print_stats(); wait(); }
-	}
+		clear();
+		std::cout << menu_top << std::endl;
+		std::cout << "| 1. Move	 2. Inventory |" << std::endl;
+		std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
+		std::cout << menu_top << std::endl;
+		std::cout << "- Select menu option: ";
+		if (input_validation(1, 4, "- Select menu option: "))
+		{
+			if (choice_int == 1) { clear();  dungeon_move_options(); }
+			else if (choice_int == 2) { clear(), print_inventory(); }
+			else if (choice_int == 4) { clear(), player.print_stats(); wait(); }
+		}
+	} while (running);
 }
 
 void Display::dungeon_move_options()
@@ -101,10 +104,9 @@ void Display::print_inventory(bool valid)
 void Display::monster_encounter(bool alive) 
 {
 	clear();
-	combat.monster.create_monster();
+	combat.monster.create_monster(player.stats_ptr);
 	do
 	{
-		player.able_to_flee = true;
 		clear();
 		std::cout << ">> As you continue along your path, dark shadows masking the way forwards a monster looms out of the darkness" << std::endl;
 		combat.print_field();
@@ -155,11 +157,12 @@ void Display::monster_encounter(bool alive)
 		} 
 		if (choice_int == 5 || (!combat.action_left && combat.moves_left == 0))
 		{
+			player.able_to_flee = true;
+			combat.moves_left = 5;
+			combat.action_left = true;
 			combat.monster_turn();
 			combat.monster.route.print_stack();
 			int_temp = combat.monster.route.top;
-			//combat.battle_field[3][1][1] = char('Q');
-			//combat.print_field();
 			for (int i = 0; i < int_temp; i++)
 			{
 				combat.next_step = combat.monster.route.pop();
@@ -167,8 +170,27 @@ void Display::monster_encounter(bool alive)
 				Sleep(2000);
 				clear();
 				combat.print_field();
-				//combat.monster.route.print_stack();
 			}
+			if (combat.monster.player_in_range(combat.player.x, combat.player.y))
+			{
+				int damage = combat.monster.calculate_damage();
+				if (player.inventory.find_item_of_type(3))
+				{
+					if (combat.monster.does_hit())
+					{
+						std::cout << ">> The Monster did " << damage << " damage." << std::endl;
+						player.stats.health -= damage;
+						wait();
+					}
+				}
+				else
+				{
+					std::cout << ">> The Monster did " << damage << " damage." << std::endl;
+					player.stats.health -= damage;
+					wait();
+				}
+			}
+
 		}
 	} while (alive);
 }
@@ -233,16 +255,18 @@ void Display::combat_fight()
 			input_validation(1, count, "- ");
 			index = player.inventory.weapon_index[choice_int];
 			temp_item = player.inventory.inventory[index];
-			
+			combat.monster.stats.health -= combat.calculate_damage(temp_item);
 			combat.action_left = false;
 		}
 		else
 		{
 			std::cout << "[!] NO ENEMIES IN RANGE, MOVE AND TRY AGAIN" << std::endl;
+			wait();
 		}
 	}
 	else
 	{
 		std::cout << "[!] YOU HAVE NO WEAPONS YOU CAN ONLY FLEE" << std::endl;
+		wait();
 	}
 }

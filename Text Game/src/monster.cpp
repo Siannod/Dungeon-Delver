@@ -1,10 +1,11 @@
 #pragma once
 #include "monster.h"
 
-void Monster::create_monster()
+void Monster::create_monster(PlayerStats* player_stats)
 {
+	int level = (*player_stats).level;
 	//HEALTH
-	stats.MAX_HEALTH = player_stats_ptr->MAX_HEALTH + random(0, 3 * player_stats_ptr->level);
+	stats.MAX_HEALTH = player_stats->MAX_HEALTH + random(0, 3 * (player_stats->level));
 	//RANGE
 	int temp = random(0, 1);
 	if (temp == 0)
@@ -18,18 +19,18 @@ void Monster::create_monster()
 	//DAMAGE
 	if (stats.range == 1)
 	{
-		stats.damage = random(4, 8 + player_stats_ptr->level);
+		stats.damage = random(3, 6 + player_stats->level);
 	}
 	else
 	{
-		stats.damage = random(3, 6 + player_stats_ptr->level);
+		stats.damage = random(2, 4 + player_stats->level);
 	}
 }
 
-bool Monster::player_in_range()
+bool Monster::player_in_range(int player_x, int player_y)
 {
-	diff.x = abs(*player_x - monster.x);
-	diff.y = abs(*player_y - monster.y);
+	diff.x = abs(player_x - monster.x);
+	diff.y = abs(player_y - monster.y);
 	if ((diff.x == 2 && diff.y == 0) || (diff.x == 0 && diff.y == 1))
 	{
 		return true;
@@ -37,7 +38,7 @@ bool Monster::player_in_range()
 	return false;
 }
 
-void Monster::next_move()
+void Monster::next_move(int player_x, int player_y)
 {
 	if (aim.x != monster.x && aim.y != monster.y)
 	{
@@ -48,8 +49,8 @@ void Monster::next_move()
 			{
 				for (std::pair <int, std::vector<int>> direction : moves)
 				{
-					new_coords.x = *player_x + (direction.second[0] * i);
-					new_coords.y = *player_y + (direction.second[1] * i);
+					new_coords.x = player_x + (direction.second[0] * i);
+					new_coords.y = player_y + (direction.second[1] * i);
 					if (check_in_range_visited(new_coords.x, new_coords.y))
 					{
 						if (battle_field->at(new_coords.x)[new_coords.y][1] == ' ')
@@ -167,4 +168,18 @@ int Monster::random(int min, int max)
 	srand(time(0));
 	temp = min + rand() % (max - min);
 	return temp;
+}
+
+int Monster::calculate_damage()
+{
+	int damage = random(1, stats.damage);
+	return damage;
+}
+bool Monster::does_hit()
+{
+	if (random(0, 1))
+	{
+		return true;
+	}
+	return false;
 }

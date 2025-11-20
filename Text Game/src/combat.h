@@ -11,7 +11,7 @@
 class Combat
 {
 public:
-	Inventory inv = Inventory(true);
+	Inventory inv;
 	const int FIELD_SIZE = 11;
 	PlayerStats* stats;
 	Combat(PlayerStats* stats_ptr)

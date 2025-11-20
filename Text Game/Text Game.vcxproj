@@ -147,6 +147,9 @@
     <ClInclude Include="src\queue.h" />
     <ClInclude Include="src\stack.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\error log.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

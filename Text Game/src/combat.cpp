@@ -100,22 +100,21 @@ int Combat::random(int min, int max)
 
 bool Combat::check_for_enemy(int range)
 {
-	diff.x = abs(player.x - monster.monster.x);
-	diff.y = abs(player.y - monster.monster.y);
-	if (diff.x <= (range * 2) && diff.y == 0)
+	for (std::pair<int, std::vector<int>> direction : moves)
 	{
-		return true;
-	}
-	else if (diff.x == 0 && diff.y <= range)
-	{
-		return true;
+		new_coords.x = player.x + direction.second[0];
+		new_coords.y = player.y + direction.second[1];
+		if (battle_field[new_coords.x][new_coords.y][1] != char(' '))
+		{
+			return true;
+		}
 	}
 	return false;
 }
 
 void Combat::monster_turn()
 {
-	monster.next_move();
+	monster.next_move(player.x, player.y);
 	monster.path_to_player_healthy();
 	monster.route.reverse_stack();
 	monster.route.pop();
@@ -136,6 +135,12 @@ int Combat::calculate_damage(struct InventorySpace::inventory_slot weapon)
 	{
 		damage = monster.random(1, inv.item_types[1].damage);
 		damage = damage + weapon.dmg_bonus + stats->stats.at("Strength");
+		return damage;
+	}
+	else
+	{
+		damage = monster.random(1, inv.item_types[2].damage);
+		damage = damage + weapon.dmg_bonus + stats->stats.at("Dexterity");
 		return damage;
 	}
 }

@@ -38,6 +38,10 @@ public:
     {
         initialise();
     }
+    Inventory()
+    {
+
+    }
     std::string command_word;
     std::string choice_string;
     int choice_int;
@@ -88,5 +92,7 @@ public:
     void back();
 
     void find_weapons();
+
+    bool find_item_of_type(int type);
 
 };

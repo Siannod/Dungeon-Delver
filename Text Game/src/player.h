@@ -10,8 +10,8 @@
 #include <string>
 struct PlayerStats
 {
-	int x;
-	int y;
+	int x = 1;
+	int y = 1;
 	int MAX_HEALTH;
 	int health = MAX_HEALTH;
 	int level;
