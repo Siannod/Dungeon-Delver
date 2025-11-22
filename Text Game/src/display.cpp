@@ -62,12 +62,13 @@ void Display::dungeon_move_options()
 		if (dungeon.dungeon[player.stats.x][player.stats.y] == "2") 
 		{
 			
-			monster_encounter(); 
+			monster_encounter(1); 
+			main_menu();
 		}
 		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") 
 		{ 
 
-			monster_encounter(); 
+			monster_encounter(0); 
 		}
 		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "4") { loot_room(); }
 		dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
@@ -123,11 +124,12 @@ void Display::print_inventory(bool valid)
 	main_menu();
 }
 
-void Display::monster_encounter() 
+void Display::monster_encounter(int type) 
 {
 	bool alive = true;
+	combat.type = type;
 	clear();
-	combat.monster.create_monster(player.stats_ptr);
+	combat.monster_types[type]->create_monster(player.stats_ptr);
 	do
 	{
 		clear();
@@ -153,12 +155,12 @@ void Display::monster_encounter()
 		else if (choice_int == 2) { print_inventory(); } 
 		else if (choice_int == 3) 
 		{ 
-			combat_fight(); 
+			combat_fight(type); 
 			if (!combat.check_monster_alive())
 			{
 				//clear();
-				std::cout << ">> Congratulations! You defeated the monster, you gained " << combat.monster.coin_worth(player.stats.level) << " coins" << std::endl;
-				player.stats.coin += combat.monster.value;
+				std::cout << ">> Congratulations! You defeated the monster, you gained " << combat.monster->coin_worth(player.stats.level) << " coins" << std::endl;
+				player.stats.coin += combat.monster->value;
 				player.stats.monsters_killed += 1;
 				alive = false;
 			}
@@ -176,11 +178,18 @@ void Display::monster_encounter()
 			combat.moves_left = 5;
 			combat.action_left = true;
 			combat.monster_turn();
-			int_temp = combat.monster.route.top;
-			print_monster_moves();
-			monster_attack();
+			int_temp = combat.monster_types[type]->route.top;
+			print_monster_moves(type);
+			monster_attack(type);
+
 		}
 	} while (alive);
+	if (type == 1)
+	{
+		new_level();
+		player.stats.x = 1;
+		player.stats.y = 1;
+	}
 }
 
 void Display::combat_menu()
@@ -199,6 +208,7 @@ void Display::combat_move()
 	clear();
 	combat.print_field();
 	combat.check_moves();
+	
 	for (int i = 0; i < combat.options.size(); i ++)
 	{
 		std::cout << ">> " << i+1 << ". " << dungeon.directions.at(combat.options[i]) << std::endl;
@@ -211,13 +221,10 @@ void Display::combat_move()
 	{
 		combat.move_player(choice_int);
 	}
-	else
-	{
-		monster_encounter();
-	}
+	
 }
 
-void Display::combat_fight()
+void Display::combat_fight(int type)
 {
 	if (combat.action_left)
 	{
@@ -236,8 +243,11 @@ void Display::combat_fight()
 			if (combat.check_for_enemy(player.inventory.item_types.at(temp_item.item_type).range))
 			{
 
-				combat.monster.stats.health -= combat.calculate_damage(temp_item);
-				std::cout << ">> You dealt " << combat.damage << " damage the monster is now on " << combat.monster.stats.health << " health" << std::endl;
+				combat.monster_types[type]->stats.health -= combat.calculate_damage(temp_item);
+				if (combat.check_monster_alive())
+				{
+					std::cout << ">> You dealt " << combat.damage << " damage the monster is now on " << combat.monster_types[type]->stats.health << " health" << std::endl;
+				}
 			}
 			else
 			{
@@ -268,11 +278,11 @@ void Display::print_weapons()
 	}
 }
 
-void Display::print_monster_moves()
+void Display::print_monster_moves(int type)
 {
 	for (int i = 0; i < int_temp; i++)
 	{
-		combat.next_step = combat.monster.route.pop();
+		combat.next_step = combat.monster_types[type]->route.pop();
 		combat.move_monster(combat.next_step.x, combat.next_step.y);
 		Sleep(2000);
 		clear();
@@ -280,14 +290,14 @@ void Display::print_monster_moves()
 	}
 }
 
-void Display::monster_attack()
+void Display::monster_attack(int type)
 {
-	if (combat.monster.player_in_range(combat.player.x, combat.player.y))
+	if (combat.monster_types[type]->player_in_range(combat.player.x, combat.player.y))
 	{
-		int damage = combat.monster.calculate_damage();
+		int damage = combat.monster_types[type]->calculate_damage();
 		if (player.inventory.find_item_of_type(3))
 		{
-			if (combat.monster.does_hit())
+			if (combat.monster_types[type]->does_hit())
 			{
 				std::cout << ">> The Monster did " << damage << " damage." << std::endl;
 				player.stats.health -= damage;
@@ -364,7 +374,7 @@ bool Display::yes_no_validation(std::string question)
 	} while (!valid);
 }
 
-void Display::boss_encounter()
+void Display::new_level()
 {
-
+	dungeon.new_dungeon();
 }

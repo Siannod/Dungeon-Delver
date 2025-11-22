@@ -1,2 +1,4 @@
-
+X cant go back after selecting fight
 X double wait after back from inv
+x player cannot die
+x boss monster not doing damage

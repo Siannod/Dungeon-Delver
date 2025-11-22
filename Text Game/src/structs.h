@@ -31,6 +31,7 @@ struct coords
 
 struct MonsterStats
 {
+    std::string name;
     int MAX_HEALTH;
     int health;
     int range;

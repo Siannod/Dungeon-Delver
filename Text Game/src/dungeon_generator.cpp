@@ -4,6 +4,7 @@
 
 void Generator::fill_dungeon(std::vector<std::vector<std::string>> &dungeon)
 {
+	dungeon.clear();
 	for (int i = 0; i < wall_max; i++)
 	{
 		dungeon.push_back({});
@@ -42,7 +43,7 @@ void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 	
 	} while (walls.size() != 0);
 	dungeon[1][1] = "X";
-	dungeon[1][3] = "3"; //TEST LINE
+	dungeon[1][3] = "2"; //TEST LINE
 	gen_rooms(dungeon);
 }
 

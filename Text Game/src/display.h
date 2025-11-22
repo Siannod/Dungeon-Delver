@@ -54,23 +54,23 @@ public:
 
 	void print_inventory(bool valid = false);
 
-	void monster_encounter();
+	void monster_encounter(int type);
 
 	void combat_menu();
 
 	void combat_move();
 
-	void combat_fight();
+	void combat_fight(int type);
 
 	void print_weapons();
 
-	void print_monster_moves();
+	void print_monster_moves(int type);
 
-	void monster_attack();
+	void monster_attack(int type);
 
 	void loot_room();
 
 	bool yes_no_validation(std::string question);
 
-	void boss_encounter();
+	void new_level();
 };

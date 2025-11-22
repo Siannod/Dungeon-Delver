@@ -33,7 +33,7 @@ void Combat::fill_field()
 		}
 	}
 	battle_field[player.x][player.y][1] = char('X');
-	battle_field[monster.monster.x][monster.monster.y][1] = char('O');
+	battle_field[(*monster_types[type]).monster.x][(*monster_types[type]).monster.y][1] = char('O');
 	//monster.battle_field = battle_field;
 }
 
@@ -123,31 +123,31 @@ bool Combat::check_for_enemy(int range)
 
 void Combat::monster_turn()
 {
-	monster.next_move(player.x, player.y);
-	monster.path_to_player_healthy();
-	monster.route.reverse_stack();
-	monster.route.pop();
+	(monster_types[type])->next_move(player.x, player.y);
+	(monster_types[type])->path_to_player_healthy();
+	(monster_types[type])->route.reverse_stack();
+	(monster_types[type])->route.pop();
 }
 
 void Combat::move_monster(int x, int y)
 {
-	battle_field[monster.monster.x][monster.monster.y][1] = char(' ');
-	monster.monster.x = x;
-	monster.monster.y = y;
-	battle_field[monster.monster.x][monster.monster.y][1] = char('O');
+	battle_field[(*monster_types[type]).monster.x][(*monster_types[type]).monster.y][1] = char(' ');
+	(*monster_types[type]).monster.x = x;
+	(*monster_types[type]).monster.y = y;
+	battle_field[(*monster_types[type]).monster.x][(*monster_types[type]).monster.y][1] = char('O');
 }
 
 int Combat::calculate_damage(struct InventorySpace::inventory_slot weapon)
 {
 	if (weapon.item_type == 1)
 	{
-		damage = monster.random(1, inv.item_types[1].damage);
+		damage = monster->random(1, inv.item_types[1].damage);
 		damage = damage + weapon.dmg_bonus + stats->stats.at("Strength");
-		return damage;
+		return 100; //DEBUG ONLY
 	}
 	else
 	{
-		damage = monster.random(1, inv.item_types[2].damage);
+		damage = monster->random(1, inv.item_types[2].damage);
 		damage = damage + weapon.dmg_bonus + stats->stats.at("Dexterity");
 		return damage;
 	}
@@ -187,17 +187,10 @@ bool Combat::in_range(int x, int y)
 
 bool Combat::check_monster_alive()
 {
-	if (monster.stats.health <= 0)
+	if ((*monster_types[type]).stats.health <= 0)
 	{
 		return false;
 	}
 	return true;
 }
 
-void Combat::define_monster(char type)
-{
-	if (type == '2')
-	{
-		monster_ = monster_types[1];
-	}
-}

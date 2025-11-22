@@ -7,6 +7,7 @@ public:
 	int temp_x;
 	int temp_y;
 	
+	float level = 1;
 	
 
 	std::vector<std::vector<std::string>> dungeon;
@@ -26,8 +27,8 @@ public:
 	std::map<int, int> room_count =
 	{
 		{2, 1},
-		{3, 4},
-		{4, 2}
+		{3, 4 * level},
+		{4, 2 * level}
 	};
 
 	std::map<int, std::vector<int>> direction =
@@ -58,4 +59,6 @@ public:
 	bool range();
 
 	void move_player(int old_x, int old_y, int new_x, int new_y);
+
+	void new_dungeon();
 };

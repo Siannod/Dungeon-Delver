@@ -53,3 +53,16 @@ void Dungeon::move_player(int new_x, int new_y, int move_x, int move_y)
 	dungeon[new_x][new_y] = "X";
 	dungeon[new_x - move_x][new_y - move_y] = "0";
 }
+
+void Dungeon::new_dungeon()
+{
+	level += 0.1;
+	generator.fill_dungeon(dungeon);
+	generator.generate(dungeon);
+	room_count.at(2) = 1;
+	room_count.at(3) = 4 * level;
+	room_count.at(4) = 2 * level;
+	generator.gen_rooms(dungeon);
+	print_dungeon();
+	
+}

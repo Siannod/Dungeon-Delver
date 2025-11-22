@@ -72,10 +72,11 @@ public:
 
 	Node next_step;
 
-	Monster monster = Monster(stats, FIELD_SIZE, field_ptr);
-	BossMonster boss_monster = BossMonster(stats, FIELD_SIZE, field_ptr);
-	std::vector<Monster> monster_types = { monster, boss_monster};
-	Monster monster_;
+	Monster* monster = new Monster(stats, FIELD_SIZE, field_ptr);
+	BossMonster* boss_monster = new BossMonster(stats, FIELD_SIZE, field_ptr);
+	std::vector<Monster*> monster_types = { monster, boss_monster};
+	int type;
+	//Monster monster_;
 	//FUNCTIONS
 	void fill_field();
 
@@ -103,5 +104,5 @@ public:
 
 	bool check_monster_alive();
 
-	void define_monster(char type);
+
 };

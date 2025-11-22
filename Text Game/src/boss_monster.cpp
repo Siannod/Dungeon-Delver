@@ -5,6 +5,7 @@ void BossMonster::create_monster(PlayerStats* player_stats)
 {
 	int level = (*player_stats).level;
 	//HEALTH
+	stats.name = "boss";
 	stats.MAX_HEALTH = player_stats->MAX_HEALTH + random(10, 15 * (player_stats->level) + player_stats->stats.at("Strength"));
 	stats.health = stats.MAX_HEALTH;
 	stats.MAX_MOVES = 7;

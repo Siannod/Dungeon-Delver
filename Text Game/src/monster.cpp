@@ -5,6 +5,7 @@ void Monster::create_monster(PlayerStats* player_stats)
 {
 	int level = (*player_stats).level;
 	//HEALTH
+	stats.name = "normal";
 	stats.MAX_HEALTH = player_stats->MAX_HEALTH + random(3, 10 * (player_stats->level) + player_stats->stats.at("Strength"));
 	stats.health = stats.MAX_HEALTH;
 	//RANGE
@@ -41,32 +42,30 @@ bool Monster::player_in_range(int player_x, int player_y)
 
 void Monster::next_move(int player_x, int player_y)
 {
-	if (aim.x != monster.x && aim.y != monster.y)
+	aim.cost = 1000;
+	for (int i = stats.range; i > stats.range - 3; i--)
 	{
-		aim.cost = 1000;
-		for (int i = stats.range; i > stats.range - 3; i--)
+		if (i > 0)
 		{
-			if (i > 0)
+			for (std::pair <int, std::vector<int>> direction : moves)
 			{
-				for (std::pair <int, std::vector<int>> direction : moves)
+				new_coords.x = player_x + (direction.second[0] * i);
+				new_coords.y = player_y + (direction.second[1] * i);
+				if (check_in_range_visited(new_coords.x, new_coords.y))
 				{
-					new_coords.x = player_x + (direction.second[0] * i);
-					new_coords.y = player_y + (direction.second[1] * i);
-					if (check_in_range_visited(new_coords.x, new_coords.y))
+					if (battle_field->at(new_coords.x)[new_coords.y][1] == ' ')
 					{
-						if (battle_field->at(new_coords.x)[new_coords.y][1] == ' ')
-						{
-							compare_spot();
-						}
+						compare_spot();
 					}
 				}
 			}
-			else
-			{
-				break;
-			}
+		}
+		else
+		{
+			break;
 		}
 	}
+	
 }
 
 void Monster::compare_spot()
@@ -96,7 +95,7 @@ void Monster::path_to_player_healthy()
 
 	route.push(current_node);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < stats.MAX_MOVES; i++)
 	{
 		current_node = route.stack[route.top];
 		i = current_node.i;
@@ -191,7 +190,7 @@ int Monster::coin_worth(int level)
 	//HEALTH
 	value = stats.MAX_HEALTH / 2;
 	//DAMAGE
-	value += abs(stats.damage[0] - 3);
+	
 	//LEVEL
 	value += level;
 	return value;

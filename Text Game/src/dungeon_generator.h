@@ -55,6 +55,7 @@ public:
 	
 
 	//FUNCTIONS
+
 	void fill_dungeon(std::vector<std::vector<std::string>> &dungeon);
 
 	void generate(std::vector<std::vector<std::string>> &dungeon);
