@@ -72,7 +72,7 @@ public:
 
 	//internal
 
-	void create_monster(PlayerStats* stats);
+	virtual void create_monster(PlayerStats* stats);
 
 	void compare_spot();
 

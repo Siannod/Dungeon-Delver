@@ -1,2 +1,2 @@
-X after fleeing monster viewing stats on return it takes you back into combat.
-X on return from stats closes program
+
+X double wait after back from inv

@@ -72,6 +72,7 @@ void Display::dungeon_move_options()
 
 bool Display::input_validation(int min, int max, std::string statement)
 {
+	valid = false;
 	while (!valid)
 	{
 		std::cin >> choice_string;
@@ -98,6 +99,7 @@ bool Display::input_validation(int min, int max, std::string statement)
 void Display::print_inventory(bool valid)
 {
 	std::cin.ignore();
+	player.inventory.go_back = false;
 	while (!player.inventory.go_back)
 	{
 		player.inventory.print();
@@ -145,10 +147,11 @@ void Display::monster_encounter(bool alive)
 			combat_fight(); 
 			if (!combat.check_monster_alive())
 			{
-				clear();
-				std::cout << ">> Congratulations! You defeated the monster, you gained " << combat.monster.coin_worth(player.stats.level) << std::endl;
+				//clear();
+				std::cout << ">> Congratulations! You defeated the monster, you gained " << combat.monster.coin_worth(player.stats.level) << " coins" << std::endl;
 				player.stats.coin += combat.monster.value;
 				player.stats.monsters_killed += 1;
+				alive = false;
 			}
 			wait(); 
 		}
@@ -156,6 +159,7 @@ void Display::monster_encounter(bool alive)
 		else if (choice_int == 4)
 		{
 			combat.flee(player.able_to_flee, player.stats.stats.at("Dexterity"));
+			wait();
 		} 
 		if (choice_int == 5 || (!combat.action_left && combat.moves_left == 0))
 		{
@@ -192,6 +196,7 @@ void Display::combat_move()
 	}
 	std::cout << ">> " << combat.options.size() + 1 << ". back" << std::endl;
 	std::cout << "- ";
+	std::cin.clear();
 	input_validation(1, combat.options.size()+1, "- ");
 	if (choice_int < combat.options.size() + 1)
 	{
@@ -217,12 +222,13 @@ void Display::combat_fight()
 			input_validation(1, count, "- ");
 			index = player.inventory.weapon_index[choice_int - 1];
 			temp_item = player.inventory.inventory[index];
+			clear();
+			combat.action_left = false;
 			if (combat.check_for_enemy(player.inventory.item_types.at(temp_item.item_type).range))
 			{
 
 				combat.monster.stats.health -= combat.calculate_damage(temp_item);
-				combat.action_left = false;
-				std::cout << ">> You dealt " << combat.damage << " damage the monster is now on " << combat.monster.stats.health << std::endl;
+				std::cout << ">> You dealt " << combat.damage << " damage the monster is now on " << combat.monster.stats.health << " health" << std::endl;
 			}
 			else
 			{

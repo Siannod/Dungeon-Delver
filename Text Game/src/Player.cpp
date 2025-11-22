@@ -15,7 +15,7 @@ void Player::level_up()
 		std::cin >> choice_string;
 		if (choice_string == "y")
 		{
-			stats.stats.at(choice_string) += 1;
+			stats.stats.at(stat_name) += 1;
 			to_level = false;
 		}
 		else if (choice_string == "n")
@@ -60,7 +60,7 @@ void Player::print_stats()
 	std::cout << ">> Current Stats:" << std::endl;
 	for (int i = 0; i < stats.stats.size(); i++)
 	{
-		std::cout << ">> " << (i + 1) << "- " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
+		std::cout << ">> " << (i + 1) << " - " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
 	}
 	if (check_level_up())
 	{
