@@ -66,9 +66,9 @@ public:
 
 	void path_to_player_healthy();
 
-	bool player_in_range(int player_x, int player_y);
+	virtual bool player_in_range(int player_x, int player_y);
 
-	int calculate_damage();
+	virtual int calculate_damage();
 
 	//internal
 

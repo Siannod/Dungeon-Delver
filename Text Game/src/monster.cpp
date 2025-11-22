@@ -20,11 +20,11 @@ void Monster::create_monster(PlayerStats* player_stats)
 	//DAMAGE
 	if (stats.range == 1)
 	{
-		stats.damage = random(3, 6 + player_stats->level);
+		stats.damage.push_back(random(3, 6 + player_stats->level));
 	}
 	else
 	{
-		stats.damage = random(2, 4 + player_stats->level);
+		stats.damage.push_back(random(2, 4 + player_stats->level));
 	}
 }
 
@@ -32,7 +32,7 @@ bool Monster::player_in_range(int player_x, int player_y)
 {
 	diff.x = abs(player_x - monster.x);
 	diff.y = abs(player_y - monster.y);
-	if ((diff.x == 2 && diff.y == 0) || (diff.x == 0 && diff.y == 1))
+	if ((diff.x <= 2 * stats.range && diff.y == 0) || (diff.x == 0 && diff.y <= 1 * stats.range))
 	{
 		return true;
 	}
@@ -172,7 +172,7 @@ int Monster::random(int min, int max)
 
 int Monster::calculate_damage()
 {
-	int damage = random(1, stats.damage);
+	int damage = random(1, stats.damage[0]);
 	return damage;
 }
 
@@ -191,7 +191,7 @@ int Monster::coin_worth(int level)
 	//HEALTH
 	value = stats.MAX_HEALTH / 2;
 	//DAMAGE
-	value += abs(stats.damage - 3);
+	value += abs(stats.damage[0] - 3);
 	//LEVEL
 	value += level;
 	return value;

@@ -71,4 +71,6 @@ public:
 	void loot_room();
 
 	bool yes_no_validation(std::string question);
+
+	void boss_encounter();
 };

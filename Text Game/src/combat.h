@@ -4,9 +4,14 @@
 #include <vector>
 #include <map>
 #include <Windows.h>
+
+
 #include "player.h"
 #include "monster.h"
+#include "boss_monster.h"
 #include "inventory.h"
+
+
 
 class Combat
 {
@@ -65,6 +70,7 @@ public:
 	Node next_step;
 
 	Monster monster = Monster(stats, FIELD_SIZE, field_ptr);
+	BossMonster boss_monster = BossMonster(stats, FIELD_SIZE, field_ptr);
 	//FUNCTIONS
 	void fill_field();
 

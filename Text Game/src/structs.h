@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 
 namespace InventorySpace
 {
@@ -33,9 +34,9 @@ struct MonsterStats
     int MAX_HEALTH;
     int health;
     int range;
-    int damage;
+    std::vector<int> damage;
     int moves_left = 5;
-    const int MAX_MOVES = 5;
+    int MAX_MOVES = 5;
 };
 
 struct PlayerStats
