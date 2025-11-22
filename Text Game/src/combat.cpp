@@ -193,3 +193,11 @@ bool Combat::check_monster_alive()
 	}
 	return true;
 }
+
+void Combat::define_monster(char type)
+{
+	if (type == '2')
+	{
+		monster_ = monster_types[1];
+	}
+}

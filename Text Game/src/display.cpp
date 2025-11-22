@@ -59,8 +59,16 @@ void Display::dungeon_move_options()
 		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
 
 		player.move(x_mod, y_mod);
-		if (dungeon.dungeon[player.stats.x][player.stats.y] == "2") {boss_encounter(); }
-		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") { monster_encounter(); }
+		if (dungeon.dungeon[player.stats.x][player.stats.y] == "2") 
+		{
+			
+			monster_encounter(); 
+		}
+		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") 
+		{ 
+
+			monster_encounter(); 
+		}
 		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "4") { loot_room(); }
 		dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
 
@@ -115,8 +123,9 @@ void Display::print_inventory(bool valid)
 	main_menu();
 }
 
-void Display::monster_encounter(bool alive) 
+void Display::monster_encounter() 
 {
+	bool alive = true;
 	clear();
 	combat.monster.create_monster(player.stats_ptr);
 	do

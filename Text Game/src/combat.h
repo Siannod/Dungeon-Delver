@@ -55,6 +55,7 @@ public:
 	coords new_coords;
 	coords diff;
 
+	
 
 	bool alive;
 
@@ -67,10 +68,14 @@ public:
 	int* x_ptr = &player.x;
 	int* y_ptr = &player.y;
 
+	
+
 	Node next_step;
 
 	Monster monster = Monster(stats, FIELD_SIZE, field_ptr);
 	BossMonster boss_monster = BossMonster(stats, FIELD_SIZE, field_ptr);
+	std::vector<Monster> monster_types = { monster, boss_monster};
+	Monster monster_;
 	//FUNCTIONS
 	void fill_field();
 
@@ -97,4 +102,6 @@ public:
 	bool in_range(int x, int y);
 
 	bool check_monster_alive();
+
+	void define_monster(char type);
 };

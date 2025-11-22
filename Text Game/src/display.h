@@ -54,7 +54,7 @@ public:
 
 	void print_inventory(bool valid = false);
 
-	void monster_encounter(bool alive = true);
+	void monster_encounter();
 
 	void combat_menu();
 
