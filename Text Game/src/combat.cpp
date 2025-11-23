@@ -34,7 +34,6 @@ void Combat::fill_field()
 	}
 	battle_field[player.x][player.y][1] = char('X');
 	battle_field[(*monster_types[type]).monster.x][(*monster_types[type]).monster.y][1] = char('O');
-	//monster.battle_field = battle_field;
 }
 
 void Combat::print_field()
@@ -145,7 +144,7 @@ int Combat::calculate_damage(struct InventorySpace::inventory_slot weapon)
 	{
 		damage = monster->random(1, inv.item_types[1].damage);
 		damage = damage + weapon.dmg_bonus + stats->stats.at("Strength");
-		return 100; //DEBUG ONLY
+		return damage; 
 	}
 	else
 	{

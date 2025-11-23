@@ -173,7 +173,7 @@ void Display::monster_encounter(int type)
 			combat_fight(type); 
 			if (!combat.check_monster_alive())
 			{
-				//clear();
+				
 				std::cout << ">> Congratulations! You defeated the monster, you gained " << combat.monster->coin_worth(player.stats.level) << " coins" << std::endl;
 				player.stats.coin += combat.monster->value;
 				player.stats.monsters_killed += 1;
