@@ -31,6 +31,7 @@ public:
 	int count;
 	int index;
 	int bonus;
+	int chance;
 
 	int int_temp;
 	std::string statement;
@@ -42,6 +43,20 @@ public:
 	InventorySpace::inventory_slot temp_item;
 
 	//FUNCTONS
+	//prints
+	void print_inventory_menu();
+
+	void combat_menu();
+
+	void print_main_menu();
+
+	void print_dunegon_move_options();
+
+	//others
+	void end_of_turn(int type, bool& alive);
+	
+	void inventory_menu(bool valid = false);
+
 	void clear();
 
 	void wait();
@@ -52,11 +67,11 @@ public:
 
 	bool input_validation(int min, int max, std::string statement);
 
-	void print_inventory(bool valid = false);
+	
 
 	void monster_encounter(int type);
 
-	void combat_menu();
+	
 
 	void combat_move();
 

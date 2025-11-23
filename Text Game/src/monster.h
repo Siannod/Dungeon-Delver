@@ -26,8 +26,10 @@ public:
 	coords temp;
 	coords diff;
 	coords new_coords;
-	coords aim;
+	coords aim = {100, 100, 100};
 	coords monster = { 11, 8, 0 };
+
+	coords last_player = { 1, 1, 0 };
 
 	int* player_x;
 	int* player_y;
@@ -35,6 +37,8 @@ public:
 	int value;
 
 	int SIZE;
+
+	int hit_chance;
 
 	bool route_found = false;
 
@@ -62,7 +66,7 @@ public:
 
 	//FUNCTIONS
 	//external
-	void next_move(int player_x, int player_y);
+	bool next_move(int player_x, int player_y);
 
 	void path_to_player_healthy();
 
@@ -70,11 +74,15 @@ public:
 
 	virtual int calculate_damage();
 
+	bool check_at_aim();
+
 	//internal
 
 	virtual void create_monster(PlayerStats* stats);
 
 	void compare_spot();
+
+	bool has_player_moved(int x, int y);
 
 	bool check_in_range_visited(int x, int y);
 
@@ -82,7 +90,7 @@ public:
 
 	int random(int min, int max);
 
-	bool does_hit();
+	bool does_hit(int chance);
 
 	int coin_worth(int level);
 };

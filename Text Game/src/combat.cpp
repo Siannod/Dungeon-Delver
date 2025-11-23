@@ -69,7 +69,7 @@ void Combat::check_moves()
 		new_coords.y = player.y + direction.second[1];
 		if (new_coords.x < FIELD_SIZE && 0 < new_coords.x)
 		{
-			if (new_coords.y < FIELD_SIZE && 0 < new_coords.y && battle_field[new_coords.x][new_coords.y][2] == char(' '))
+			if (new_coords.y < FIELD_SIZE && 0 < new_coords.y && battle_field[new_coords.x][new_coords.y][1] == char(' '))
 			{
 				options.push_back(direction.first);
 			}
@@ -123,10 +123,12 @@ bool Combat::check_for_enemy(int range)
 
 void Combat::monster_turn()
 {
-	(monster_types[type])->next_move(player.x, player.y);
-	(monster_types[type])->path_to_player_healthy();
-	(monster_types[type])->route.reverse_stack();
-	(monster_types[type])->route.pop();
+	if((monster_types[type])->next_move(player.x, player.y))
+	{
+		(monster_types[type])->path_to_player_healthy();
+		(monster_types[type])->route.reverse_stack();
+		(monster_types[type])->route.pop();
+	}
 }
 
 void Combat::move_monster(int x, int y)
@@ -194,3 +196,11 @@ bool Combat::check_monster_alive()
 	return true;
 }
 
+bool Combat::check_player_alive(int health)
+{
+	if (health <= 0)
+	{
+		return false;
+	}
+	return true;
+}

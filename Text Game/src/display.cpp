@@ -11,24 +11,29 @@ void Display::wait()
 	_getch();
 }
 
+void Display::print_main_menu()
+{
+	clear();
+	std::cout << menu_top << std::endl;
+	std::cout << "| 1. Move	 2. Inventory |" << std::endl;
+	std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
+	std::cout << menu_top << std::endl;
+	std::cout << "- Select menu option: ";
+}
+
 void Display::main_menu()
 {
 	do
 	{
-		clear();
-		std::cout << menu_top << std::endl;
-		std::cout << "| 1. Move	 2. Inventory |" << std::endl;
-		std::cout << "| 3. Spells	 4. Stats     |" << std::endl;
-		std::cout << menu_top << std::endl;
-		std::cout << "- Select menu option: ";
+		print_main_menu();
 		if (input_validation(1, 4, "- Select menu option: "))
 		{
 			if (choice_int == 1) { clear();  dungeon_move_options(); }
-			else if (choice_int == 2) { clear(), print_inventory(); }
+			else if (choice_int == 2) { clear(), inventory_menu(); }
 			else if (choice_int == 4)
 			{
 				clear(); 
-				player.print_stats(); 
+				player.print_stats_menu(); 
 				wait();
 				if (player.check_level_up())
 				{
@@ -41,17 +46,22 @@ void Display::main_menu()
 	} while (running);
 }
 
-void Display::dungeon_move_options()
+void Display::print_dunegon_move_options()
 {
-	dungeon.print_dungeon();
-	temp.clear();
-	dungeon.check_paths({ player.stats.x, player.stats.y }, temp);
 	for (int i = 0; i < temp.size(); i++)
 	{
 		std::cout << ">> " << i + 1 << ". " << dungeon.directions.at(temp[i]) << std::endl;
 	}
 	std::cout << ">> " << temp.size() + 1 << ". Back to main menu" << std::endl;
 	std::cout << "- ";
+}
+
+void Display::dungeon_move_options()
+{
+	dungeon.print_dungeon();
+	temp.clear();
+	dungeon.check_paths({ player.stats.x, player.stats.y }, temp);
+	print_dunegon_move_options();
 	input_validation(1, temp.size() + 1, "- ");
 	if (choice_int < temp.size() + 1)
 	{
@@ -105,15 +115,20 @@ bool Display::input_validation(int min, int max, std::string statement)
 	}
 }
 
-void Display::print_inventory(bool valid)
+void Display::print_inventory_menu()
+{
+	player.inventory.print();
+	std::cout << ">> Coins: " << player.stats.coin << std::endl;
+	std::cout << ">> Type 'help' for more commands" << std::endl;
+}
+
+void Display::inventory_menu(bool valid)
 {
 	std::cin.ignore();
 	player.inventory.go_back = false;
 	while (!player.inventory.go_back)
 	{
-		player.inventory.print();
-		std::cout << ">> Coins: " << player.stats.coin << std::endl;
-		std::cout << ">> Type 'help' for more commands" << std::endl;
+		print_inventory_menu();
 		std::cout << "- ";
 		std::getline(std::cin, choice_string);
 		player.inventory.command.delimit(choice_string);
@@ -152,7 +167,7 @@ void Display::monster_encounter(int type)
 			}
 		} 
 		//SEE INVENTORY
-		else if (choice_int == 2) { print_inventory(); } 
+		else if (choice_int == 2) { inventory_menu(); } 
 		else if (choice_int == 3) 
 		{ 
 			combat_fight(type); 
@@ -174,14 +189,7 @@ void Display::monster_encounter(int type)
 		} 
 		if (choice_int == 5 || (!combat.action_left && combat.moves_left == 0))
 		{
-			player.able_to_flee = true;
-			combat.moves_left = 5;
-			combat.action_left = true;
-			combat.monster_turn();
-			int_temp = combat.monster_types[type]->route.top;
-			print_monster_moves(type);
-			monster_attack(type);
-
+			end_of_turn(type, alive);
 		}
 	} while (alive);
 	if (type == 1)
@@ -191,6 +199,22 @@ void Display::monster_encounter(int type)
 		player.stats.y = 1;
 	}
 }
+
+void Display::end_of_turn(int type, bool &alive)
+{
+	player.able_to_flee = true;
+	combat.moves_left = 5;
+	combat.action_left = true;
+	combat.monster_turn();
+	int_temp = combat.monster_types[type]->route.top;
+	print_monster_moves(type);
+	monster_attack(type);
+	if (!combat.check_player_alive(player.stats.health))
+	{
+		player.player_death();
+	}
+}
+
 
 void Display::combat_menu()
 {
@@ -297,10 +321,16 @@ void Display::monster_attack(int type)
 		int damage = combat.monster_types[type]->calculate_damage();
 		if (player.inventory.find_item_of_type(3))
 		{
-			if (combat.monster_types[type]->does_hit())
+			chance = 30 + (player.inventory.inventory[index].dmg_bonus * 3);
+			if (combat.monster_types[type]->does_hit(chance))
 			{
 				std::cout << ">> The Monster did " << damage << " damage." << std::endl;
 				player.stats.health -= damage;
+				wait();
+			}
+			else
+			{
+				std::cout << ">> The monster tried to hit but you blocked with your shield" << std::endl;
 				wait();
 			}
 		}
@@ -316,12 +346,12 @@ void Display::monster_attack(int type)
 void Display::loot_room()
 {
 	clear();
-	index = combat.random(0, player.inventory.items.size());
+	index = combat.random(1, player.inventory.items.size());
 	statement = player.inventory.items.at(index).name;
-	bonus = combat.random(0, player.stats.level);
+	bonus = combat.random(1, player.stats.level);
 	std::cout << ">> As you make your way through the dungeon you come across a door." << std::endl;
 	std::cout << ">> Opening it reveals a sturdy chest in the centre, wrought iron bands wrap around securing it in place" << std::endl;
-	if (0 < player.inventory.items.at(index).item_type && player.inventory.items.at(index).item_type < 4 && bonus > 0)
+	if (player.inventory.items.at(index).item_type < 4 && 0 < bonus)
 	{
 		
 		std::cout << ">> Prying the bands away and lifting the heavy lid reveals a +" << bonus << " " << statement << std::endl;

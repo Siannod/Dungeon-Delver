@@ -1,5 +1,5 @@
 Major Errors
-x player cannot die during fights
+x player cannot die during fights - to test
 x boss monster not doing damage
 
 Medium Errors

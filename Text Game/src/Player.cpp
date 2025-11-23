@@ -55,13 +55,10 @@ bool Player::range_validation(int min, int max, std::string statement, bool vali
 	}
 }
 
-void Player::print_stats()
+void Player::print_stats_menu()
 {
 	std::cout << ">> Current Stats:" << std::endl;
-	for (int i = 0; i < stats.stats.size(); i++)
-	{
-		std::cout << ">> " << (i + 1) << " - " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
-	}
+	print_stats();
 	if (check_level_up())
 	{
 		std::cout << ">> Level Up Available! Press Enter to level up." << std::endl;
@@ -69,6 +66,14 @@ void Player::print_stats()
 	else
 	{
 		std::cout << ">> Press enter to return...";
+	}
+}
+
+void Player::print_stats()
+{
+	for (int i = 0; i < stats.stats.size(); i++)
+	{
+		std::cout << ">> " << (i + 1) << " - " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
 	}
 }
 
@@ -127,6 +132,7 @@ void Player::create_character()
 	std::cout << ">> Enter your name: " << std::endl;
 	std::cout << "- ";
 	std::cin >> stats.name;
+	stats.level = 1;
 	system("cls");
 }
 
@@ -138,4 +144,17 @@ bool Player::check_level_up()
 		return true;
 	}
 	return false;
+}
+
+void Player::player_death()
+{
+	system("cls");
+	std::cout << ">> You died." << std::endl;
+	std::cout << ">> Your final stats were as follows: " << std::endl;
+	std::cout << ">> Level: " << stats.level << std::endl;
+	std::cout << ">> Monsters Killed: " << stats.monsters_killed << std::endl;
+	std::cout << ">> Coins: " << stats.coin << std::endl;
+	std::cout << ">> Stats: " << std::endl;
+	print_stats();
+	exit(0);
 }

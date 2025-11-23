@@ -40,17 +40,20 @@ bool Monster::player_in_range(int player_x, int player_y)
 	return false;
 }
 
-void Monster::next_move(int player_x, int player_y)
+bool Monster::next_move(int player_x, int player_y)
 {
-	aim.cost = 1000;
-	for (int i = stats.range; i > stats.range - 3; i--)
-	{
+	aim.cost == 100;
+	for (int i = stats.range; i > stats.range - 3; i--)		{
 		if (i > 0)
 		{
 			for (std::pair <int, std::vector<int>> direction : moves)
 			{
 				new_coords.x = player_x + (direction.second[0] * i);
 				new_coords.y = player_y + (direction.second[1] * i);
+				if (new_coords.x == monster.x && new_coords.y == monster.y)
+				{
+					return false;
+				}
 				if (check_in_range_visited(new_coords.x, new_coords.y))
 				{
 					if (battle_field->at(new_coords.x)[new_coords.y][1] == ' ')
@@ -65,7 +68,7 @@ void Monster::next_move(int player_x, int player_y)
 			break;
 		}
 	}
-	
+	return true;
 }
 
 void Monster::compare_spot()
@@ -95,6 +98,8 @@ void Monster::path_to_player_healthy()
 
 	route.push(current_node);
 
+	
+
 	for (int i = 0; i < stats.MAX_MOVES; i++)
 	{
 		current_node = route.stack[route.top];
@@ -116,7 +121,6 @@ void Monster::path_to_player_healthy()
 		{
 			route.pop();
 		}
-		
 	}
 }
 
@@ -175,9 +179,10 @@ int Monster::calculate_damage()
 	return damage;
 }
 
-bool Monster::does_hit()
+bool Monster::does_hit(int chance)
 {
-	if (random(0, 1))
+	hit_chance = random(0, 100);
+	if (hit_chance >= chance)
 	{
 		return true;
 	}
@@ -194,4 +199,24 @@ int Monster::coin_worth(int level)
 	//LEVEL
 	value += level;
 	return value;
+}
+
+bool Monster::check_at_aim()
+{
+	if (monster.x == aim.x && monster.y == aim.y)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Monster::has_player_moved(int x, int y)
+{
+	if (last_player.x == x && last_player.y == y)
+	{
+		return false;
+	}
+	last_player.x = x;
+	last_player.y = y;
+	return true;
 }

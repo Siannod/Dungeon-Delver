@@ -104,5 +104,5 @@ public:
 
 	bool check_monster_alive();
 
-
+	bool check_player_alive(int health);
 };

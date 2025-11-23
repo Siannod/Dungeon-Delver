@@ -63,6 +63,8 @@ public:
 
 	void level_up();
 
+	void print_stats_menu();
+
 	void print_stats();
 
 	bool range_validation(int min, int max, std::string statement, bool valid = false);
@@ -70,4 +72,7 @@ public:
 	void move(int x_mod, int y_mod);
 
 	bool check_level_up();
+	
+	void player_death();
+
 };

@@ -43,7 +43,7 @@ void Generator::generate(std::vector<std::vector<std::string>> &dungeon)
 	
 	} while (walls.size() != 0);
 	dungeon[1][1] = "X";
-	dungeon[1][3] = "2"; //TEST LINE
+	dungeon[1][3] = "3"; //TEST LINE
 	gen_rooms(dungeon);
 }
 
