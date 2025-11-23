@@ -1,7 +1,7 @@
 #pragma once
 #include "player.h"
 
-void Player::level_up()
+void Player::level_up() 
 {
 	do
 	{
@@ -85,30 +85,24 @@ void Player::move(int x_mod, int y_mod)
 
 void Player::create_character()
 {
-	for (int i = 0; i < stats.stats.size(); i++)
+	for (int i = 0; i < stats.stats.size(); i++) //sets all stats to 0
 	{
 		stats.stats.at(stat_names[i]) = 0;
 	}
 	stats.upgrade_points = 5;
-	do
+	do //player picks which stats they want to increase
 	{
 		std::cout << ">> You currently have: " << stats.upgrade_points << " points left." << std::endl;
 		std::cout << ">> Your current stats: " << std::endl; 
-		for (int i = 0; i < stats.stats.size(); i++)
-		{
-			std::cout << ">> " << i+1 << ". " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
-		}
+		print_stats();
 		std::cout << "- ";
 		range_validation(1, 3, "- ");
 		stats.stats.at(stat_names[choice_int - 1]) = stats.stats.at(stat_names[choice_int - 1]) + 1;
 		stats.upgrade_points -= 1;
 		system("cls");
 	} while (stats.upgrade_points > 0);
-	for (int i = 0; i < stats.stats.size(); i++)
-	{
-		std::cout << ">> " << i + 1 << ". " << stat_names[i] << ": " << stats.stats.at(stat_names[i]) << std::endl;
-	}
-	do
+	print_stats();
+	do //checks player is happy with stats
 	{
 		std::cout << "[?] Are you happy with these stats? (y/n) ";
 		std::cin >> choice_string;
@@ -127,9 +121,9 @@ void Player::create_character()
 			std::cout << "[!] INVALID INPUT, PLEASE TRY AGAIN" << std::endl;
 		}
 	} while (!valid);
-	stats.MAX_HEALTH = 5 + (stats.stats.at("Constitution") * 2);
+	stats.MAX_HEALTH = 5 + (stats.stats.at("Constitution") * 2); //calculates player max health
 	stats.health = stats.MAX_HEALTH;
-	std::cout << ">> Enter your name: " << std::endl;
+	std::cout << ">> Enter your name: " << std::endl; //takes player name
 	std::cout << "- ";
 	std::cin >> stats.name;
 	stats.level = 1;
@@ -156,5 +150,4 @@ void Player::player_death()
 	std::cout << ">> Coins: " << stats.coin << std::endl;
 	std::cout << ">> Stats: " << std::endl;
 	print_stats();
-	exit(0);
 }

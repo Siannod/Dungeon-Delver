@@ -23,7 +23,7 @@ void Display::print_main_menu()
 
 void Display::main_menu()
 {
-	do
+	while(running)
 	{
 		print_main_menu();
 		if (input_validation(1, 4, "- Select menu option: "))
@@ -43,7 +43,7 @@ void Display::main_menu()
 				}
 			}
 		}
-	} while (running);
+	}
 }
 
 void Display::print_dunegon_move_options()
@@ -71,22 +71,22 @@ void Display::dungeon_move_options()
 		player.move(x_mod, y_mod);
 		if (dungeon.dungeon[player.stats.x][player.stats.y] == "2") 
 		{
-			
 			monster_encounter(1); 
-			main_menu();
 		}
 		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") 
 		{ 
-
 			monster_encounter(0); 
 		}
 		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "4") { loot_room(); }
 		dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
-
-		clear();
-		dungeon_move_options();
+		if (running)
+		{
+			clear();
+			dungeon_move_options();
+		}
 	}
-	else { clear(); main_menu(); }
+	clear(); 
+	main_menu();
 }
 
 bool Display::input_validation(int min, int max, std::string statement)
@@ -211,7 +211,8 @@ void Display::end_of_turn(int type, bool &alive)
 	monster_attack(type);
 	if (!combat.check_player_alive(player.stats.health))
 	{
-		player.player_death();
+		alive = false;
+		running = false;
 	}
 }
 

@@ -92,7 +92,7 @@ bool Combat::able_to_flee(int dex)
 
 int Combat::random(int min, int max)
 {
-	if (max == 0)
+	if (max == 0 || max - min == 0)
 	{
 		return 0;
 	}

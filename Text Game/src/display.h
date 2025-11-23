@@ -14,10 +14,11 @@
 class Display
 {
 private:
-	bool running = true;
+	
 
 
 public:
+	bool running = true;
 	Player player = Player(true);
 	Dungeon dungeon;
 	Combat combat = Combat(player.stats_ptr);

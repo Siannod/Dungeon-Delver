@@ -36,7 +36,7 @@ void Dungeon::check_paths(std::vector<int> coords, std::vector<int>& temp)
 	}
 }
 
-bool Dungeon::range()
+bool Dungeon::range() //checks if the co-ords are in range
 {
 	if (temp_x > 0 && temp_x < wall_max && 0 < temp_y && temp_y < wall_max)
 	{
@@ -48,7 +48,7 @@ bool Dungeon::range()
 	}
 }
 
-void Dungeon::move_player(int new_x, int new_y, int move_x, int move_y)
+void Dungeon::move_player(int new_x, int new_y, int move_x, int move_y) //moves player icon in the dungeon
 {
 	dungeon[new_x][new_y] = "X";
 	dungeon[new_x - move_x][new_y - move_y] = "0";

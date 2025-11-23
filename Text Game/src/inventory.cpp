@@ -4,6 +4,8 @@
 
 void Inventory::initialise()
 {
+    starting_items = 0;
+    choice_int == 0;
     for (int i = 0; i < inventory_size; i++)
     {
         inventory.push_back(items.at(0));
@@ -13,7 +15,7 @@ void Inventory::initialise()
         std::cout << ">> You get " << 2 - starting_items << " starting items from the following: " << std::endl;
         for (std::pair<int, InventorySpace::inventory_slot> item : items)
         {
-            if (item.first == 0 || item.first == choice_int)
+            if (item.first == 0 || item.second.item_id == inventory[0].item_id)
             {
                 continue;
             }
