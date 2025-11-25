@@ -48,7 +48,6 @@ void Inventory::initialise()
             std::cout << "[!] INVALID INPUT, PLEASE TRY AGAIN" << std::endl;
         }
     } while (!item_picked);
-    get_adjective();
 }
 
 bool Inventory::input_validation(int min, int max, std::string statement)

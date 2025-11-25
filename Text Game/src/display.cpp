@@ -374,7 +374,7 @@ void Display::loot_room()
 	if (player.inventory.items.at(index).item_type < 4 && 0 < bonus)
 	{
 		
-		std::cout << ">> Prying the bands away and lifting the heavy lid reveals a " << " +" << bonus << " " << statement << std::endl;
+		std::cout << ">> Prying the bands away and lifting the heavy lid reveals a +" << bonus << " " << statement << std::endl;
 	}
 	else
 	{
