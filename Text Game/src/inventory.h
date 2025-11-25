@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include <conio.h>
 
@@ -20,6 +21,7 @@ private:
 public:
     //CLASSES
     Command command;
+
 
     //INTS
     int choice_int;
