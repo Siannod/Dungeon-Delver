@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 
+//ALL STRUCTS USED IN PROGRAM SO ALL FILES CAN READ
 namespace InventorySpace
 {
     struct inventory_slot
@@ -36,6 +37,7 @@ struct MonsterStats
     int health;
     int range;
     std::vector<int> damage;
+    int bonus;
     int moves_left = 5;
     int MAX_MOVES = 5;
 };

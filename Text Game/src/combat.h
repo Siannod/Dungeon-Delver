@@ -9,6 +9,7 @@
 #include "player.h"
 #include "monster.h"
 #include "boss_monster.h"
+#include "ranged_monster.h"
 #include "inventory.h"
 
 
@@ -57,6 +58,7 @@ public:
 
 	int moves_left = 5;
 	bool action_left = true;
+	char action_char = 'Y';
 	
 	int temp;
 	int damage;
@@ -68,11 +70,13 @@ public:
 
 	Node next_step;
 
+	//Monsters
 	Monster* monster = new Monster(stats, FIELD_SIZE, field_ptr);
 	BossMonster* boss_monster = new BossMonster(stats, FIELD_SIZE, field_ptr);
-	std::vector<Monster*> monster_types = { monster, boss_monster};
+	RangedMonster* ranged_monster = new RangedMonster(stats, FIELD_SIZE, field_ptr);
+	std::vector<Monster*> monster_types = { monster, ranged_monster, boss_monster};
 	int type;
-	//Monster monster_;
+
 	//FUNCTIONS
 	void fill_field(); //CREATES THE FIELD
 

@@ -19,8 +19,6 @@ class Player
 private:
 	bool to_level = false;
 	bool valid = false;
-	
-	
 
 public:
 	//CLASSES
@@ -34,8 +32,6 @@ public:
 	PlayerStats stats;
 	PlayerStats* stats_ptr = &stats;
 
-	//strings
-	//std::string player_name;
 	//bool
 	bool able_to_flee = true;
 	
@@ -45,11 +41,6 @@ public:
 	int choice_int;
 	//string
 	std::string choice_string;
-	//bool
-	
-	
-	//MAPS
-	
 
 	//VECTOR
 	std::vector <std::string> stat_names = { "Strength", "Dexterity", "Constitution"};
@@ -66,7 +57,7 @@ public:
 
 	void print_stats();
 
-	bool range_validation(int min, int max, std::string statement, bool valid = false);
+	bool range_validation(int min, int max, std::string statement);
 	
 	void move(int x_mod, int y_mod);
 

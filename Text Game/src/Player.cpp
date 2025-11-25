@@ -31,8 +31,9 @@ void Player::level_up()
 	stats.MAX_HEALTH = calculate_max_health();
 }
 
-bool Player::range_validation(int min, int max, std::string statement, bool valid)
+bool Player::range_validation(int min, int max, std::string statement)
 {
+	valid = false;
 	while (!valid)
 	{
 		std::cin >> choice_string;

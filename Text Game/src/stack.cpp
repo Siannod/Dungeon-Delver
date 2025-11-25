@@ -18,6 +18,7 @@ Node Stack::pop()
 	if (is_empty())
 	{
 		std::cerr << "[!] No previous movements available";
+		return {};
 	}
 	else
 	{

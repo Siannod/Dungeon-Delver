@@ -134,6 +134,7 @@
     <ClCompile Include="src\monster.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\queue.cpp" />
+    <ClCompile Include="src\ranged_monster.cpp" />
     <ClCompile Include="src\stack.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="src\monster.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\queue.h" />
+    <ClInclude Include="src\ranged_monster.h" />
     <ClInclude Include="src\stack.h" />
     <ClInclude Include="src\structs.h" />
   </ItemGroup>

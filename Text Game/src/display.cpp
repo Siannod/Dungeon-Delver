@@ -83,7 +83,7 @@ void Display::dungeon_move_options()
 		}
 		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") 
 		{ 
-			monster_encounter(0); 
+			monster_encounter(1); 
 		}
 		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "4") { loot_room(); }
 		dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
@@ -144,7 +144,7 @@ void Display::inventory_menu(bool valid)
 		
 		clear();
 	}
-	main_menu();
+	//main_menu();
 }
 
 void Display::monster_encounter(int type) 
@@ -187,6 +187,7 @@ void Display::monster_encounter(int type)
 				player.stats.monsters_killed += 1;
 				alive = false;
 			}
+			std::cout << ">> Press Enter to continue...";
 			wait(); 
 		}
 		//FLEE
@@ -213,6 +214,7 @@ void Display::end_of_turn(int type, bool &alive)
 	player.able_to_flee = true;
 	combat.moves_left = 5;
 	combat.action_left = true;
+	combat.action_char = 'Y';
 	combat.monster_turn();
 	int_temp = combat.monster_types[type]->route.top;
 	print_monster_moves(type);
@@ -227,11 +229,11 @@ void Display::end_of_turn(int type, bool &alive)
 
 void Display::combat_menu()
 {
-	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
-	std::cout << "| 1. Move    2. Items | Health: " << player.stats.health << " |" << std::endl;
-	std::cout << "| 3. Fight   4. Flee  | Moves: " << combat.moves_left << "  |" << std::endl;
-	std::cout << "| 5. End Turn         |           |" << std::endl;
-	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=+" << std::endl;
+	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=-=+" << std::endl;
+	std::cout << "| 1. Move    2. Items | Health: " << player.stats.health << "  |" << std::endl;
+	std::cout << "| 3. Fight   4. Flee  | Moves: " << combat.moves_left << "    |" << std::endl;
+	std::cout << "| 5. End Turn         | Action: " << combat.action_char << "   |" << std::endl;
+	std::cout << "+=-=-=-=-=-=-=-=-=-=-=+=-=-=-=-=-=-=+" << std::endl;
 	std::cout << "- ";
 	input_validation(1, 5, "- ");
 }
@@ -269,10 +271,15 @@ void Display::combat_fight(int type)
 			print_weapons();
 			std::cout << "- ";
 			input_validation(1, count, "- ");
+			if (choice_int == count)
+			{
+				return;
+			}
 			index = player.inventory.weapon_index[choice_int - 1];
 			temp_item = player.inventory.inventory[index];
 			clear();
 			combat.action_left = false;
+			combat.action_char = 'N';
 			if (combat.check_for_enemy(player.inventory.item_types.at(temp_item.item_type).range))
 			{
 
@@ -300,6 +307,9 @@ void Display::combat_fight(int type)
 
 void Display::print_weapons()
 {
+	count = 1;
+	combat.print_field();
+	std::cout << "[?] Choose your weapon: " << std::endl;
 	for (int item : player.inventory.weapon_index)
 	{
 		temp_item = player.inventory.inventory[item];
@@ -309,6 +319,7 @@ void Display::print_weapons()
 		}
 		count += 1;
 	}
+	std::cout << ">> " << count << ". Back" << std::endl;
 }
 
 void Display::print_monster_moves(int type)

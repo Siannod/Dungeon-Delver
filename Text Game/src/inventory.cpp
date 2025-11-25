@@ -5,7 +5,7 @@
 void Inventory::initialise()
 {
     starting_items = 0;
-    choice_int == 0;
+    choice_int = 0;
     for (int i = 0; i < inventory_size; i++)
     {
         inventory.push_back(items.at(0));

@@ -6,27 +6,13 @@ void Monster::create_monster(PlayerStats* player_stats)
 	int level = (*player_stats).level;
 	//HEALTH
 	stats.name = "normal";
-	stats.MAX_HEALTH = player_stats->MAX_HEALTH + random(3, 10 * (player_stats->level) + player_stats->stats.at("Strength"));
+	stats.MAX_HEALTH = player_stats->MAX_HEALTH + random(7, 14 * (player_stats->level) + player_stats->stats.at("Strength"));
 	stats.health = stats.MAX_HEALTH;
 	//RANGE
-	int temp = random(0, 1);
-	if (temp == 0)
-	{
-		stats.range = 1;
-	}
-	else
-	{
-		stats.range = 7;
-	}
+	stats.range = 1;
 	//DAMAGE
-	if (stats.range == 1)
-	{
-		stats.damage.push_back(random(3, 6 + player_stats->level));
-	}
-	else
-	{
-		stats.damage.push_back(random(2, 4 + player_stats->level));
-	}
+	stats.damage.push_back(random(3, 6 + player_stats->level));
+	
 }
 
 bool Monster::player_in_range(int player_x, int player_y)
@@ -42,7 +28,7 @@ bool Monster::player_in_range(int player_x, int player_y)
 
 bool Monster::next_move(int player_x, int player_y)
 {//checks for the best spot around the player to move to
-	aim.cost == 100;
+	aim.cost = 100;
 	for (int i = stats.range; i > stats.range - 3; i--)		{
 		if (i > 0)
 		{
@@ -201,22 +187,5 @@ int Monster::coin_worth(int level)
 	return value;
 }
 
-bool Monster::check_at_aim()
-{
-	if (monster.x == aim.x && monster.y == aim.y)
-	{
-		return true;
-	}
-	return false;
-}
 
-bool Monster::has_player_moved(int x, int y)
-{
-	if (last_player.x == x && last_player.y == y)
-	{
-		return false;
-	}
-	last_player.x = x;
-	last_player.y = y;
-	return true;
-}
+
