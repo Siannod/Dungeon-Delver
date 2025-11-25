@@ -78,25 +78,25 @@ public:
 	int type;
 	//Monster monster_;
 	//FUNCTIONS
-	void fill_field();
+	void fill_field(); //CREATES THE FIELD
 
-	void print_field();
+	void print_field(); //PRINTS THE FIELD
 
-	void move_player(int choice_int);
+	void move_player(int choice_int); //MOVES THE PLAYER
 
-	void move_monster(int x, int y);
+	void move_monster(int x, int y); 
 
-	void check_moves();
+	void check_moves(); //CHECKS WHICH MOVES ARE FREE FOR THE PLAYER
 
-	bool able_to_flee(int dex);
+	bool able_to_flee(int dex); //CHECKS IF THE PLAYER IS ABLE TO FLEE THE FIGHT
 
 	int random(int min, int max);
 
-	bool check_for_enemy(int range);
+	bool check_for_enemy(int range); //CHECKS IF AN ENEMY IS WITHIN RANGE
 
 	void monster_turn();
 
-	int calculate_damage(struct InventorySpace::inventory_slot weapon);
+	int calculate_damage(struct InventorySpace::inventory_slot weapon); //CALCULATES HOW MUCH DAMAGE THE PLAYER DOES
 
 	void flee(bool &flee, int dex);
 

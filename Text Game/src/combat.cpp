@@ -7,17 +7,17 @@ void Combat::fill_field()
 	for (int i = 0; i < (FIELD_SIZE*2)+1; i++)
 	{
 		battle_field.push_back({});
-		if (i % 2 == 0)
+		if (i % 2 == 0)//CHECKS WHICH SECTION OF THE MAP ITS CREATING
 		{
-			start = "top_";
+			start = "top_"; //FOR THE +-=-+
 		}
 		else
 		{
-			start = "mid_";
+			start = "mid_"; //FOR THE |  |
 		}
 		for (int j = 0; j < FIELD_SIZE; j++)
 		{
-			if (j == 0)
+			if (j == 0) //CHECKS IF ITS THE FIRST PIECE OF A ROW
 			{
 				end = "first";
 			}
@@ -51,26 +51,24 @@ void Combat::print_field()
 void Combat::move_player(int choice_int)
 {
 	moves_left -= 1;
-	new_coords.x = player.x + moves.at(options[choice_int - 1])[0];
-	new_coords.y = player.y + moves.at(options[choice_int - 1])[1];
-	battle_field[player.x][player.y][1] = char(' ');
-	battle_field[new_coords.x][new_coords.y][1] = char('X');
-	player.x = new_coords.x;
-	player.y = new_coords.y;
+	battle_field[player.x][player.y][1] = char(' '); //clears the old place
+	player.x = player.x + moves.at(options[choice_int - 1])[0]; //moves the players coords
+	player.y = player.y + moves.at(options[choice_int - 1])[1];
+	battle_field[player.x][player.y][1] = char('X'); //sets the new place on the grid
 }
 
 void Combat::check_moves()
 {
 	options.clear();
-	for (std::pair < int, std::vector<int>> direction : moves)
+	for (std::pair < int, std::vector<int>> direction : moves) //loops through each directions
 	{
 		new_coords.x = player.x + direction.second[0];
 		new_coords.y = player.y + direction.second[1];
-		if (new_coords.x < FIELD_SIZE && 0 < new_coords.x)
+		if (in_range(new_coords.x, new_coords.y)) //checks if the direction is in range
 		{
-			if (new_coords.y < FIELD_SIZE && 0 < new_coords.y && battle_field[new_coords.x][new_coords.y][1] == char(' '))
+			if (battle_field[new_coords.x][new_coords.y][1] == char(' ')) //checks if the spot is clear
 			{
-				options.push_back(direction.first);
+				options.push_back(direction.first); //adds direction to options
 			}
 		}
 	}
@@ -78,15 +76,12 @@ void Combat::check_moves()
 
 bool Combat::able_to_flee(int dex)
 {
-	temp = random(1, 6);
+	temp = random(1, 6); //random number to flee
 	if (temp + dex > 5)
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;	
 }
 
 int Combat::random(int min, int max)
@@ -102,9 +97,9 @@ int Combat::random(int min, int max)
 
 bool Combat::check_for_enemy(int range)
 {
-	for (std::pair<int, std::vector<int>> direction : moves)
+	for (std::pair<int, std::vector<int>> direction : moves) //loops through each direction
 	{
-		for (int i = 1; i < range + 1; i++)
+		for (int i = 1; i <= range; i++) //for every spot within range
 		{
 			new_coords.x = player.x + direction.second[0] * i;
 			new_coords.y = player.y + direction.second[1] * i;

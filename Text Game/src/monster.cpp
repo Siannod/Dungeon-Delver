@@ -41,7 +41,7 @@ bool Monster::player_in_range(int player_x, int player_y)
 }
 
 bool Monster::next_move(int player_x, int player_y)
-{
+{//checks for the best spot around the player to move to
 	aim.cost == 100;
 	for (int i = stats.range; i > stats.range - 3; i--)		{
 		if (i > 0)
@@ -51,7 +51,7 @@ bool Monster::next_move(int player_x, int player_y)
 				new_coords.x = player_x + (direction.second[0] * i);
 				new_coords.y = player_y + (direction.second[1] * i);
 				if (new_coords.x == monster.x && new_coords.y == monster.y)
-				{
+				{//if the monster is in a spot that it can attack from it doesnt move
 					return false;
 				}
 				if (check_in_range_visited(new_coords.x, new_coords.y))
@@ -72,7 +72,7 @@ bool Monster::next_move(int player_x, int player_y)
 }
 
 void Monster::compare_spot()
-{
+{//compares the distance of the last most effectve spot
 	diff.x = abs(monster.x - new_coords.x);
 	diff.y = abs(monster.y - new_coords.y);
 	diff.cost = diff.x + diff.y;
