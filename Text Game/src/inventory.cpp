@@ -81,11 +81,11 @@ void Inventory::do_command(PlayerStats &stats)
 {
     command_word = command.command[0];
     if (command.command.empty()) { std::cout << "[!] EMPTY COMMAND, TRY AGAIN.\n"; }
-    else if (command_word == "help") { command.get_help(); }
-    else if (command_word == "view") { view(); }
-    else if (command_word == "drop") { set(); }
+    else if (command_word == "help") { command.get_help(); _getch(); }
+    else if (command_word == "view") { view(); _getch();}
+    else if (command_word == "drop") { set(); _getch();}
     else if (command_word == "back") { back(); }
-    else if (command_word == "use") { use(stats); }
+    else if (command_word == "use") { use(stats); _getch();}
     else { std::cout << "[!] INVALID COMMAND INPUT, TRY AGAIN\n"; }
     std::cout << "\n";
 }

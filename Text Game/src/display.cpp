@@ -133,7 +133,7 @@ void Display::inventory_menu(bool valid)
 		std::getline(std::cin, choice_string);
 		player.inventory.command.delimit(choice_string);
 		player.inventory.do_command(player.stats);
-		wait();
+		
 		clear();
 	}
 	main_menu();
