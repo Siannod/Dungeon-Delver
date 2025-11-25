@@ -28,6 +28,7 @@ void Player::level_up()
 			_getch();
 		}
 	} while (to_level);
+	stats.MAX_HEALTH = calculate_max_health();
 }
 
 bool Player::range_validation(int min, int max, std::string statement, bool valid)
@@ -121,12 +122,13 @@ void Player::create_character()
 			std::cout << "[!] INVALID INPUT, PLEASE TRY AGAIN" << std::endl;
 		}
 	} while (!valid);
-	stats.MAX_HEALTH = 5 + (stats.stats.at("Constitution") * 2); //calculates player max health
+	stats.level = 1;
+	stats.MAX_HEALTH = calculate_max_health(); //calculates player max health
 	stats.health = stats.MAX_HEALTH;
 	std::cout << ">> Enter your name: " << std::endl; //takes player name
 	std::cout << "- ";
 	std::cin >> stats.name;
-	stats.level = 1;
+	
 	system("cls");
 }
 
@@ -150,4 +152,9 @@ void Player::player_death()
 	std::cout << ">> Coins: " << stats.coin << std::endl;
 	std::cout << ">> Stats: " << std::endl;
 	print_stats();
+}
+
+int Player::calculate_max_health()
+{
+	return 5 + (stats.stats.at("Constitution") * 2) + (stats.level * 2);
 }

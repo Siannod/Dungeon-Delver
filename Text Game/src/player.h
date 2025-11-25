@@ -75,4 +75,5 @@ public:
 	
 	void player_death();
 
+	int calculate_max_health();
 };

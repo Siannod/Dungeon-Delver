@@ -7,4 +7,3 @@ X cant go back after selecting fight
 
 
 Minimal Errors
-X double wait after back from inv
