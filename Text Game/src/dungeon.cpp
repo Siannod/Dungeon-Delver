@@ -1,6 +1,7 @@
 #pragma once
 #include "dungeon.h"
 
+
 void Dungeon::generate()
 {
 	generator.generate(dungeon);
@@ -11,10 +12,16 @@ void Dungeon::print_dungeon()
 	std::cout << "\n\n";
 	for (std::vector<std::string> line : dungeon)
 	{
-		
-		for (std::string colummn : line)
+		for (std::string column : line)
 		{
-			std::cout << colummn << " ";
+			if (column == "0" || column == "1" || column == "X")
+			{
+				std::cout << column << " ";
+			}
+			else
+			{
+				std::cout << "?" << " ";
+			}
 		}
 		std::cout << "\n";
 	}
@@ -63,6 +70,5 @@ void Dungeon::new_dungeon()
 	room_count.at(3) = 4 * level;
 	room_count.at(4) = 2 * level;
 	generator.gen_rooms(dungeon);
-	print_dungeon();
-	
+
 }

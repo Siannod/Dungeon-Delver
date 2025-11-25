@@ -1,5 +1,6 @@
 #pragma once
 #include "dungeon_generator.h"
+#include <thread>
 
 class Dungeon
 {
@@ -27,8 +28,8 @@ public:
 	std::map<int, int> room_count =
 	{
 		{2, 1},
-		{3, 4 * level},
-		{4, 2 * level}
+		{3, 4},
+		{4, 2}
 	};
 
 	std::map<int, std::vector<int>> direction =
@@ -47,9 +48,13 @@ public:
 		{4, "West"}
 	};
 
+	std::thread t;
+
 	Generator generator = Generator(rooms, room_count, dungeon);
 
 	//FUNCTIONS
+	void start_up();
+
 	void print_dungeon();
 
 	void generate();

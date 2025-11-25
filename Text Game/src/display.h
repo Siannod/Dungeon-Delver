@@ -11,6 +11,7 @@
 #include <string>
 
 
+
 class Display
 {
 private:
@@ -43,6 +44,8 @@ public:
 	std::vector<int> temp;
 	InventorySpace::inventory_slot temp_item;
 
+	std::thread t;
+
 	//FUNCTONS
 	//prints
 	void print_inventory_menu();
@@ -54,6 +57,8 @@ public:
 	void print_dunegon_move_options();
 
 	//others
+	void start_up();
+
 	void end_of_turn(int type, bool& alive);
 	
 	void inventory_menu(bool valid = false);
@@ -68,11 +73,7 @@ public:
 
 	bool input_validation(int min, int max, std::string statement);
 
-	
-
 	void monster_encounter(int type);
-
-	
 
 	void combat_move();
 

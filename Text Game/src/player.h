@@ -24,12 +24,11 @@ private:
 
 public:
 	//CLASSES
-	Inventory inventory = Inventory(true);
+	Inventory inventory;
 	
 	Player(bool run)
 	{
 		stats.upgrade_points = 5;
-		create_character();
 	}
 
 	PlayerStats stats;

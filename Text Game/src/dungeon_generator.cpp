@@ -77,7 +77,6 @@ void Generator::gen_rooms(std::vector<std::vector<std::string>>& dungeon, bool g
 			generating = false;
 		}
 	} while (generating);
-	std::cout << "\n";
 }
 
 

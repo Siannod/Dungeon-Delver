@@ -1,6 +1,14 @@
 #pragma once
 #include "display.h"
 
+void Display::start_up()
+{
+	std::thread t_dungeon(&Dungeon::new_dungeon, &dungeon);
+	player.create_character();
+	player.inventory.initialise();
+	t_dungeon.join();
+}
+
 void Display::clear()
 {
 	system("cls");

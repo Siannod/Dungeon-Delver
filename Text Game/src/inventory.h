@@ -19,14 +19,7 @@ private:
 
 public:
     Command command;
-    Inventory(bool run)
-    {
-        initialise();
-    }
-    Inventory()
-    {
 
-    }
     std::string command_word;
     std::string choice_string;
     int choice_int;

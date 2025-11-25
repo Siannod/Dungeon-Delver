@@ -6,6 +6,7 @@
 int main()
 {
     Display display;
+    display.start_up();
     display.main_menu(); //runs until player dies
     display.player.player_death();
 

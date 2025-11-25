@@ -7,6 +7,7 @@
 #include <time.h>
 #include <string>
 
+
 constexpr int wall_min = 0;
 constexpr int wall_max = 21;
 
@@ -21,8 +22,6 @@ public:
 		rooms = room;
 		room_count = room_counts;
 		dungeon_temp = dungeon;
-		fill_dungeon(dungeon);
-		generate(dungeon);
 	}
 	int temp;
 	//CO-ORDS
