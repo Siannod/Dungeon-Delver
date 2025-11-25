@@ -44,8 +44,6 @@ public:
 	std::vector<int> temp;
 	InventorySpace::inventory_slot temp_item;
 
-	std::thread t;
-
 	//FUNCTONS
 	//prints
 	void print_inventory_menu();
@@ -58,36 +56,32 @@ public:
 
 	//others
 	void start_up();
-
-	void end_of_turn(int type, bool& alive);
 	
 	void inventory_menu(bool valid = false);
-
-	void clear();
-
-	void wait();
 
 	void main_menu();
 
 	void dungeon_move_options();
 
-	bool input_validation(int min, int max, std::string statement);
-
-	void monster_encounter(int type);
-
-	void combat_move();
-
-	void combat_fight(int type);
-
-	void print_weapons();
-
-	void print_monster_moves(int type);
-
-	void monster_attack(int type);
-
 	void loot_room();
 
-	bool yes_no_validation(std::string question);
-
 	void new_level();
+
+
+	//INTERNAL
+	void clear();
+	void wait();
+
+	//COMBAT
+	void monster_encounter(int type);
+	void combat_move();
+	void combat_fight(int type);
+	void print_weapons();
+	void print_monster_moves(int type);
+	void monster_attack(int type);
+	void end_of_turn(int type, bool& alive);
+
+	//VALIDATION
+	bool yes_no_validation(std::string question);
+	bool input_validation(int min, int max, std::string statement);
 };

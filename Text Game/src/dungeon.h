@@ -32,7 +32,7 @@ public:
 		{4, 2}
 	};
 
-	std::map<int, std::vector<int>> direction =
+	std::map<int, std::vector<int>> direction = //the directions the player can move
 	{
 		{1, {-2, 0}},
 		{2, {0, 2}},
@@ -48,22 +48,20 @@ public:
 		{4, "West"}
 	};
 
-	std::thread t;
+	
 
 	Generator generator = Generator(rooms, room_count, dungeon);
 
 	//FUNCTIONS
-	void start_up();
+	void print_dungeon(); //prints the dungeon
 
-	void print_dungeon();
+	void generate(); //calls the generator to generate the dungeon
 
-	void generate();
+	void check_paths(std::vector<int> coords, std::vector<int> &temp); //checks which paths are available to traverse
 
-	void check_paths(std::vector<int> coords, std::vector<int> &temp);
+	bool range(); //checks if its in range
 
-	bool range();
+	void move_player(int old_x, int old_y, int new_x, int new_y); //moves player in the array
 
-	void move_player(int old_x, int old_y, int new_x, int new_y);
-
-	void new_dungeon();
+	void new_dungeon(); //creates a new dungeon level
 };
