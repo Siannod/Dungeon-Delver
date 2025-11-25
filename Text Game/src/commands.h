@@ -18,10 +18,9 @@ public:
 
 	//FUNCTIONS
 	//back-end commands
-	void delimit(std::string input);
+	void delimit(std::string input); //splits the input up into a vector
 
-
-	char convert_case(char letter);
+	char convert_case(char letter); //converts a given character into the opposite case
 	
 	//player commands
 	void get_help();

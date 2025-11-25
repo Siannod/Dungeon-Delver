@@ -55,13 +55,13 @@ public:
 
 	//FUNCTIONS
 
-	void fill_dungeon(std::vector<std::vector<std::string>> &dungeon);
+	void fill_dungeon(std::vector<std::vector<std::string>> &dungeon); //fills the dungeon with 1
 
-	void generate(std::vector<std::vector<std::string>> &dungeon);
+	void generate(std::vector<std::vector<std::string>> &dungeon); //runs an algorithm to generate an unique dungeon
 
 	int random(int min, int max);
 
-	void check_new_walls(std::vector<std::vector<std::string>> dungeon);
+	void check_new_walls(std::vector<std::vector<std::string>> dungeon); //when a new path is created checks the end for each new wall
 
-	void gen_rooms(std::vector<std::vector<std::string>>& dungeon, bool generating = true);
+	void gen_rooms(std::vector<std::vector<std::string>>& dungeon, bool generating = true); //randomly places new rooms in the dungeon
 };

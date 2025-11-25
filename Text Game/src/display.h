@@ -19,36 +19,44 @@ private:
 
 
 public:
-	bool running = true;
+	//CLASSES
 	Player player = Player(true);
 	Dungeon dungeon;
 	Combat combat = Combat(player.stats_ptr);
 
+
+	//INTS
 	int choice_int;
 	int min;
 	int max;
 	int x_mod;
 	int y_mod;
-	bool valid = false;
 	int count;
 	int index;
 	int bonus;
 	int chance;
-
 	int int_temp;
+
+	//BOOLS
+	bool valid = false;
+	bool running = true;
+
+	//STRINGS
 	std::string statement;
 	std::string choice_string;
 	std::string menu_top = "+ - - - - - - - - - - - - - - +";
 
-
+	//VECTORS
 	std::vector<int> temp;
+
+
 	InventorySpace::inventory_slot temp_item;
 
 	//FUNCTONS
 	//prints
 	void print_inventory_menu();
 
-	void combat_menu();
+	void combat_menu(); 
 
 	void print_main_menu();
 
@@ -69,8 +77,8 @@ public:
 
 
 	//INTERNAL
-	void clear();
-	void wait();
+	void clear(); //clears the screen
+	void wait(); //waits for user to press enter
 
 	//COMBAT
 	void monster_encounter(int type);

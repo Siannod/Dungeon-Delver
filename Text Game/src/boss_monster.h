@@ -2,6 +2,8 @@
 #include "monster.h"
 #include "structs.h"
 
+
+//INHERITED MONSTER CLASS THAT HAS MORE HEALTH AND STRONGER/MORE ATTACKS
 class BossMonster : public Monster
 {
 public:

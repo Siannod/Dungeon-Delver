@@ -18,14 +18,14 @@ public:
 	const int boss_max = 1;
 	const int monster_max = 4;
 	const int loot_max = 2;
-	std::map<int, std::string> rooms =
+	std::map<int, std::string> rooms = //room types available
 	{
 		{2, "boss"},
 		{3, "monster"},
 		{4, "loot"}
 	};
 
-	std::map<int, int> room_count =
+	std::map<int, int> room_count = //number of each type of room per level
 	{
 		{2, 1},
 		{3, 4},

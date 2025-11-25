@@ -32,8 +32,6 @@ public:
 		{"mid_rest", "   |"}
 	};
 
-	std::vector<std::string> field_rows = { "|", " ", " ", "|" };
-
 	std::vector<std::vector<std::string>> battle_field;
 
 	std::vector<std::vector<std::string>>* field_ptr = &battle_field;
@@ -54,8 +52,6 @@ public:
 	coords player = { 1, 1, 0 };
 	coords new_coords;
 	coords diff;
-
-	
 
 	bool alive;
 

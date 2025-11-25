@@ -18,21 +18,30 @@ private:
   
 
 public:
+    //CLASSES
     Command command;
 
-    std::string command_word;
-    std::string choice_string;
+    //INTS
     int choice_int;
     int index;
+    int healing;
 
+    //BOOLS
     bool go_back = false;
     bool item_picked = false;
+    bool valid;
 
+    //STRINGS
+    std::string command_word;
+    std::string choice_string;
+   
+    //VECTORS
     std::vector<InventorySpace::inventory_slot> inventory;
     std::vector<int> weapon_index;
 
+    //MAPS
     std::map <int, InventorySpace::inventory_slot> items =
-    {
+    {//SPECIFIC ITEMS
       //ID TYPE DMG_BONUS NAME
         {0, {0, 0, 0, "Empty"}},
         {1, {1, 1, 0, "Sword"}},
@@ -42,7 +51,7 @@ public:
     };
 
     std::map <int, InventorySpace::item_type> item_types =
-    {
+    {//GENERAL ITEM CLASSIFICATIONS
         {0, {"Empty", NULL, NULL}},
         {1, {"Weapon", 1, 8}},
         {2, {"Ranged Weapon", 10, 6}},
@@ -50,19 +59,16 @@ public:
         {4, {"Potion", 0 ,0}}
     };
 
-    int healing;
-    bool valid;
-
     //FUNCTION
-    void initialise();
+    void initialise(); //sets up the inventory + starting items
 
     bool input_validation(int min, int max, std::string statement);
 
-    void do_command(PlayerStats &stats);
+    void do_command(PlayerStats &stats); //checks what command has been inputted and calls relevant functions
 
-    void print();
+    void print(); //prints the inventory
 
-    int set(int index, int id);
+    int set(int index, int id); 
 
     void view();
 
@@ -70,11 +76,11 @@ public:
 
     void back();
 
-    void find_weapons();
+    void find_weapons(); //finds all weapons
 
-    bool find_item_of_type(int type);
+    bool find_item_of_type(int type); //finds a specific type of item
 
-    void use(PlayerStats &stats);
+    void use(PlayerStats &stats); 
 
     void use_health_potion(PlayerStats& stats);
 
