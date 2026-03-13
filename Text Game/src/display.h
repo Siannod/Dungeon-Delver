@@ -4,6 +4,7 @@
 #include "dungeon.h"
 #include "inventory.h"
 #include "combat.h"
+#include "structs.h"
 
 #include <iostream>
 #include <conio.h>
@@ -48,7 +49,7 @@ public:
 
 	//VECTORS
 	std::vector<int> temp;
-
+	std::vector<MovementDirections> directions;
 
 	InventorySpace::inventory_slot temp_item;
 
@@ -60,7 +61,7 @@ public:
 
 	void print_main_menu();
 
-	void print_dunegon_move_options();
+	void print_dunegon_move_options(std::vector<MovementDirections> &directions);
 
 	//others
 	void start_up();
@@ -79,6 +80,8 @@ public:
 	//INTERNAL
 	void clear(); //clears the screen
 	void wait(); //waits for user to press enter
+	void SetColour(int textColour);
+	void ClearColour();
 
 	//COMBAT
 	void monster_encounter(int type);

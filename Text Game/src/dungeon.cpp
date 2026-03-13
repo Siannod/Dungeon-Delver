@@ -1,5 +1,6 @@
 #pragma once
 #include "dungeon.h"
+#include "structs.h"
 
 
 void Dungeon::generate()
@@ -14,32 +15,58 @@ void Dungeon::print_dungeon()
 	{
 		for (std::string column : line)
 		{
-			if (column == "0" || column == "1" || column == "X")
+			if (column == "0")
 			{
+				std::cout << "\033[47;37m";
+				std::cout << column << " ";
+			}
+			else if (column == "1")
+			{
+				std::cout << "\033[41;31m";
+				std::cout << column << " ";
+			}
+			else if (column == "X")
+			{
+				std::cout << "\033[47;30m";
 				std::cout << column << " ";
 			}
 			else
 			{
+				std::cout << "\033[47;30m";
 				std::cout << "?" << " ";
 			}
+			std::cout << "\033[0m";
 		}
 		std::cout << "\n";
 	}
 }
 
-void Dungeon::check_paths(std::vector<int> coords, std::vector<int>& temp)
+void Dungeon::check_paths(std::vector<int> coords, std::vector<MovementDirections>& directions)
 {
+	MovementDirections tempDirection;
 	for (int i = 1; i < 5; i++)
 	{
 		temp_x = coords[0] + generator.direction.at(i)[2];
 		temp_y = coords[1] + generator.direction.at(i)[3];
+		tempDirection.dirNum = i;
+
 		if (range())
 		{
 			if (dungeon[temp_x][temp_y] != "1")
 			{
-				temp.push_back(i);
+				tempDirection.available = true;
+			}
+			else
+			{
+				tempDirection.available = false;
 			}
 		}
+		else
+		{
+			tempDirection.available = false;
+		}
+		
+		directions.push_back(tempDirection);
 	}
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "dungeon_generator.h"
 #include <thread>
+#include "structs.h"
 
 class Dungeon
 {
@@ -57,7 +58,7 @@ public:
 
 	void generate(); //calls the generator to generate the dungeon
 
-	void check_paths(std::vector<int> coords, std::vector<int> &temp); //checks which paths are available to traverse
+	void check_paths(std::vector<int> coords, std::vector<MovementDirections> &directions); //checks which paths are available to traverse
 
 	bool range(); //checks if its in range
 

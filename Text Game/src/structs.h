@@ -30,6 +30,12 @@ struct coords
     int cost;
 };
 
+struct MovementDirections
+{
+    int dirNum;
+    bool available;
+};
+
 struct MonsterStats
 {
     std::string name;

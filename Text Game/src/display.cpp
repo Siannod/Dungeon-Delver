@@ -19,6 +19,16 @@ void Display::wait()
 	_getch();
 }
 
+void Display::SetColour(int textColour)
+{
+	std::cout << "\033[" << textColour << "m";
+}
+
+void Display::ClearColour()
+{
+	std::cout << "\033[0m";
+}
+
 void Display::print_main_menu()
 {
 	clear();
@@ -54,43 +64,63 @@ void Display::main_menu()
 	}
 }
 
-void Display::print_dunegon_move_options()
+void Display::print_dunegon_move_options(std::vector<MovementDirections> &directions)
 {
-	for (int i = 0; i < temp.size(); i++)
+	for (int i = 0; i < directions.size(); i++)
 	{
-		std::cout << ">> " << i + 1 << ". " << dungeon.directions.at(temp[i]) << std::endl;
+		if (!directions[i].available)
+		{
+			SetColour(31);
+		}
+		std::cout << ">> " << i + 1 << ". " << dungeon.directions.at(directions[i].dirNum) << std::endl;
+		ClearColour();
 	}
-	std::cout << ">> " << temp.size() + 1 << ". Back to main menu" << std::endl;
+	std::cout << ">> " << directions.size() + 1 << ". Back to main menu" << std::endl;
 	std::cout << "- ";
 }
 
 void Display::dungeon_move_options()
 {
-	dungeon.print_dungeon();
-	temp.clear();
-	dungeon.check_paths({ player.stats.x, player.stats.y }, temp);
-	print_dunegon_move_options();
-	input_validation(1, temp.size() + 1, "- ");
-	if (choice_int < temp.size() + 1)
+	bool moving = true;
+	while (moving)
 	{
-		x_mod = dungeon.direction.at(temp[choice_int - 1])[0];
-		y_mod = dungeon.direction.at(temp[choice_int - 1])[1];
-
-		player.move(x_mod, y_mod);
-		if (dungeon.dungeon[player.stats.x][player.stats.y] == "2") 
+		dungeon.print_dungeon();
+		directions.clear();
+		dungeon.check_paths({ player.stats.x, player.stats.y }, directions);
+		print_dunegon_move_options(directions);
+		input_validation(1, directions.size() + 1, "- ");
+		if (choice_int < directions.size() + 1)
 		{
-			monster_encounter(1); 
+			if (directions[choice_int - 1].available)
+			{
+				x_mod = dungeon.direction.at(directions[choice_int - 1].dirNum)[0];
+				y_mod = dungeon.direction.at(directions[choice_int - 1].dirNum)[1];
+				player.move(x_mod, y_mod);
+				if (dungeon.dungeon[player.stats.x][player.stats.y] == "2")
+				{
+					monster_encounter(1);
+				}
+				else if (dungeon.dungeon[player.stats.x][player.stats.y] == "3")
+				{
+					monster_encounter(1);
+				}
+				else if (dungeon.dungeon[player.stats.x][player.stats.y] == "4") { loot_room(); }
+				dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
+				if (running)
+				{
+					clear();
+					dungeon_move_options();
+				}
+			}
+			else
+			{
+				std::cout << "[!] INVALID INPUT\n";
+				
+			}
 		}
-		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "3") 
-		{ 
-			monster_encounter(1); 
-		}
-		else if (dungeon.dungeon[player.stats.x][player.stats.y] == "4") { loot_room(); }
-		dungeon.move_player(player.stats.x, player.stats.y, x_mod, y_mod);
-		if (running)
+		else
 		{
-			clear();
-			dungeon_move_options();
+			moving = false;
 		}
 	}
 	clear(); 
