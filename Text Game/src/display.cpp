@@ -3,12 +3,31 @@
 
 void Display::start_up()
 {
+	print_title();
 	std::thread t_dungeon(&Dungeon::new_dungeon, &dungeon);
 	player.create_character();
 	player.inventory.initialise();
 	t_dungeon.join();
 }
 
+
+void Display::print_title()
+{
+	std::cout << "\n\n\n";
+	std::cout << "\t\t\t\t\t\t";
+	std::cout << "    ___                                         ___     _                \n";
+	std::cout << "\t\t\t\t\t\t";
+	std::cout << "   /   \\_   _ _ __   __ _  ___  ___  _ __      /   \\___| |_   _____ _ __ \n";
+	std::cout << "\t\t\t\t\t\t";
+	std::cout << "  / /\\ / | | | '_ \\ / _` |/ _ \\/ _ \\| '_ \\    / /\\ / _ \\ \\ \\ / / _ \\ '__|\n";
+	std::cout << "\t\t\t\t\t\t";
+	std::cout << " / /_//| |_| | | | | (_| |  __/ (_) | | | |  / /_//  __/ |\\ V /  __/ |   \n";
+	std::cout << "\t\t\t\t\t\t";
+	std::cout << "/___,'  \\__,_|_| |_|\\__, |\\___|\\___/|_| |_| /___,' \\___|_| \\_/ \\___|_|   \n";
+	std::cout << "\t\t\t\t\t\t";
+	std::cout << "                     |___/                                                \n";
+	wait();
+}
 void Display::clear()
 {
 	system("cls");

@@ -63,6 +63,8 @@ public:
 
 	void print_dunegon_move_options(std::vector<MovementDirections> &directions);
 
+	void print_title();
+
 	//others
 	void start_up();
 	
